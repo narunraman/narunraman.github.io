@@ -12,6 +12,26 @@ nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
 }
+/* navbar animations */
+nav ul li a{
+  position: relative;
+}
+nav ul li a:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: #aaa;
+  height: 1px;
+}
+nav ul li a:hover:after {
+  width: 100%;
+}
+
 a {
     text-decoration: none;
     color: #999;
