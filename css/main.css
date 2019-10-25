@@ -12,13 +12,14 @@ nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
 }
+
 /* navbar animations */
+nav ul li a,
 nav ul li a:after,
 nav ul li a:before {
   transition: all .5s;
 }
 nav ul li a:hover {
-/*   color: #555; */
   color: #f08b1f;
 }
 nav ul li a{
@@ -42,11 +43,16 @@ nav ul li a:hover:after {
 
 a {
     text-decoration: none;
-    color: #999;
+    color: #006eff;
 }
-/* a:hover {
+a:hover {
     text-decoration: underline;
-} */
+    color: #00b3ff;
+}
+a:visited {
+    color: #800080;
+    text-decoration: none;
+}
 h1 {
     font-size: 3em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
