@@ -41,15 +41,18 @@ nav ul li a:hover:after {
   width: 100%;
 }
 
-a {
+a.blurb,
+a.plug {
     text-decoration: none;
     color: #006eff;
 }
-a:hover {
+a.blurb:hover,
+a.plug:hover {
     text-decoration: underline;
     color: #00b3ff;
 }
-a:visited {
+a.blurb:visited,
+a.plug:visited {
     color: #800080;
     text-decoration: none;
 }
