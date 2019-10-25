@@ -41,7 +41,7 @@ nav ul li a:hover:after {
   width: 100%;
 }
 
-a.blurb,
+/* a.blurb,
 a.plug {
     text-decoration: none;
     color: #006eff;
@@ -55,7 +55,7 @@ a.blurb:visited,
 a.plug:visited {
     color: #800080;
     text-decoration: none;
-}
+} */
 h1 {
     font-size: 3em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
