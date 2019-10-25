@@ -13,6 +13,14 @@ nav ul li, footer ul li {
     margin-right: 20px;
 }
 /* navbar animations */
+nav ul li a:after,
+nav ul li a:before {
+  transition: all .5s;
+}
+nav ul li a:hover {
+/*   color: #555; */
+  color: #f08b1f;
+}
 nav ul li a{
   position: relative;
 }
@@ -36,9 +44,9 @@ a {
     text-decoration: none;
     color: #999;
 }
-a:hover {
+/* a:hover {
     text-decoration: underline;
-}
+} */
 h1 {
     font-size: 3em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
