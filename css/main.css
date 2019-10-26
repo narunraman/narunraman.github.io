@@ -41,6 +41,10 @@ nav ul li a:hover:after {
   width: 100%;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* a.blurb,
 a.plug {
     text-decoration: none;
