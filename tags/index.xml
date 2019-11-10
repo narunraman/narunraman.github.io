@@ -5,12 +5,36 @@
     <link>https://narunraman.github.io/tags/</link>
       <atom:link href="https://narunraman.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 27 Apr 2016 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://narunraman.github.io/img/icon-192.png</url>
       <title>Tags</title>
       <link>https://narunraman.github.io/tags/</link>
     </image>
+    
+    <item>
+      <title>Applied</title>
+      <link>https://narunraman.github.io/tags/applied/</link>
+      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://narunraman.github.io/tags/applied/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Personal</title>
+      <link>https://narunraman.github.io/tags/personal/</link>
+      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://narunraman.github.io/tags/personal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Professional</title>
+      <link>https://narunraman.github.io/tags/professional/</link>
+      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://narunraman.github.io/tags/professional/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

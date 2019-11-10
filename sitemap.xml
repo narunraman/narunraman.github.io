@@ -3,11 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://narunraman.github.io/authors/admin/</loc>
+    <loc>https://narunraman.github.io/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://narunraman.github.io/</loc>
+    <loc>https://narunraman.github.io/tags/applied/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://narunraman.github.io/project/cederman/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://narunraman.github.io/tags/personal/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://narunraman.github.io/tags/professional/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://narunraman.github.io/project/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://narunraman.github.io/project/shy-trumper/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://narunraman.github.io/tags/</loc>
+    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://narunraman.github.io/authors/admin/</loc>
   </url>
   
   <url>
@@ -32,10 +68,6 @@
   
   <url>
     <loc>https://narunraman.github.io/talk/</loc>
-  </url>
-  
-  <url>
-    <loc>https://narunraman.github.io/tags/</loc>
   </url>
   
 </urlset>
