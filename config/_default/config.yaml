@@ -6,7 +6,7 @@
 # # Uncomment when installing using Hugo Modules
 # theme: researcher
 # # theme: github.com/wangchucheng/hugo-eureka
-# # theme: github.com/narunraman/nkr.github.io
+# # theme: github.com/narunraman/narunraman.github.io
 
 # paginate: 3
 # copyright:
@@ -25,7 +25,7 @@
 #     ignoreImports: false
 #     # path: github.com/gohugoio/hugoTestModules1_linux/modh1_2_1v
 #     path: github.com/wangchucheng/hugo-eureka
-#     # path: github.com/narunraman/nkr.github.io
+#     # path: github.com/narunraman/narunraman.github.io
 #   # - path: my-shortcodes
 
 # # Uncomment for google analytics

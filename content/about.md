@@ -45,8 +45,11 @@ I am very available via email, my basic interests are detailed below and I am in
 
 ## Publications
 ### 2020
-1. <u>N. Raman</u>, N. Sauerberg, J. Fisher, A. Partida, S. Narayan: **Classifying Wikipedia article quality with revision history networks** in the *16th International Symposium on Open Collaboration (OpenSym)* <br> [[paper]](https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf)
-2. T. Klinge, J. Lathrop, S. Moreno, H. Potter, <u>N. Raman</u>, M. Riley: **ALCH: An Imperative Language for Chemical Reaction Network-Controlled Tile Assembly** in the *26th International Conference on DNA Computing and Molecular Programming (DNA 26)* <br> [[paper]](https://drops.dagstuhl.de/opus/volltexte/2020/12959/pdf/LIPIcs-DNA-2020-6.pdf)&nbsp;[[poster]](#)
+1. **Classifying Wikipedia article quality with revision history networks** in the *16th International Symposium on Open Collaboration (OpenSym)* <br> [[paper]](https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf)
+<!-- <u>N. Raman</u>, N. Sauerberg, J. Fisher, A. Partida, S. Narayan:  -->
+2. **ALCH: An Imperative Language for Chemical Reaction Network-Controlled Tile Assembly** in the *26th International Conference on DNA Computing and Molecular Programming (DNA 26)* <br> [[paper]](https://drops.dagstuhl.de/opus/volltexte/2020/12959/pdf/LIPIcs-DNA-2020-6.pdf)&nbsp;[[poster]](#)
+<!-- T. Klinge, J. Lathrop, S. Moreno, H. Potter, <u>N. Raman</u>, M. Riley:  -->
+
 
 
 ---------

@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Narun Raman</title>
-    <link>www.narunraman.com/nkr.github.io/</link>
+    <link>www.narunraman.com/</link>
     <description>Recent content on Narun Raman</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 09 Aug 2021 11:31:32 -0500</lastBuildDate><atom:link href="www.narunraman.com/nkr.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Aug 2021 11:31:32 -0500</lastBuildDate><atom:link href="www.narunraman.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Photos</title>
-      <link>www.narunraman.com/nkr.github.io/photos/</link>
+      <link>www.narunraman.com/photos/</link>
       <pubDate>Mon, 09 Aug 2021 12:42:41 -0500</pubDate>
       
-      <guid>www.narunraman.com/nkr.github.io/photos/</guid>
+      <guid>www.narunraman.com/photos/</guid>
       <description>coming soon</description>
     </item>
     
     <item>
       <title>Narun Raman</title>
-      <link>www.narunraman.com/nkr.github.io/about/</link>
+      <link>www.narunraman.com/about/</link>
       <pubDate>Mon, 09 Aug 2021 11:31:32 -0500</pubDate>
       
-      <guid>www.narunraman.com/nkr.github.io/about/</guid>
+      <guid>www.narunraman.com/about/</guid>
       <description>A little about me  Hi, I’m Narun Raman! I pronounce my name like Maroon (with an N) Ramen &amp;ndash; quite an unappetizing sight. Some people have interpreted this slightly incorrectly and called me Manun, so maybe I should find a new explanation. Please feel free to email me pictures of oddly colored noodles that you have made or found: narunram [at] cs [dot] ubc [dot] ca. -- narunram [at] cs [dot] ubc [dot] ca.</description>
     </item>
     
