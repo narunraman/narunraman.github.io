@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Narun Raman</title>
-    <link>www.narunraman.com/</link>
+    <link>https://narunraman.github.io/</link>
     <description>Recent content on Narun Raman</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 09 Aug 2021 11:31:32 -0500</lastBuildDate><atom:link href="www.narunraman.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Aug 2021 11:31:32 -0500</lastBuildDate><atom:link href="https://narunraman.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Photos</title>
-      <link>www.narunraman.com/photos/</link>
+      <link>https://narunraman.github.io/photos/</link>
       <pubDate>Mon, 09 Aug 2021 12:42:41 -0500</pubDate>
       
-      <guid>www.narunraman.com/photos/</guid>
+      <guid>https://narunraman.github.io/photos/</guid>
       <description> galleries:
 gallery number one 1:
 row one in gallery one    { url: &amp;lsquo;1.jpg&amp;rsquo;, alt: &amp;lsquo;alt 1&amp;rsquo;}    row two in gallery one    { url: &amp;lsquo;2.jpg&amp;rsquo;, alt: &amp;lsquo;alt 2&amp;rsquo;} { url: &amp;lsquo;3.jpg&amp;rsquo;, alt: &amp;lsquo;alt 3&amp;rsquo;}    gallery number two 2:
@@ -20,10 +20,10 @@ row one in gallery two    { url: &amp;lsquo;4.jpg&amp;rsquo;, alt: &amp;lsquo;al
     
     <item>
       <title>Narun Raman</title>
-      <link>www.narunraman.com/about/</link>
+      <link>https://narunraman.github.io/about/</link>
       <pubDate>Mon, 09 Aug 2021 11:31:32 -0500</pubDate>
       
-      <guid>www.narunraman.com/about/</guid>
+      <guid>https://narunraman.github.io/about/</guid>
       <description>a little about me  I pronounce my name like Maroon (with an N) Ramen &amp;ndash; quite an unappetizing sight.1 Having said that, please feel free to email me pictures of oddly colored noodles that you have made or found:
 narunram [at] cs [dot] ubc [dot] ca.
 narunram [at] cs [dot] ubc [dot] ca. -- at] ```cs``` [dot] ```ubc``` [dot] ```ca```. -- I am currently a Master&amp;rsquo;s student under Kevin Leyton-Brown pursuing Computer Science at the University of British Columbia.</description>
@@ -31,10 +31,10 @@ narunram [at] cs [dot] ubc [dot] ca. -- at] ```cs``` [dot] ```ubc``` [dot] ```ca
     
     <item>
       <title>personal</title>
-      <link>www.narunraman.com/bio/</link>
+      <link>https://narunraman.github.io/bio/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>www.narunraman.com/bio/</guid>
+      <guid>https://narunraman.github.io/bio/</guid>
       <description>Best Places to Eat Ratna Cafe (Chennai, India): Probably the best sambar vada in the world and decent filter coffee.
 per se Social Corner (Vancouver, Canada): The best pizza I have ever had in my life.
 Elephant (Vancouver, Canada): Their omakase (really a price fixe menu) is the best in Vancouver.
