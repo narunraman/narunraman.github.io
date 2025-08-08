@@ -22,99 +22,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/0504-31.png">
     <link rel="shortcut icon" href="/assets/images/0504-31.png">
     
-    <script>
-        // Enhanced footnote system with click-to-stick functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            let activeMarginNote = null;
-            
-            // Handle text footnotes
-            const footnotes = document.querySelectorAll('.footnote-ref');
-            footnotes.forEach(function(footnote) {
-                const text = footnote.getAttribute('data-footnote');
-                if (text) {
-                    const marginNote = document.createElement('span');
-                    marginNote.className = 'margin-note';
-                    marginNote.textContent = text;
-                    footnote.parentNode.insertBefore(marginNote, footnote.nextSibling);
-                    
-                    // Add click functionality
-                    footnote.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        // Hide any currently active margin note
-                        if (activeMarginNote && activeMarginNote !== marginNote) {
-                            activeMarginNote.classList.remove('sticky');
-                        }
-                        
-                        // Toggle this margin note
-                        if (marginNote.classList.contains('sticky')) {
-                            marginNote.classList.remove('sticky');
-                            activeMarginNote = null;
-                        } else {
-                            marginNote.classList.add('sticky');
-                            activeMarginNote = marginNote;
-                        }
-                    });
-                }
-            });
-            
-            // Handle image footnotes
-            const imageFootnotes = document.querySelectorAll('.image-footnote-ref');
-            imageFootnotes.forEach(function(footnote) {
-                const imageSrc = footnote.getAttribute('data-image');
-                const imageAlt = footnote.getAttribute('data-image-alt') || '';
-                const imageCaption = footnote.getAttribute('data-image-caption') || '';
-                
-                if (imageSrc) {
-                    const marginImage = document.createElement('span');
-                    marginImage.className = 'margin-image';
-                    
-                    const img = document.createElement('img');
-                    img.src = imageSrc;
-                    img.alt = imageAlt;
-                    marginImage.appendChild(img);
-                    
-                    if (imageCaption) {
-                        const caption = document.createElement('div');
-                        caption.className = 'image-caption';
-                        caption.textContent = imageCaption;
-                        marginImage.appendChild(caption);
-                    }
-                    
-                    footnote.parentNode.insertBefore(marginImage, footnote.nextSibling);
-                    
-                    // Add click functionality
-                    footnote.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        // Hide any currently active margin note
-                        if (activeMarginNote && activeMarginNote !== marginImage) {
-                            activeMarginNote.classList.remove('sticky');
-                        }
-                        
-                        // Toggle this margin image
-                        if (marginImage.classList.contains('sticky')) {
-                            marginImage.classList.remove('sticky');
-                            activeMarginNote = null;
-                        } else {
-                            marginImage.classList.add('sticky');
-                            activeMarginNote = marginImage;
-                        }
-                    });
-                }
-            });
-            
-            // Hide margin notes when clicking elsewhere
-            document.addEventListener('click', function(e) {
-                if (activeMarginNote && !activeMarginNote.contains(e.target)) {
-                    activeMarginNote.classList.remove('sticky');
-                    activeMarginNote = null;
-                }
-            });
-        });
-    </script>
+    <script src="/js/main.js"></script>
 
 </head>
 
@@ -147,9 +55,19 @@
 <hr>
 <div id="content">
 <div class="container">
-<figure class="avatar"><img src="./assets/images/avatar.jpg"
-         alt="avatar"/>
-</figure>
+<div class="hero-section">
+    <figure class="avatar"><img src="./assets/images/avatar.jpg"
+             alt="avatar"/>
+    </figure>
+    
+    <div class="pill-buttons mobile-pills">
+        <a href="https://scholar.google.com/citations?hl=en&pli=1&user=SEWbKagAAAAJ" class="pill-button"><span class="scholar-icon"></span>Google Scholar</a>
+        <a href="https://github.com/narunraman" class="pill-button"><i class="fab fa-github"></i>GitHub</a>
+        <a href="https://www.linkedin.com/in/narun-raman-019857132/" class="pill-button"><i class="fab fa-linkedin"></i>LinkedIn</a>
+        <a href="cv.pdf" class="pill-button"><span class="pdf-icon"></span>CV</a>
+        <a href="assets/Resume.pdf" class="pill-button"><span class="pdf-icon"></span>Resume</a>
+    </div>
+</div>
 
 <p>I pronounce my name like Maroon (with an N) Ramen&ndash;quite an unappetizing sight.<a href="#" class="footnote-ref" data-footnote="Some people have interpreted this slightly incorrectly and called me Manun, so maybe I should find a new explanation."><sup>1</sup></a> Having said that, please feel free to email me pictures of oddly colored noodles that you have made or found:</p>
 <p style="text-align: center;"><span class='inconsolata' style="font-weight: bold">narunram [at] cs [dot] ubc [dot] ca</span></p>
@@ -157,10 +75,10 @@
 
 Previously, I completed my Master's in Computer Science at UBC under the supervision of Kevin Leyton-Brown. My thesis was on formalizing the motivations behind purchase intentions for digital goods, in particular, why people <a href="https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0438636">pay to not play</a>. During my Master's (Winter 2023), I TA'd for Kevin's course <a href="https://www.cs.ubc.ca/~kevinlb/teaching/cs532l/">Models of Strategic Behavior</a>. The course page contains videos giving a pretty good intro into game theory, mechanism design, and behavioral economics, and a list of some fun<a href="#" class="footnote-ref" data-footnote="Your mileage may vary on what 'fun' means. I wrote them to be a little challenging, but mostly as a dip into game theoretic 'reasoning.'"><sup>3</sup></a> problem sets. Before UBC, I completed a Bachelor's in <a href="https://www.carleton.edu/computer-science/">Computer Science</a> and <a href="https://www.carleton.edu/math/">Mathematics</a> at <a href="https://www.carleton.edu/">Carleton College</a>,<a href="#" class="image-footnote-ref" 
    data-image="/assets/images/carleton_confusion.png" 
-   data-image-alt="Example diagram for Canadians."
+   data-image-alt="Figure 1: For Canadians"
    data-image-caption="Figure 1: For Canadians"><sup>4</sup></a> which culminated in an undergraduate thesis on predicting Wikipedia article quality. I have also worked as a software engineer; you can find more details about my work experiences in my resume.</p>
 
-<div class="pill-buttons">
+<div class="pill-buttons desktop-pills">
     <a href="https://scholar.google.com/citations?hl=en&pli=1&user=SEWbKagAAAAJ" class="pill-button"><span class="scholar-icon"></span>Google Scholar</a>
     <a href="https://github.com/narunraman" class="pill-button"><i class="fab fa-github"></i>GitHub</a>
     <a href="https://www.linkedin.com/in/narun-raman-019857132/" class="pill-button"><i class="fab fa-linkedin"></i>LinkedIn</a>
@@ -174,22 +92,25 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
 <h2 id="news">Recent-<span class="cmu-serif-italic">ish</span> News</h2>
 <ul>
     <li>
-        Our work on assessing the economic rationality in large language models was presented by my supervisor earlier this year.
+        Kevin gave a talk covering our work, to date, on assessing the economic rationality in large language models. The slides are available <a href="assets/talks/STEER + STEER-ME.pptx">here</a>.
     </li>
     <li>
-        STEER was accepted to <a href="https://icml.cc/virtual/2024/poster/33120">ICML 2024</a>! I presented the work in Vienna and the poster is available <a href="assets/posters/STEER_Poster.pdf">here</a>.
+        Our workshop paper was accepted to the <a href="https://sites.google.com/view/ec25-information-economics-llm">Information Economics x LLMs Workshop</a> at EC (2025). A PDF of the paper is available <a href="assets/papers/STEER_ME_EC_2025_Workshop.pdf">here</a>.
     </li>
     <li>
-        Our work on mobile game monetization was presented by my coauthor <a href="https://www.cs.ubc.ca/~tlundy/">Taylor Lundy</a> at <a href="https://www.math.mcgill.ca/vetta/workshop.html">Bellairs (2023)</a> in Bermuda.
+        STEER was accepted to <a href="https://icml.cc/virtual/2024/poster/33120">ICML (2024)</a>! I presented our work in Vienna and the poster is available <a href="assets/posters/STEER_Poster.pdf">here</a>.
+    </li>
+    <li>
+        Our work on mobile game monetization was presented by my coauthor <a href="https://www.cs.ubc.ca/~tlundy/">Taylor</a> at <a href="https://www.math.mcgill.ca/vetta/workshop.html">Bellairs (2023)</a> in Bermuda. The slides are available <a href="assets/talks/bellairs.pptx">here</a>.
     </li>
 </ul>
 
 <h2 id="publications-and-pre-prints">Publications, Working Papers, and Presentations</h2>
 <h3 id="2025">2025</h3>
 <ol>
-    <li><strong>Conspicuous Consumption of NFTs: Empirical Insights from a Data-Rich Market.</strong> Narun K. Raman, Taylor Lundy, Scott D. Kominers, Kevin Leyton-Brown. Working Paper.
+    <li><strong>Conspicuous Consumption of NFTs: Empirical Insights from a Data-Rich Market.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun  Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Scott D. Kominers" data-short-name="S. Kominers">Scott D. Kominers</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. <span class="cmu-serif-italic">Working Paper</span>.
     </li>
-    <li><strong>Reasoning Models are Test Exploiters: Rethinking Multiple Choice.</strong> Narun K. Raman, Taylor Lundy, Kevin Leyton-Brown. <span class="cmu-serif-italic">Working Paper.</span>
+    <li><strong>Reasoning Models are Test Exploiters: Rethinking Multiple Choice.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. <span class="cmu-serif-italic">Working Paper.</span>
         <ul class="horizontal-links">
             <li>
                 <a href="https://arxiv.org/abs/2507.15337" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
@@ -197,7 +118,7 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
         </ul>
     </li>
 
-    <li><strong>STEER-ME: Assessing the Microeconomic Reasoning of Large Language Models.</strong> Narun K. Raman, Taylor Lundy, Thiago Amin, Kevin Leyton-Brown. <span class="cmu-serif-italic">Working Paper.</span>
+    <li><strong>STEER-ME: Assessing the Microeconomic Reasoning of Large Language Models.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Thiago Amin" data-short-name="T. Amin">Thiago Amin</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jesse Perla" data-short-name="J. Perla">Jesse Perla</span>. <span class="cmu-serif-italic">Working Paper.</span>
         <ul class="horizontal-links">
             <li>
                 <a href="https://arxiv.org/abs/2502.13119" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
@@ -205,10 +126,21 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
             <li>
                 <a href="assets/talks/STEER + STEER-ME.pptx" class="icon-link slides-link"><span class="link-text">slides</span></a>
             </li>
+            <li>
+                <a href="https://huggingface.co/datasets/narunraman/steer_me" class="icon-link huggingface-link"><span class="link-text">dataset</span></a>
+            </li>
         </ul>
     </li>
 
-    <li><strong>NFTs as a Data-Rich Test Bed: Conspicuous Consumption and its Determinants.</strong> Taylor Lundy, Narun K. Raman, Scott D. Kominers, Kevin Leyton-Brown. In <span class="cmu-serif-italic">TheWebConference (WWW '25)</span>. 
+    <li><strong>STEER-ME: Evaluating LLMs in Information Economics.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Thiago Amin" data-short-name="T. Amin">Thiago Amin</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jesse Perla" data-short-name="J. Perla">Jesse Perla</span>. In <span class="cmu-serif-italic">The Workshop on Information Economics and Large Language Models at Economics and Computation (EC '25).</span>
+        <ul class="horizontal-links">
+            <li>
+                <a href="assets/papers/STEER_ME_EC_2025_Workshop.pdf" class="icon-link pdf-link"><span class="link-text">workshop</span></a>
+            </li>
+        </ul>
+    </li>
+
+    <li><strong>NFTs as a Data-Rich Test Bed: Conspicuous Consumption and its Determinants.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Scott D. Kominers" data-short-name="S. Kominers">Scott D. Kominers</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">TheWebConference (WWW '25)</span>. 
         <ul class="horizontal-links">
             <li>
                 <a href="https://doi.org/10.1145/3696410.3714724" class="icon-link doi-link"><span class="link-text">paper</span></a>
@@ -225,7 +157,7 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
 <h3 id="2024">2024</h3>
 <ol>
 
-    <li><strong>Pay to (Not) Play: Monetizing Impatience in Mobile Games.</strong> Taylor Lundy, Narun K. Raman, Hu Fu, Kevin Leyton-Brown. In <span class="cmu-serif-italic">AAAI Conference on Artificial Intelligence (AAAI '24)</span> 
+    <li><strong>Pay to (Not) Play: Monetizing Impatience in Mobile Games.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Hu Fu" data-short-name="H. Fu">Hu Fu</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">AAAI Conference on Artificial Intelligence (AAAI '24)</span> 
         <ul class="horizontal-links">
             <li>
                 <a href="https://arxiv.org/abs/2312.10205" class="icon-link aaai-link"><span class="link-text">paper</span></a>
@@ -241,7 +173,7 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
             </li>
         </ul>
     </li>
-    <li><strong>STEER: Assessing the Economic Rationality in Large Language Models.</strong> Narun K. Raman, Taylor Lundy, Samuel J. Amouyal, Yoav Levine, Kevin Leyton-Brown, Moshe Tennenholtz. In <span class="cmu-serif-italic">International Conference on Machine Learning (ICML '24)</span>
+    <li><strong>STEER: Assessing the Economic Rationality in Large Language Models.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Samuel J. Amouyal" data-short-name="S. Amouyal">Samuel J. Amouyal</span>, <span class="author-name" data-full-name="Yoav Levine" data-short-name="Y. Levine">Yoav Levine</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Moshe Tennenholtz" data-short-name="M. Tennenholtz">Moshe Tennenholtz</span>. In <span class="cmu-serif-italic">International Conference on Machine Learning (ICML '24)</span>
         <ul class="horizontal-links">
             <li>
                 <a href="https://icml.cc/virtual/2024/poster/33120" class="icon-link icml-link"><span class="link-text">paper</span></a>
@@ -258,17 +190,20 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
 <h3 id="2020">2020</h3>
 <ol>
 
-    <li><strong>Classifying Wikipedia Article Quality with Revision History Networks.</strong> Narun K. Raman, Nathaniel Sauerberg, Jonah Fisher, Addison Partida, Sneha Narayan. In <span class="cmu-serif-italic">The International Symposium on Open Collaboration (OpenSym '20)</span> 
+    <li><strong>Classifying Wikipedia Article Quality with Revision History Networks.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Nathaniel Sauerberg" data-short-name="N. Sauerberg">Nathaniel Sauerberg</span>, <span class="author-name" data-full-name="Jonah Fisher" data-short-name="J. Fisher">Jonah Fisher</span>, <span class="author-name" data-full-name="Addison Partida" data-short-name="A. Partida">Addison Partida</span>, <span class="author-name" data-full-name="Sneha Narayan" data-short-name="S. Narayan">Sneha Narayan</span>. In <span class="cmu-serif-italic">The International Symposium on Open Collaboration (OpenSym '20)</span> 
         <ul class="horizontal-links">
             <li>
                 <a href="https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf" class="icon-link pdf-link"><span class="link-text">paper</span></a>
             </li>
         </ul>
     </li>
-    <li><strong>ALCH: An Imperative Language for the CRN-TAM.</strong> Titus H. Klinge, James I. Lathrop, Sonia Moreno, Hugh D. Potter, Narun K. Raman, Matthew R. Riley. In  <span class="cmu-serif-italic">The International Conference on DNA Computing and Molecular Programming (DNA '20)</span>
+    <li><strong>ALCH: An Imperative Language for the CRN-TAM.</strong> <span class="author-name" data-full-name="Titus H. Klinge" data-short-name="T. Klinge">Titus H. Klinge</span>, <span class="author-name" data-full-name="James I. Lathrop" data-short-name="J. Lathrop">James I. Lathrop</span>, <span class="author-name" data-full-name="Sonia Moreno" data-short-name="S. Moreno">Sonia Moreno</span>, <span class="author-name" data-full-name="Hugh D. Potter" data-short-name="H. Potter">Hugh D. Potter</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Matthew R. Riley" data-short-name="M. Riley">Matthew R. Riley</span>. In  <span class="cmu-serif-italic">The International Conference on DNA Computing and Molecular Programming (DNA '20)</span>
         <ul class="horizontal-links">
             <li>
-                <a href="https://drops.dagstuhl.de/opus/volltexte/2020/12959/pdf/LIPIcs-DNA-2020-6.pdf" class="icon-link pdf-link"><span class="link-text">paper</span></a>
+                <a href="https://cs.emis.de/LIPIcs/frontdoor_d8ee.html" class="icon-link dna-link"><span class="link-text">paper</span></a>
+            </li>
+            <li>
+                <a href="https://link.springer.com/article/10.1007/s11047-021-09878-8" class="icon-link springer-nature-link"><span class="link-text">journal</span></a>
             </li>
             <li>
                 <a href="assets/posters/ALCH_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>

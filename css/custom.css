@@ -1,5 +1,10 @@
 /* Custom styles for Narun's website */
 
+/* CSS Variables */
+:root {
+    --mobile-breakpoint: 530px;
+}
+
 /* Base styles from researcher theme */
 * {
     color: #222;
@@ -396,6 +401,22 @@
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0d/Microsoft_Office_PowerPoint_%282019%E2%80%93present%29.svg');
 }
 
+.huggingface-link::before {
+    background-image: url('https://cas-bridge.xethub.hf.co/xet-bridge-us/63d3eec885118edc0439bd98/b5b6c9df87c8c406e1f861d53537050e7f0ed7aaee4f7768fe9087ee7db54992?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cas%2F20250808%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250808T193453Z&X-Amz-Expires=3600&X-Amz-Signature=f5cc28bd1e7f2f59aa2c220b7df8015619e67d18ce26216b8c7b00dad060baf4&X-Amz-SignedHeaders=host&X-Xet-Cas-Uid=public&response-content-disposition=inline%3B+filename*%3DUTF-8%27%27hf-logo.svg%3B+filename%3D%22hf-logo.svg%22%3B&response-content-type=image%2Fsvg%2Bxml&x-id=GetObject&Expires=1754685293&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc1NDY4NTI5M319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2FzLWJyaWRnZS54ZXRodWIuaGYuY28veGV0LWJyaWRnZS11cy82M2QzZWVjODg1MTE4ZWRjMDQzOWJkOTgvYjViNmM5ZGY4N2M4YzQwNmUxZjg2MWQ1MzUzNzA1MGU3ZjBlZDdhYWVlNGY3NzY4ZmU5MDg3ZWU3ZGI1NDk5MioifV19&Signature=A7uADtNo1AzczymWSD01D1-t6LZGy-k64lJ-FN%7Em5mbelkyzYgw4quNuVbWqzvcBoRVf0VfyUJKeYpMdq9y2B8I0PxfPA-BW1Nv8ApuiNKtPQGD7Wse%7EjOExAIHizAwiMj8LrGr9W7HGDULN5NENl5PmQIh%7EAWxAiJ26sHX%7EtLiEhOsMmREMdohbXeQVL81PPyRTck96wSsZy10VrjmsgMTz9Ujz%7EvVq-eL4LUV-8ez5ANt-UAAbCqBkAO6cD48p31%7EyUM26aiTwQh6wWMvpJIZs-5t8oqC72bKrLLbn9HbXbeUDup9tKxqq44JGQvbCoTTHcdy3VqOxB7d5E-kMzA__&Key-Pair-Id=K2L8F4GPSG1IFC');
+}
+
+.springer-nature-link::before {
+    background-image: url('../assets/logos/springer_nature_small.png');
+}
+
+.dna-link::before {
+    background-image: url('../assets/logos/dna_logo_small.jpg');
+}
+
+.dna-link {
+    gap: 6px; /* Custom gap for DNA links */
+}
+
 .slides-link {
     gap: 6px; /* Custom gap for slides links */
 }
@@ -423,6 +444,7 @@
     content: attr(data-footnote);
     position: absolute;
     bottom: 100%;
+    margin-bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.9);
@@ -432,7 +454,7 @@
     font-size: 14px;
     line-height: 1.4;
     white-space: normal;
-    width: 250px; /* Force width instead of max-width */
+    width: 250px;
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
@@ -440,18 +462,52 @@
     pointer-events: none;
 }
 
-.footnote-ref::before {
+/* Smart positioning for tooltips */
+.footnote-ref.tooltip-left::after {
+    left: 0;
+    transform: translateX(0);
+}
+
+.footnote-ref.tooltip-right::after {
+    left: auto;
+    right: 0;
+    transform: translateX(0);
+}
+
+.footnote-ref.tooltip-center::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* .footnote-ref::before {
     content: '';
     position: absolute;
     bottom: 90%;
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top: 5px solid rgba(0, 0, 0, 0.9);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.9);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s;
+} */
+
+/* Adjust arrow position for positioned tooltips */
+/* .footnote-ref.tooltip-left::before {
+    left: 20px;
+    transform: translateX(0);
 }
+
+.footnote-ref.tooltip-right::before {
+    left: auto;
+    right: 20px;
+    transform: translateX(0);
+} */
+
+/* .footnote-ref.tooltip-center::before {
+    left: 50%;
+    transform: translateX(-50%);
+} */
 
 .footnote-ref:hover::after,
 .footnote-ref:hover::before {
@@ -469,44 +525,49 @@
 
 /* Tooltip for mobile/tablet - image footnotes */
 .image-footnote-ref::after {
-    content: attr(data-image-alt);
+    content: '';
     position: absolute;
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.9);
     color: white;
-    padding: 8px 12px;
+    padding: 8px;
     border-radius: 4px;
-    font-size: 14px;
-    line-height: 1.4;
-    white-space: normal;
-    width: 300px; /* Force width instead of max-width */
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s;
     pointer-events: none;
+    
+    /* Image display properties */
+    background-image: attr(data-image url);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 200px;
+    height: 150px;
+    /* border: 2px solid rgba(255, 255, 255, 0.3); */
 }
 
-.image-footnote-ref::before {
-    content: '';
-    position: absolute;
-    bottom: 90%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top: 5px solid rgba(0, 0, 0, 0.9);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+/* Smart positioning for image tooltips */
+.image-footnote-ref.tooltip-left + .image-tooltip {
+    left: 0 !important;
+    transform: translateX(0) !important;
 }
 
-.image-footnote-ref:hover::after,
-.image-footnote-ref:hover::before {
-    opacity: 1;
-    visibility: visible;
+.image-footnote-ref.tooltip-right + .image-tooltip {
+    left: auto !important;
+    right: 0 !important;
+    transform: translateX(0) !important;
 }
+
+.image-footnote-ref.tooltip-center + .image-tooltip {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+/* Image tooltips are now created dynamically via JavaScript */
 
 /* Ensure margin notes are completely hidden on smaller screens */
 .margin-note {
@@ -614,4 +675,90 @@
 #footer a:hover {
     text-decoration: none !important;
     color: #dc3545;
+}
+
+/* Responsive hero section with conditional pill button placement */
+.hero-section {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+/* Desktop: hide mobile pills, show desktop pills */
+.mobile-pills {
+    display: none;
+}
+
+.desktop-pills {
+    display: flex;
+}
+
+/* Mobile: show mobile pills next to avatar, hide desktop pills */
+@media (max-width: 530px) {
+    .hero-section {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 1.5rem;
+    }
+    
+    #content .avatar {
+        margin: 0;
+        flex-shrink: 0;
+        order: 2; /* Avatar comes after pills */
+    }
+    
+    #content .avatar > img {
+        float: none;
+        margin: 0;
+        height: 160px;
+        width: 160px;
+    }
+    
+    .mobile-pills {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        flex-shrink: 0; /* Don't stretch to fill space */
+        align-self: center; /* Center pills vertically with avatar */
+        order: 1; /* Pills come before avatar */
+        max-width: calc(100% - 195px); /* Leave space for larger avatar */
+    }
+    
+    .mobile-pills .pill-button {
+        font-size: 15px;
+        padding: 4px 8px;
+        /* Removed justify-self: stretch to maintain natural size */
+    }
+    
+    .desktop-pills {
+        display: none;
+    }
+}
+
+/* Very small screens: keep side-by-side layout */
+@media (max-width: 470px) {
+    .hero-section {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 1.5rem;
+    }
+    
+    #content .avatar > img {
+        height: 140px;
+        width: 140px;
+    }
+    
+    .mobile-pills {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: calc(100% - 150px); /* Adjust for smaller avatar */
+    }
+    
+    .mobile-pills .pill-button {
+        font-size: 15px;
+        padding: 3px 6px;
+    }
 }
