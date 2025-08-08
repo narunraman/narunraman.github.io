@@ -1,0 +1,617 @@
+/* Custom styles for Narun's website */
+
+/* Base styles from researcher theme */
+* {
+    color: #222;
+    font-family: CMU Bright;
+    line-height: 1.2;
+}
+
+.container {
+    max-width: 750px;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    color: #222;
+    text-decoration: none;
+}
+
+.navbar-brand * {
+    color: #222;
+}
+
+.navbar-brand:hover {
+    color: #222;
+    text-decoration: underline;
+}
+
+.nav-link {
+    color: #dc3545;
+    text-decoration: none;
+}
+
+.nav-link * {
+    color: #dc3545;
+}
+
+.nav-link:hover {
+    color: #dc3545;
+    text-decoration: underline;
+}
+
+#content a {
+    color: #dc3545;
+    text-decoration: none;
+}
+
+#content a * {
+    color: #dc3545;
+}
+
+#content a:hover {
+    color: #dc3545;
+    text-decoration: underline;
+}
+
+#content p {
+    margin-bottom: .6rem;
+}
+
+#content h1,
+#content h2,
+#content h3,
+#content h4,
+#content h5,
+#content h6 {
+    font-size: medium;
+    font-weight: 700;
+    margin: 1rem 0 .6rem;
+}
+
+#content h1 {
+    font-size: 1.8rem;
+}
+
+#content h2 {
+    font-size: 1.6rem;
+}
+
+#content h3 {
+    font-size: 1.4rem;
+}
+
+#content h4 {
+    font-size: 1.2rem;
+}
+
+#content img {
+    display: block;
+    margin: 1rem auto;
+    max-width: 100%;
+}
+
+#content .avatar > img {
+    border-radius: 50%;
+    float: right;
+    margin: -1px 0 0 16px;
+    height: 200px;
+    width: 200px;
+}
+
+#content ol {
+    counter-reset: list;
+    list-style: none;
+    padding-left: 2rem;
+}
+
+#content ol > li {
+    display: table-row;
+}
+
+#content ol > li:before {
+    content: "[" counter(list, decimal) "] ";
+    counter-increment: list;
+    display: table-cell;
+    text-align: right;
+    padding-right: .5em;
+}
+
+#content .container > ol,
+#content .footnotes > ol {
+    padding-left: 0;
+}
+
+#content ul {
+    list-style: inside;
+    padding-left: 2rem;
+}
+
+#content ul > li {
+    list-style-position: outside;
+    margin-left: 1em;
+}
+
+#content .container > ul,
+#content .footnotes > ul {
+    padding-left: 0;
+}
+
+#content table {
+    margin: 1rem auto;
+    width: 100%;
+}
+
+#content table th {
+    font-weight: 700;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    text-align: left;
+}
+
+#content table td {
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    text-align: left;
+}
+
+#content table tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+
+#content blockquote {
+    border-left: 4px solid;
+    font-style: italic;
+    margin: 1rem 0;
+    padding: 8px;
+}
+
+#content code {
+    color: #222;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 10%;
+    padding: 0 4px;
+}
+
+#content pre code {
+    all: unset;
+}
+
+#content .highlight {
+    margin: 1rem auto;
+}
+
+#content .highlight > pre {
+    padding: 8px;
+}
+
+/* Typography classes */
+.cmu-serif-italic {
+    font-family: 'CMU Serif', serif;
+    font-style: italic;
+}
+
+.inconsolata {
+    font-family: 'Inconsolata', monospace;
+}
+
+/* Pill button styles */
+.pill-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 1rem 0;
+    justify-content: left;
+}
+
+.pill-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    /* background-color: #dc3545; */
+    background-color: rgb(243, 241, 241);
+    color: black !important;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.1s ease;
+    border: 1px solid gray;
+}
+
+.pill-button:hover {
+    background-color: white;
+    color: #dc3545 !important;
+    text-decoration: none !important;
+    /* transform: translateY(-1px); */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+}
+
+.pill-button i {
+    font-size: 16px;
+    width: 16px;
+    text-align: center;
+}
+
+/* Preserve original icon colors */
+.pill-button .fa-file-pdf {
+    color: #dc3545 !important; /* PDF red */
+}
+
+.pill-button .fa-linkedin {
+    color: #0077b5 !important; /* LinkedIn blue */
+}
+
+.pill-button .fa-github {
+    color: #333 !important; /* GitHub black */
+}
+
+.pill-button:hover .fa-file-pdf {
+    color: #dc3545 !important; /* Keep PDF red on hover */
+}
+
+.pill-button:hover .fa-linkedin {
+    color: #0077b5 !important; /* Keep LinkedIn blue on hover */
+}
+
+.pill-button:hover .fa-github {
+    color: #333 !important; /* Keep GitHub black on hover */
+}
+
+/* Custom Google Scholar icon styling */
+.scholar-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Scholar_logo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+
+.pdf-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('/assets/logos/pdf_logo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+
+.pill-button .fa-graduation-cap {
+    color: #4285f4;
+}
+
+.pill-button:hover .fa-graduation-cap {
+    color: #4285f4;
+}
+
+.pill-button i {
+    font-size: 16px;
+}
+
+/* Horizontal list container */
+.horizontal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 2px 0;
+    padding: 0;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    list-style: none;
+}
+
+.horizontal-links li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Custom link item styles */
+.link-item {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+.link-item:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Base styling for all icon links */
+.icon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.icon-link::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.icon-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.icon-link:hover .link-text {
+    text-decoration: underline;
+}
+
+/* Specific icon backgrounds */
+.arxiv-link::before {
+    background-image: url('../assets/logos/arXiv_logo_small.svg');
+}
+
+.arxiv-link {
+    gap: 3px; /* Custom gap for arXiv links */
+}
+
+.pdf-link::before {
+    background-image: url('../assets/logos/pdf_logo.svg');
+}
+
+.pdf-link {
+    gap: 6px; /* Custom gap for PDF links */
+}
+
+.doi-link::before {
+    background-image: url('../assets/logos/DOI_logo.svg');
+}
+
+.doi-link {
+    gap: 4px; /* Custom gap for DOI links */
+}
+
+.icml-link::before {
+    background-image: url('../assets/logos/ICML_logo_cropped.svg');
+}
+
+.aaai-link::before {
+    background-image: url('https://aaai.org/wp-content/uploads/2024/03/AAAI-Logo-Title-FullColor.svg');
+    background-size: 350%; /* Make the image larger than the container */
+    background-position: left center; /* Position to show only the left part */
+}
+
+.slides-link::before {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0d/Microsoft_Office_PowerPoint_%282019%E2%80%93present%29.svg');
+}
+
+.slides-link {
+    gap: 6px; /* Custom gap for slides links */
+}
+
+/* Generic link styling for other types */
+.link-text {
+    transition: text-decoration 0.2s ease;
+}
+
+/* Bracket styling */
+.link-brackets {
+    color: #666;
+}
+
+/* Footnote styling */
+.footnote-ref {
+    position: relative;
+    text-decoration: none;
+    color: #dc3545;
+    cursor: help;
+}
+
+/* Tooltip for mobile/tablet */
+.footnote-ref::after {
+    content: attr(data-footnote);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: normal;
+    width: 250px; /* Force width instead of max-width */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+}
+
+.footnote-ref::before {
+    content: '';
+    position: absolute;
+    bottom: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top: 5px solid rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.footnote-ref:hover::after,
+.footnote-ref:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Left-side image footnote styling */
+.image-footnote-ref {
+    position: relative;
+    text-decoration: none;
+    color: #dc3545;
+    cursor: help;
+}
+
+/* Tooltip for mobile/tablet - image footnotes */
+.image-footnote-ref::after {
+    content: attr(data-image-alt);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: normal;
+    width: 300px; /* Force width instead of max-width */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+}
+
+.image-footnote-ref::before {
+    content: '';
+    position: absolute;
+    bottom: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top: 5px solid rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.image-footnote-ref:hover::after,
+.image-footnote-ref:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure margin notes are completely hidden on smaller screens */
+.margin-note {
+    display: none;
+}
+
+.margin-image {
+    display: none;
+}
+
+/* Margin notes for wide desktop screens only */
+@media (min-width: 1400px) {
+    .container {
+        position: relative;
+    }
+    
+    .footnote-ref::after {
+        display: none; /* Hide tooltip on desktop */
+    }
+    
+    .footnote-ref::before {
+        display: none; /* Hide tooltip arrow on desktop */
+    }
+    
+    .image-footnote-ref::after {
+        display: none; /* Hide tooltip on desktop */
+    }
+    
+    .image-footnote-ref::before {
+        display: none; /* Hide tooltip arrow on desktop */
+    }
+    
+    .margin-note {
+        display: block;
+        position: absolute;
+        right: -220px;
+        width: 210px;
+        background: #f8f9fa;
+        border-left: 3px solid #dc3545;
+        padding: 8px 12px;
+        font-size: 13px;
+        line-height: 1.4;
+        border-radius: 2px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+        /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+    }
+    
+    .margin-image {
+        display: block;
+        position: absolute;
+        left: -220px;
+        top: -0.02px; /* Move image margin note higher */
+        width: 210px;
+        background: #f8f9fa;
+        border-right: 3px solid #dc3545;
+        padding: 8px;
+        border-radius: 2px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+        text-align: center;
+        /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+    }
+    
+    .margin-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 2px;
+    }
+    
+    .margin-image .image-caption {
+        font-size: 12px;
+        color: #666;
+        margin-top: 4px;
+        line-height: 1.3;
+    }
+    
+    .footnote-ref:hover + .margin-note,
+    .margin-note:hover,
+    .margin-note.sticky {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .image-footnote-ref:hover + .margin-image,
+    .margin-image:hover,
+    .margin-image.sticky {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Footer link styling - no underlines on hover */
+#footer a {
+    color: #222;
+    text-decoration: none !important;
+}
+
+#footer a * {
+    color: #222;
+}
+
+#footer a:hover {
+    text-decoration: none !important;
+    color: #dc3545;
+}

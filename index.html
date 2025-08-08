@@ -5,29 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Narun Raman</title>
-    <meta name="description" content="A simple monospaced resume theme for Hugo.">
+    <meta name="description" content="Narun Raman's personal website.">
+
     <meta name="author" content='Narun Raman'>
 
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-bright.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-serif.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous">
 
     
-    <link rel="stylesheet" href="/sass/researcher.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/0504-31.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/0504-31.png">
+    <link rel="shortcut icon" href="/assets/images/0504-31.png">
+    
+    <script>
+        // Enhanced footnote system with click-to-stick functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            let activeMarginNote = null;
+            
+            // Handle text footnotes
+            const footnotes = document.querySelectorAll('.footnote-ref');
+            footnotes.forEach(function(footnote) {
+                const text = footnote.getAttribute('data-footnote');
+                if (text) {
+                    const marginNote = document.createElement('span');
+                    marginNote.className = 'margin-note';
+                    marginNote.textContent = text;
+                    footnote.parentNode.insertBefore(marginNote, footnote.nextSibling);
+                    
+                    // Add click functionality
+                    footnote.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Hide any currently active margin note
+                        if (activeMarginNote && activeMarginNote !== marginNote) {
+                            activeMarginNote.classList.remove('sticky');
+                        }
+                        
+                        // Toggle this margin note
+                        if (marginNote.classList.contains('sticky')) {
+                            marginNote.classList.remove('sticky');
+                            activeMarginNote = null;
+                        } else {
+                            marginNote.classList.add('sticky');
+                            activeMarginNote = marginNote;
+                        }
+                    });
+                }
+            });
+            
+            // Handle image footnotes
+            const imageFootnotes = document.querySelectorAll('.image-footnote-ref');
+            imageFootnotes.forEach(function(footnote) {
+                const imageSrc = footnote.getAttribute('data-image');
+                const imageAlt = footnote.getAttribute('data-image-alt') || '';
+                const imageCaption = footnote.getAttribute('data-image-caption') || '';
+                
+                if (imageSrc) {
+                    const marginImage = document.createElement('span');
+                    marginImage.className = 'margin-image';
+                    
+                    const img = document.createElement('img');
+                    img.src = imageSrc;
+                    img.alt = imageAlt;
+                    marginImage.appendChild(img);
+                    
+                    if (imageCaption) {
+                        const caption = document.createElement('div');
+                        caption.className = 'image-caption';
+                        caption.textContent = imageCaption;
+                        marginImage.appendChild(caption);
+                    }
+                    
+                    footnote.parentNode.insertBefore(marginImage, footnote.nextSibling);
+                    
+                    // Add click functionality
+                    footnote.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Hide any currently active margin note
+                        if (activeMarginNote && activeMarginNote !== marginImage) {
+                            activeMarginNote.classList.remove('sticky');
+                        }
+                        
+                        // Toggle this margin image
+                        if (marginImage.classList.contains('sticky')) {
+                            marginImage.classList.remove('sticky');
+                            activeMarginNote = null;
+                        } else {
+                            marginImage.classList.add('sticky');
+                            activeMarginNote = marginImage;
+                        }
+                    });
+                }
+            });
+            
+            // Hide margin notes when clicking elsewhere
+            document.addEventListener('click', function(e) {
+                if (activeMarginNote && !activeMarginNote.contains(e.target)) {
+                    activeMarginNote.classList.remove('sticky');
+                    activeMarginNote = null;
+                }
+            });
+        });
+    </script>
 
-    
-        <link rel="icon" type="image/ico" href="https://narunraman.com/vecteezy_n-logo-letter-vector-icons-logos-app_579405/0504-31.png">
-    
-
-    <link rel="alternate" type="application/rss+xml" href="https://narunraman.com/index.xml" title="Narun Raman" />
-    
-        
-    
 </head>
 
     <body><div class="container mt-5">
     <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
-        <a class="navbar-brand mx-0 mr-sm-auto" href="https://narunraman.com" title="Narun Raman">
+        <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">
           
           Narun Raman
         </a>
@@ -42,8 +135,8 @@
                         <span class="nav-item navbar-text mx-1">/</span>
                     
                 
-                    <a class="nav-item nav-link" href="/recs" title="Food">
-                        Food
+                    <a class="nav-item nav-link" href="/recs" title="Recs">
+                        Recs
                     </a>
                     
                 
@@ -54,112 +147,141 @@
 <hr>
 <div id="content">
 <div class="container">
-    <!-- ## a little about me -->
-<figure class="avatar"><img src="/avatar.jpg"
+<figure class="avatar"><img src="./assets/images/avatar.jpg"
          alt="avatar"/>
 </figure>
 
-<p>I pronounce my name like Maroon (with an N) Ramen &ndash; quite an unappetizing sight.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> Having said that, please feel free to email me pictures of oddly colored noodles that you have made or found:</p>
-<p><strong><code>narunram [at] cs [dot] ubc [dot] ca</code></strong>.</p>
-<!-- <span style="color:#dc3545">narunram</span> [at] <span style="color:#dc3545">cs</span> [dot] <span style="color:#dc3545">ubc</span> [dot] <span style="color:#dc3545">ca</span>.   -->
-<!-- ```narunram``` [<span style="color:#dc3545">at</span>] ```cs``` [<span style="color:#dc3545">dot</span>] ```ubc``` [<span style="color:#dc3545">dot</span>] ```ca```. -->
-<p>I am wrapping up a Master&rsquo;s under Kevin Leyton-Brown and will be continuing with a Ph.D. in Computer Science at the University of British Columbia in 2024.
-My research interests are listed below and primarily center around understanding the quirks of human behavior in digital spaces.
-I am very available via email so please do reach out if you would like to collaborate or chat, I would love to get coffee.<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<p>My work experiences are accessible here: <a href="resume.pdf">📑 resume</a>.</p>
-<table>
-<col style="width:50%">
-<col style="width:50%">
- <tr>
-    <td><b style="font-size:26px">Research Interests</b></td>
-    <td><b style="font-size:26px">Education</b></td>
- </tr>
- <tr>
-    <td>
-    - Algorithmic Game Theory 
-    <br>
-    - Behavioral Models
-    <br>
-    - Mechanism Design
-    </td>
-    <td>
-    <span style="float:left">University of British Columbia</span> <span style="color:grey;float:right">2021-2023</span> 
-    <br>
-    <span style="color:grey;font-size:12px">Master's in Computer Science</span>
-    <br>
-    <span style="float:left">Carleton College</span> <span style="color:grey;float:right">2016-2020</span> <br>
-    <span style="color:grey;font-size:12px">Bachelor's in Computer Science and Mathematics</span>
-    </td>
- </tr>
-</table>
-<h2 id="publications-and-pre-prints">Publications and Pre-Prints</h2>
+<p>I pronounce my name like Maroon (with an N) Ramen&ndash;quite an unappetizing sight.<a href="#" class="footnote-ref" data-footnote="Some people have interpreted this slightly incorrectly and called me Manun, so maybe I should find a new explanation."><sup>1</sup></a> Having said that, please feel free to email me pictures of oddly colored noodles that you have made or found:</p>
+<p style="text-align: center;"><span class='inconsolata' style="font-weight: bold">narunram [at] cs [dot] ubc [dot] ca</span></p>
+<p>I am currently a PhD candidate in the <a href="https://www.cs.ubc.ca/">Department of Computer Science</a> at the <a href="https://www.ubc.ca/">University of British Columbia</a> (UBC). I am supervised by <a href="https://www.cs.ubc.ca/~kevinlb/">Kevin Leyton-Brown</a>. My research focuses on understanding digital behavior&ndash;which, for me, means understanding how humans interact within digital environments <span class="cmu-serif-italic">and</span>  how large language models behave and interact. I am very available via email so please do reach out if you would like to collaborate or chat, I would love to get coffee.<a href="#" class="footnote-ref" data-footnote="Unfortunately, however, I will need a place where I can substitute oat milk. My stomach was not built for the rough and tumble world of dairy."><sup>2</sup></a></p>
+
+Previously, I completed my Master's in Computer Science at UBC under the supervision of Kevin Leyton-Brown. My thesis was on formalizing the motivations behind purchase intentions for digital goods, in particular, why people <a href="https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0438636">pay to not play</a>. During my Master's (Winter 2023), I TA'd for Kevin's course <a href="https://www.cs.ubc.ca/~kevinlb/teaching/cs532l/">Models of Strategic Behavior</a>. The course page contains videos giving a pretty good intro into game theory, mechanism design, and behavioral economics, and a list of some fun<a href="#" class="footnote-ref" data-footnote="Your mileage may vary on what 'fun' means. I wrote them to be a little challenging, but mostly as a dip into game theoretic 'reasoning.'"><sup>3</sup></a> problem sets. Before UBC, I completed a Bachelor's in <a href="https://www.carleton.edu/computer-science/">Computer Science</a> and <a href="https://www.carleton.edu/math/">Mathematics</a> at <a href="https://www.carleton.edu/">Carleton College</a>,<a href="#" class="image-footnote-ref" 
+   data-image="/assets/images/carleton_confusion.png" 
+   data-image-alt="Example diagram for Canadians."
+   data-image-caption="Figure 1: For Canadians"><sup>4</sup></a> which culminated in an undergraduate thesis on predicting Wikipedia article quality. I have also worked as a software engineer; you can find more details about my work experiences in my resume.</p>
+
+<div class="pill-buttons">
+    <a href="https://scholar.google.com/citations?hl=en&pli=1&user=SEWbKagAAAAJ" class="pill-button"><span class="scholar-icon"></span>Google Scholar</a>
+    <a href="https://github.com/narunraman" class="pill-button"><i class="fab fa-github"></i>GitHub</a>
+    <a href="https://www.linkedin.com/in/narun-raman-019857132/" class="pill-button"><i class="fab fa-linkedin"></i>LinkedIn</a>
+    <a href="cv.pdf" class="pill-button"><span class="pdf-icon"></span>CV</a>
+    <a href="assets/Resume.pdf" class="pill-button"><span class="pdf-icon"></span>Resume</a>
+</div>
+
+
+
+
+<h2 id="news">Recent-<span class="cmu-serif-italic">ish</span> News</h2>
+<ul>
+    <li>
+        Our work on assessing the economic rationality in large language models was presented by my supervisor earlier this year.
+    </li>
+    <li>
+        Our work on mobile game monetization was presented by my coauthor <a href="https://www.cs.ubc.ca/~tlundy/">Taylor Lundy</a> at <a href="https://www.math.mcgill.ca/vetta/workshop.html">Bellairs (2023)</a> in Bermuda.
+    </li>
+</ul>
+
+<h2 id="publications-and-pre-prints">Publications, Working Papers, and Presentations</h2>
+<h3 id="2025">2025</h3>
+<ol>
+    <li><strong>Conspicuous Consumption of NFTs: Empirical Insights from a Data-Rich Market.</strong> Narun K. Raman, Taylor Lundy, Scott D. Kominers, Kevin Leyton-Brown. Working Paper.
+    </li>
+    <li><strong>Reasoning Models are Test Exploiters: Rethinking Multiple Choice.</strong> Narun K. Raman, Taylor Lundy, Kevin Leyton-Brown. <span class="cmu-serif-italic">Working Paper.</span>
+        <ul class="horizontal-links">
+            <li>
+                <a href="https://arxiv.org/abs/2507.15337" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+            </li>
+        </ul>
+    </li>
+
+    <li><strong>STEER-ME: Assessing the Microeconomic Reasoning of Large Language Models.</strong> Narun K. Raman, Taylor Lundy, Thiago Amin, Kevin Leyton-Brown. <span class="cmu-serif-italic">Working Paper.</span>
+        <ul class="horizontal-links">
+            <li>
+                <a href="https://arxiv.org/abs/2502.13119" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+            </li>
+            <li>
+                <a href="assets/talks/STEER + STEER-ME.pptx" class="icon-link slides-link"><span class="link-text">slides</span></a>
+            </li>
+        </ul>
+    </li>
+
+    <li><strong>NFTs as a Data-Rich Test Bed: Conspicuous Consumption and its Determinants.</strong> Taylor Lundy, Narun K. Raman, Scott D. Kominers, Kevin Leyton-Brown. In <span class="cmu-serif-italic">TheWebConference (WWW '25)</span>. 
+        <ul class="horizontal-links">
+            <li>
+                <a href="https://doi.org/10.1145/3696410.3714724" class="icon-link doi-link"><span class="link-text">paper</span></a>
+            </li>
+            <li>
+                <a href="https://arxiv.org/abs/2503.17457" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+            </li>
+            <li>
+                <a href="assets/posters/NFT_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+            </li>
+        </ul>
+    </li>
+</ol>
 <h3 id="2024">2024</h3>
 <ol>
-<li><strong>Pay to (Not) Play: Monetizing Impatience in Mobile Games</strong> in the <em>38th Conference on Artificial Intelligence (AAAI-24)</em> <br> T. Lundy, <strong>N. Raman</strong>, H. Fu, K. Leyton-Brown. <br> <a href="https://arxiv.org/abs/2312.10205">[arXiv]</a> <a href="ec2023.pdf">[poster]</a></li>
-<li><strong>Rationality Report Cards: Assessing the Economic Rationality in Large Language Models</strong> <br> <strong>N. Raman</strong>, T. Lundy, S. Amouyal, Y. Levine, K. Leyton-Brown, M. Tennenholtz. <br> <a href="#">[arXiv]</a></li>
-<li><strong>Determinants of Conspicuous Consumption: NFTs as a Data-Rich Test Bed</strong> <br> T. Lundy, <strong>N. Raman</strong>, S. Kominers, K. Leyton-Brown. <br> <a href="#">[arXiv]</a></li>
+
+    <li><strong>Pay to (Not) Play: Monetizing Impatience in Mobile Games.</strong> Taylor Lundy, Narun K. Raman, Hu Fu, Kevin Leyton-Brown. In <span class="cmu-serif-italic">AAAI Conference on Artificial Intelligence (AAAI '24)</span> 
+        <ul class="horizontal-links">
+            <li>
+                <a href="https://arxiv.org/abs/2312.10205" class="icon-link aaai-link"><span class="link-text">paper</span></a>
+            </li>
+            <li>
+                <a href="https://arxiv.org/abs/2312.10205" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+            </li>
+            <li>
+                <a href="assets/posters/MobileGames_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+            </li>
+            <li>
+                <a href="bellairs.pptx" class="icon-link slides-link"><span class="link-text">slides</span></a>
+            </li>
+        </ul>
+    </li>
+    <li><strong>STEER: Assessing the Economic Rationality in Large Language Models.</strong> Narun K. Raman, Taylor Lundy, Samuel J. Amouyal, Yoav Levine, Kevin Leyton-Brown, Moshe Tennenholtz. In <span class="cmu-serif-italic">International Conference on Machine Learning (ICML '24)</span>
+        <ul class="horizontal-links">
+            <li>
+                <a href="https://icml.cc/virtual/2024/poster/33120" class="icon-link icml-link"><span class="link-text">paper</span></a>
+            </li>
+            <li>
+                <a href="https://arxiv.org/abs/2402.09552" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+            </li>
+            <li>
+                <a href="assets/posters/STEER_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+            </li>
+        </ul>
+    </li>
 </ol>
 <h3 id="2020">2020</h3>
 <ol>
-<li><strong>Classifying Wikipedia article quality with revision history networks</strong> in the <em>16th International Symposium on Open Collaboration (OpenSym)</em> <br> <strong>N. Raman</strong>, N. Sauerberg, J. Fisher, A. Partida, S. Narayan. <br> <a href="https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf">[paper]</a></li>
-<li><strong>ALCH: An Imperative Language for Chemical Reaction Network-Controlled Tile Assembly</strong> in the <em>26th International Conference on DNA Computing and Molecular Programming (DNA 26)</em> <br>  T. Klinge, J. Lathrop, S. Moreno, H. Potter, <strong>N. Raman</strong>, M. Riley. <br> <a href="https://drops.dagstuhl.de/opus/volltexte/2020/12959/pdf/LIPIcs-DNA-2020-6.pdf">[paper]</a> <a href="dna2019.pdf">[poster]</a></li>
-</ol>
-<h2 id="other-news">Other News</h2>
-<ul>
-<li>
-<p>I recently TA&rsquo;d for Kevin&rsquo;s Winter 2023 course <a href="https://www.cs.ubc.ca/~kevinlb/teaching/cs532l/">Models of Strategic Behavior</a>.</p>
-</li>
-<li>
-<p>Our work on mobile game monetization was presented by my coauthor  <a href="https://www.cs.ubc.ca/~tlundy/">Taylor Lundy</a> at <a href="https://www.math.mcgill.ca/vetta/workshop.html">2023 Bellairs</a>. <br> <a href="bellairs.pptx">[slides]</a></p>
-</li>
-</ul>
-<!-- ---------
-## Work Experiences
-<span style="font-size:19px;float:left">**Program Associate at Wells Fargo**</span> <span style="font-size:13px;float: right">Location: Minneapolis, MN</span>
-<br />
-<span style="font-size:13px;float:right">Dates: Jul. 2020&mdash;Jul. 2021</span>
-> Worked in a variety of capacities in both SCRUM and Waterfall teams to develop front to back end technologies. Migrated the Loan Forgiveness Tool onto a newly built Java DB, leveraging REST and JavaDB. Fully built out QA for two microservices.
 
-<span style="font-size:19px;float:left">**Software Engineer Intern at Overlay Inc.**</span> <span style="font-size:13px;float:right">Location: Menlo Park, CA</span>
-<br>
-<span style="font-size:13px;float:right">Dates: Jun. 2018&mdash;Sep. 2018</span>
-> Built and deployed an edge detection algorithm for surveyors via iOS AR Camera application. Rebuilt existing framework, GPUImage, and deployed into existing codebase iterating with existing userbase.
-
-<span style="font-size:19px;float:left">**Pilot R&D Intern at View Inc.**</span> <span style="font-size:13px;float:right">Location: Milpitas, CA</span>
-<br>
-<span style="font-size:13px;float:right">Dates: Jun. 2017&mdash;Sep. 2017</span>
-> Conducted failure analysis of View's electrochromic glass. Automated the generation and FA for implementation into the workflow through simple computer vision tools.
- -->
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1" role="doc-endnote">
-<p>Some people have interpreted this slightly incorrectly and called me Manun, so maybe I should find a new explanation.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2" role="doc-endnote">
-<p>Unfortunately, however, I will need a place where I can substitute oat milk. My stomach was not built for the rough and tumble world of dairy.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
+    <li><strong>Classifying Wikipedia Article Quality with Revision History Networks.</strong> Narun K. Raman, Nathaniel Sauerberg, Jonah Fisher, Addison Partida, Sneha Narayan. In <span class="cmu-serif-italic">The International Symposium on Open Collaboration (OpenSym '20)</span> 
+        <ul class="horizontal-links">
+            <li>
+                <a href="https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf" class="icon-link pdf-link"><span class="link-text">paper</span></a>
+            </li>
+        </ul>
+    </li>
+    <li><strong>ALCH: An Imperative Language for the CRN-TAM.</strong> Titus H. Klinge, James I. Lathrop, Sonia Moreno, Hugh D. Potter, Narun K. Raman, Matthew R. Riley. In  <span class="cmu-serif-italic">The International Conference on DNA Computing and Molecular Programming (DNA '20)</span>
+        <ul class="horizontal-links">
+            <li>
+                <a href="https://drops.dagstuhl.de/opus/volltexte/2020/12959/pdf/LIPIcs-DNA-2020-6.pdf" class="icon-link pdf-link"><span class="link-text">paper</span></a>
+            </li>
+            <li>
+                <a href="assets/posters/ALCH_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+            </li>
+        </ul>
+    </li>
 </ol>
-</section>
+
 
 </div>
 
         </div><div id="footer" class="mb-5">
-    <hr>
-    <div class="container text-center">
-        
-            <a href="https://www.instagram.com/narun_pics/?hl=en" class="fab fa-instagram fa-1x" title="instagram"></a>
-        
-            <a href="https://twitter.com/narunraman" class="fab fa-twitter fa-1x" title="twitter"></a>
-        
-            <a href="https://scholar.google.com/narunraman" class="/icon-google-scholar fa-1x" title="google scholar"></a>
-        
-            <a href="https://github.com/narunraman" class="fab fa-github fa-1x" title="github"></a>
-        
-    </div>
+    <!-- <hr> -->
     
         <div class="container text-center">
-            <a href="https://www.youtube.com/watch?v=-50NdPawLVY" title="By Narun Raman"><small>By Narun Raman</small></a>
+            <small>By Narun Raman</small>
         </div>
     
 </div>
