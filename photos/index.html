@@ -241,6 +241,10 @@
   <script>
   const galleries = { travel: 34, bw: 23,  portraits: 25};
 
+  // Add base for asset paths so it works on file:// and GitHub Pages
+  const ASSETS_BASE = '../assets/photos';
+  const IS_FILE = typeof location !== 'undefined' && location.protocol === 'file:';
+
   // ==== PERF KNOBS ====
   const GAP = 2;
   const MIN_ROW_H = 140, MAX_ROW_H = 380, STEP_H = 8, LAST_ROW_MIN_FILL = 0.65;
@@ -248,19 +252,69 @@
   // Cache aspect ratios by src so tab switches are instant after first view
   const arCache = new Map(); // src -> number
 
+  // Manifest of photos (loaded at runtime). GH Pages cannot list directories, so we use a JSON index.
+  let PHOTO_INDEX = null;
+  async function ensurePhotoIndex() {
+    if (PHOTO_INDEX) return PHOTO_INDEX;
+    // Firefox blocks fetch() on file://. In file mode, skip fetch and use fallback filenames.
+    if (IS_FILE) { PHOTO_INDEX = {}; return PHOTO_INDEX; }
+    try {
+      const res = await fetch(`${ASSETS_BASE}/photo-index.json`, { cache: 'no-store' });
+      if (res.ok) {
+        PHOTO_INDEX = await res.json();
+      } else {
+        console.warn('photo-index.json not found or not ok:', res.status);
+        PHOTO_INDEX = {};
+      }
+    } catch (e) {
+      console.warn('Failed to load photo-index.json', e);
+      PHOTO_INDEX = {};
+    }
+    return PHOTO_INDEX;
+  }
+
   function gridWidthPx(el) {
-    return Math.floor(el.clientWidth || el.getBoundingClientRect().width);
+    try {
+      let w = el?.clientWidth || el?.getBoundingClientRect?.().width || 0;
+      if (!w || w <= 0) {
+        const p = el?.parentElement;
+        w = p?.clientWidth || p?.getBoundingClientRect?.().width || 0;
+      }
+      if (!w || w <= 0) {
+        w = (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth : 0;
+      }
+      w = Math.max(1, Math.floor(w || 0));
+      return w;
+    } catch (e) {
+      console.warn('gridWidthPx failed; using viewport width', e);
+      return Math.max(1, Math.floor((typeof window !== 'undefined' ? window.innerWidth : 1024)));
+    }
   }
 
-  function sourcesFor(galleryType) {
+  function sourcesFromIndex(indexObj, galleryType) {
+    const list = indexObj?.[galleryType];
+    if (Array.isArray(list) && list.length) {
+      return list.map(name => `${ASSETS_BASE}/${galleryType}/${name}`);
+    }
+    return [];
+  }
+
+  function fallbackSequentialSources(galleryType) {
     const n = galleries[galleryType] || 0;
-    return Array.from({ length: n }, (_, i) => `/assets/photos/${galleryType}/photo${i + 1}.jpg`);
+    return Array.from({ length: n }, (_, i) => `${ASSETS_BASE}/${galleryType}/photo${i + 1}.jpg`);
   }
 
-  function createPhotoGrid(galleryType) {
-    const photoGrid = document.getElementById('photo-grid');
-    const srcs = sourcesFor(galleryType);
+  async function sourcesFor(galleryType) {
+    const indexObj = await ensurePhotoIndex();
+    const fromIndex = sourcesFromIndex(indexObj, galleryType);
+    return fromIndex.length ? fromIndex : fallbackSequentialSources(galleryType);
+  }
 
+  async function createPhotoGrid(galleryType) {
+    const photoGrid = document.getElementById('photo-grid');
+    const srcs = await sourcesFor(galleryType);
+
+    // Build photo objects up front
     const photos = srcs.map((src, i) => {
       const item = document.createElement('div');
       item.className = 'photo-item';
@@ -275,6 +329,7 @@
 
     photoGrid.innerHTML = '';
 
+    // Fast path if we have all ARs
     const haveAllARs = photos.every(p => typeof p.ar === 'number');
     if (haveAllARs) {
       fastLayout(photoGrid, photos);
@@ -288,13 +343,38 @@
       return;
     }
 
+    // Slow path: wait for loads (or errors), then layout with whatever ARs we have.
+    // In Firefox file://, load/error events may not fire. Use a timer fallback with default ARs.
     let loaded = 0; const total = photos.length;
+    let didLayoutOnce = false; let relayoutTimer; let safetyTimer;
+
+    const scheduleRelayout = (list) => {
+      clearTimeout(relayoutTimer);
+      relayoutTimer = setTimeout(() => {
+        if (!list || !list.length) return;
+        fastLayout(photoGrid, list);
+        didLayoutOnce = true;
+      }, 50);
+    };
+
     const onready = (p) => {
       if (!p.ar && p.img.naturalWidth) {
         p.ar = p.img.naturalWidth / p.img.naturalHeight;
         arCache.set(p.img.src, p.ar);
       }
-      if (++loaded === total) fastLayout(photoGrid, photos);
+      if (++loaded === total) {
+        clearTimeout(safetyTimer);
+        const usable = photos.filter(q => typeof q.ar === 'number' && isFinite(q.ar) && q.ar > 0);
+        if (usable.length) {
+          scheduleRelayout(usable);
+        } else {
+          photoGrid.innerHTML = '';
+        }
+      } else if (didLayoutOnce && p.ar) {
+        // Debounced relayout as real ARs arrive after a placeholder layout
+        const usable = photos.filter(q => typeof q.ar === 'number' && isFinite(q.ar) && q.ar > 0);
+        if (usable.length) scheduleRelayout(usable);
+      }
     };
 
     photos.forEach(p => {
@@ -305,6 +385,20 @@
         p.img.addEventListener('error', () => onready(p), { once: true });
       }
     });
+
+    // Timer fallback: if nothing has fired after 1200ms, layout with default ARs so Firefox file:// shows something.
+    safetyTimer = setTimeout(() => {
+      if (didLayoutOnce) return;
+      const usable = photos.filter(q => typeof q.ar === 'number' && isFinite(q.ar) && q.ar > 0);
+      if (usable.length) {
+        fastLayout(photoGrid, usable);
+      } else {
+        // Assign a reasonable default AR (e.g., 3:2) and layout
+        photos.forEach(q => { if (!q.ar) q.ar = 1.5; });
+        fastLayout(photoGrid, photos);
+      }
+      didLayoutOnce = true;
+    }, 1200);
   }
 
   function fastLayout(container, photos) {
@@ -473,7 +567,7 @@
     }
 
     // Initial gallery + tab switching
-    createPhotoGrid('travel');
+    try { createPhotoGrid('travel'); } catch (e) { console.error('createPhotoGrid failed', e); }
     document.querySelectorAll('.gallery-option').forEach(option => {
       option.addEventListener('click', e => {
         e.preventDefault();
