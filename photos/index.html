@@ -1,114 +1,495 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Photos - Narun Raman</title>
-    <meta name="description" content="Narun Raman's photo gallery - coming soon.">
+  <title>Photos - Narun Raman</title>
+  <meta name="description" content="Narun Raman's photo gallery - coming soon.">
+  <meta name="author" content="Narun Raman">
 
-    <meta name="author" content='Narun Raman'>
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-bright.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-serif.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-bright.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-serif.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/0504-31.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/0504-31.png">
+  <link rel="shortcut icon" href="/assets/images/0504-31.png">
+
+  <style>
+    :root { --gap: 2px; }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* Make navbar brand smaller for this page */
+    .navbar-brand { font-size: 1rem !important; }
+
+    /* Reduce spacing between navbar and horizontal line */
+    .container.mt-5 { margin-top: 1rem !important; }
+
+    hr { margin-top: 0.5rem; margin-bottom: 1rem; }
+
+    /* Full-page splash photo */
+    .splash-container {
+      position: relative;
+      height: calc(100vh - 60px);
+      width: 100%;
+      overflow: hidden;
+      margin-top: 0;
+    }
+    .splash-photo { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .splash-container::after {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 150px;
+      background: linear-gradient(to bottom, white, transparent); pointer-events: none; z-index: 1;
+    }
+    .splash-container::before {
+      content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+      background: linear-gradient(to top, black, transparent); pointer-events: none; z-index: 1;
+    }
+    .splash-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white; padding: 2rem; text-align: center;
+    }
+    .splash-overlay h1 { font-size: 2.5rem; margin-bottom: 1rem; color: white; }
+
+    @media (max-width: 768px) {
+      .splash-container { height: calc(100vh - 50px); }
+      .splash-overlay h1 { font-size: 2rem; }
+      .splash-overlay { padding: 1.5rem; }
+    }
+
+    /* Black gallery section */
+    .gallery-section {
+      background-color: black;
+      min-height: 100vh;
+      padding: 2rem 0;
+      color: white;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+    }
+
+    .gallery-content { flex: 1; overflow: visible; }
+
+    .gallery-selector { width: 100%; text-align: center; padding: 1rem 0; }
+    .gallery-selector h3 { color: white; margin-bottom: 1rem; font-size: 1.2rem; }
+
+    .gallery-options { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 2rem; }
+    .gallery-option {
+      color: white !important; text-decoration: none !important; font-size: 1rem;
+      transition: all 0.3s ease; cursor: pointer; position: relative;
+    }
+    .gallery-option:hover { color: #dc3545 !important; text-decoration: none !important; }
+    .gallery-option.active { color: #dc3545 !important; text-decoration: none !important; }
+    .gallery-option.active:hover { color: #dc3545 !important; text-decoration: none !important; }
+    .gallery-option.active::after {
+      content: ""; position: absolute; bottom: -5px; left: 0; right: 0; height: 2px; background: #dc3545;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-container { padding: 0 1rem; }
+      .gallery-options { gap: 1rem; }
+      .gallery-option { font-size: 0.9rem; }
+    }
     
-    <link rel="stylesheet" href="/css/custom.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/0504-31.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/0504-31.png">
-    <link rel="shortcut icon" href="/assets/images/0504-31.png">
-    
-    <style>
-        /* Make navbar brand smaller for this page */
-        .navbar-brand {
-            font-size: 1rem !important;
-        }
-        
-        /* Reduce spacing between navbar and horizontal line */
-        .container.mt-5 {
-            margin-top: 1rem !important;
-        }
-        
-        hr {
-            margin-top: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        /* Center the coming soon message */
-        .coming-soon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 60vh;
-            text-align: center;
-        }
-        
-        .coming-soon-content {
-            max-width: 500px;
-        }
-        
-        .coming-soon h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #222;
-        }
-        
-        .coming-soon p {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-        
-        .back-link {
-            color: #dc3545;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .back-link:hover {
-            color: #dc3545;
-            text-decoration: underline;
-        }
-    </style>
+    /* === Justified grid (MVP integrated) === */
+    .photo-grid {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%); /* full-bleed centering */
+      display: flex;           /* stack rows vertically */
+      flex-direction: column;
+      row-gap: var(--gap);     /* thin, uniform gap BETWEEN rows */
+      line-height: 0;
+      font-size: 0;
+      padding: 0;
+      margin-top: 0 !important;
+    }
+
+    .photo-row {
+      display: flex;
+      gap: var(--gap);         /* thin, uniform gap WITHIN the row */
+      align-items: stretch;
+      flex-wrap: nowrap;       /* never wrap within a row */
+      margin: 0; padding: 0;
+    }
+
+    /* IMPORTANT: remove margin-stacking approach; gaps are controlled above */
+    /* .photo-row + .photo-row { margin-top: 2px; }  <-- deleted on purpose */
+
+    .photo-item { position: relative; overflow: hidden; flex: 0 0 auto; margin: 0; padding: 0; }
+    .photo-item img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    /* Remove old responsive fixed heights; JS controls heights precisely */
+    /* @media (max-width: 768px) { .photo-item { height: 30vw; } }
+       @media (max-width: 480px) { .photo-item { height: 35vw; } } */
+
+    #content .photo-grid img,
+    #content .photo-row img,
+    #content .photo-item img {
+    margin: 0 !important;            /* kills the 1rem auto from custom.css */
+    display: block;                   /* keep it block to avoid inline gaps */
+    }
+
+    /* Ensure rows control spacing, not margins */
+    #content .photo-row {
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 2px !important;              /* thin horizontal gutter */
+    }
+
+    /* Same thin vertical gutter between rows */
+    #content .photo-grid {
+    row-gap: 2px !important;
+    line-height: 0;
+    font-size: 0;
+    }
+
+    /* Hover dim + pointer */
+    .photo-item { cursor: pointer; }
+    .photo-item img { transition: filter 150ms ease; }
+    .photo-item:hover img { filter: brightness(0.75); }
+
+    /* Lightbox/Carousel */
+    body.modal-open { overflow: hidden; }
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 10000; }
+    .lightbox.open { display: flex; }
+    .lightbox-content { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 4rem 5rem; z-index: 1; }
+    .lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 30px rgba(0,0,0,0.35); }
+    .lightbox-close, .lightbox-prev, .lightbox-next {
+      position: absolute; background: rgba(0,0,0,0.55); border: none; color: #fff;
+      width: 44px; height: 44px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; line-height: 1; transition: background 120ms ease;
+      z-index: 3; /* Ensure controls are above content */
+      pointer-events: auto;
+    }
+    .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover { background: rgba(0,0,0,0.8); }
+    .lightbox-close { top: 16px; right: 16px; }
+    .lightbox-prev { left: 16px; top: 50%; transform: translateY(-50%); }
+    .lightbox-next { right: 16px; top: 50%; transform: translateY(-50%); }
+
+    @media (max-width: 768px) {
+      .lightbox-content { padding: 3rem 3.5rem; }
+      .lightbox-prev, .lightbox-next { width: 38px; height: 38px; }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
-            <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">
-                Narun Raman
-            </a>
-            <div class="navbar-nav flex-row flex-wrap justify-content-center">
-                <a class="nav-item nav-link" href="/photos" title="Photos">
-                    Photos
-                </a>
-                <span class="nav-item navbar-text mx-1">/</span>
-                <a class="nav-item nav-link" href="/recs" title="Recs">
-                    Recs
-                </a>
-            </div>
-        </nav>
-    </div>
-    <hr>
-    
-    <div id="content">
-        <div class="container">
-            <div class="coming-soon">
-                <div class="coming-soon-content">
-                    <h1>Coming Soon</h1>
-                    <a href="/" class="back-link">← Back to main page</a>
-                </div>
-            </div>
-        </div>
+  <div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
+      <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">Narun Raman</a>
+      <div class="navbar-nav flex-row flex-wrap justify-content-center">
+        <a class="nav-item nav-link" href="/photos" title="Photos">Photos</a>
+        <span class="nav-item navbar-text mx-1">/</span>
+        <a class="nav-item nav-link" href="/recs" title="Recs">Recs</a>
+      </div>
+    </nav>
+  </div>
+
+  <div id="content">
+    <div class="splash-container">
+      <img src="/assets/photos/wide_splash_photo.jpg" alt="Photo Gallery" class="splash-photo">
     </div>
 
-    <div id="footer" class="mb-5">
-        <hr>
-        <div class="container text-center">
-            <small>By Narun Raman</small>
+    <div class="gallery-section">
+      <div class="gallery-container">
+        <div class="gallery-selector">
+          <div class="gallery-options">
+            <a href="#" class="gallery-option active" data-gallery="travel">Travel</a>
+            <a href="#" class="gallery-option" data-gallery="bw">Black & White</a>
+            <a href="#" class="gallery-option" data-gallery="portraits">Portraits</a>
+          </div>
         </div>
+
+        <div class="gallery-content">
+          <div id="gallery-display">
+            <div class="photo-grid" id="photo-grid"></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div id="footer" class="mb-5">
+    <hr>
+    <div class="container text-center">
+      <small>By Narun Raman</small>
+    </div>
+  </div>
+
+  <!-- Lightbox / Carousel -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-prev" aria-label="Previous">&#10094;</button>
+    <div class="lightbox-content">
+      <img class="lightbox-img" alt="Expanded photo">
+    </div>
+    <button class="lightbox-next" aria-label="Next">&#10095;</button>
+  </div>
+
+  <script>
+  const galleries = { travel: 34, bw: 23,  portraits: 25};
+
+  // ==== PERF KNOBS ====
+  const GAP = 2;
+  const MIN_ROW_H = 140, MAX_ROW_H = 380, STEP_H = 8, LAST_ROW_MIN_FILL = 0.65;
+
+  // Cache aspect ratios by src so tab switches are instant after first view
+  const arCache = new Map(); // src -> number
+
+  function gridWidthPx(el) {
+    return Math.floor(el.clientWidth || el.getBoundingClientRect().width);
+  }
+
+  function sourcesFor(galleryType) {
+    const n = galleries[galleryType] || 0;
+    return Array.from({ length: n }, (_, i) => `/assets/photos/${galleryType}/photo${i + 1}.jpg`);
+  }
+
+  function createPhotoGrid(galleryType) {
+    const photoGrid = document.getElementById('photo-grid');
+    const srcs = sourcesFor(galleryType);
+
+    const photos = srcs.map((src, i) => {
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      const img = document.createElement('img');
+      img.src = src; img.alt = '';
+      img.loading = 'lazy'; img.decoding = 'async';
+      item.appendChild(img);
+      // Make clickable for lightbox
+      item.addEventListener('click', () => openLightbox(i, srcs));
+      return { item, img, ar: arCache.get(src) ?? null };
+    });
+
+    photoGrid.innerHTML = '';
+
+    const haveAllARs = photos.every(p => typeof p.ar === 'number');
+    if (haveAllARs) {
+      fastLayout(photoGrid, photos);
+      photos.forEach(p => {
+        if (!arCache.has(p.img.src)) {
+          p.img.addEventListener('load', () => {
+            if (p.img.naturalWidth) arCache.set(p.img.src, p.img.naturalWidth / p.img.naturalHeight);
+          }, { once: true });
+        }
+      });
+      return;
+    }
+
+    let loaded = 0; const total = photos.length;
+    const onready = (p) => {
+      if (!p.ar && p.img.naturalWidth) {
+        p.ar = p.img.naturalWidth / p.img.naturalHeight;
+        arCache.set(p.img.src, p.ar);
+      }
+      if (++loaded === total) fastLayout(photoGrid, photos);
+    };
+
+    photos.forEach(p => {
+      if (p.img.complete && p.img.naturalWidth) {
+        requestAnimationFrame(() => onready(p));
+      } else {
+        p.img.addEventListener('load', () => onready(p), { once: true });
+        p.img.addEventListener('error', () => onready(p), { once: true });
+      }
+    });
+  }
+
+  function fastLayout(container, photos) {
+    const W = gridWidthPx(container);
+    if (W <= 0 || photos.length === 0) return;
+
+    // Use cached ARs to pick h immediately
+    const ars = photos.map(p => p.ar);
+    const best = pickOptimalTargetHeight(ars, W);
+    renderJustified(container, photos, W, best.h, false);
+  }
+
+  function pickOptimalTargetHeight(ars, W) {
+    let best = { h: MIN_ROW_H, bad: Infinity };
+    for (let h = MIN_ROW_H; h <= MAX_ROW_H; h += STEP_H) {
+      const rows = simulateRows(ars, W, h);
+      const last = rows[rows.length - 1];
+      const lastWidth = last.sumAR * h + GAP * Math.max(0, last.len - 1);
+      const fill = Math.min(lastWidth / W, 1);
+      let bad = (1 - fill) ** 2;
+      if (fill < LAST_ROW_MIN_FILL) bad += 0.15 * (LAST_ROW_MIN_FILL - fill) ** 2;
+      bad += 0.00002 * (h - 260) ** 2;
+      if (bad < best.bad) best = { h, bad };
+    }
+    return best;
+  }
+
+  function simulateRows(ars, W, h) {
+    const rows = [];
+    let start = 0, sumAR = 0, len = 0;
+    for (let i = 0; i < ars.length; i++) {
+      const nextSum = sumAR + ars[i];
+      const nextLen = len + 1;
+      const nextWidth = nextSum * h + GAP * Math.max(0, nextLen - 1);
+      if (nextWidth > W && len > 0) {
+        rows.push({ start, end: i - 1, sumAR, len });
+        start = i; sumAR = ars[i]; len = 1;
+      } else { sumAR = nextSum; len = nextLen; }
+    }
+    rows.push({ start, end: ars.length - 1, sumAR, len });
+    return rows;
+  }
+
+  function renderJustified(containerEl, photos, W, targetH, fillLastRow) {
+    // Build DOM in a fragment to reduce reflows
+    const frag = document.createDocumentFragment();
+    containerEl.style.rowGap = GAP + 'px';
+
+    const ars = photos.map(p => p.ar);
+    const rows = simulateRows(ars, W, targetH);
+
+    rows.forEach((row, idx) => {
+      const isLast = idx === rows.length - 1;
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'photo-row';
+      rowDiv.style.gap = GAP + 'px';
+      rowDiv.style.contentVisibility = 'auto';         // render perf
+      rowDiv.style.containIntrinsicSize = '1px 260px'; // reserve space cheaply
+
+      const h = (!isLast || fillLastRow)
+        ? (W - GAP * Math.max(0, row.len - 1)) / row.sumAR
+        : targetH;
+
+      const rowItems = photos.slice(row.start, row.end + 1);
+      let used = 0;
+      rowItems.forEach((p, j) => {
+        let w;
+        if (!isLast || fillLastRow) {
+          if (j < rowItems.length - 1) {
+            w = Math.round(p.ar * h);
+            used += w;
+          } else {
+            const gaps = GAP * Math.max(0, row.len - 1);
+            w = Math.max(1, Math.round(W - gaps - used));
+          }
+        } else {
+          w = Math.round(p.ar * h);
+        }
+        p.item.style.width  = w + 'px';
+        p.item.style.height = Math.round(h) + 'px';
+        rowDiv.appendChild(p.item);
+      });
+
+      frag.appendChild(rowDiv);
+    });
+
+    containerEl.innerHTML = '';
+    containerEl.appendChild(frag);
+  }
+
+  function switchGallery(galleryType) {
+    document.querySelectorAll('.gallery-option').forEach(o => o.classList.remove('active'));
+    document.querySelector(`[data-gallery="${galleryType}"]`).classList.add('active');
+    createPhotoGrid(galleryType);
+  }
+
+  // Lightbox state
+  let LB_SOURCES = [];
+  let LB_INDEX = 0;
+  let LB_EL, LB_IMG, LB_BTN_PREV, LB_BTN_NEXT, LB_BTN_CLOSE;
+
+  function openLightbox(startIndex, sources) {
+    if (!sources || !sources.length) return;
+    LB_SOURCES = sources;
+    LB_INDEX = Math.max(0, Math.min(startIndex, sources.length - 1));
+    if (!LB_EL) return;
+    updateLightboxImage();
+    document.body.classList.add('modal-open');
+    LB_EL.classList.add('open');
+    LB_EL.setAttribute('aria-hidden', 'false');
+    document.addEventListener('keydown', onLightboxKey);
+  }
+
+  function closeLightbox() {
+    if (!LB_EL) return;
+    LB_EL.classList.remove('open');
+    LB_EL.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', onLightboxKey);
+  }
+
+  function onLightboxKey(e) {
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowRight') nextImage();
+    else if (e.key === 'ArrowLeft') prevImage();
+  }
+
+  function nextImage() {
+    if (!LB_SOURCES.length) return;
+    LB_INDEX = (LB_INDEX + 1) % LB_SOURCES.length;
+    updateLightboxImage();
+  }
+
+  function prevImage() {
+    if (!LB_SOURCES.length) return;
+    LB_INDEX = (LB_INDEX - 1 + LB_SOURCES.length) % LB_SOURCES.length;
+    updateLightboxImage();
+  }
+
+  function updateLightboxImage() {
+    if (!LB_IMG) return;
+    LB_IMG.src = LB_SOURCES[LB_INDEX];
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Lightbox element refs + events
+    LB_EL = document.getElementById('lightbox');
+    if (LB_EL) {
+      LB_IMG = LB_EL.querySelector('.lightbox-img');
+      LB_BTN_PREV = LB_EL.querySelector('.lightbox-prev');
+      LB_BTN_NEXT = LB_EL.querySelector('.lightbox-next');
+      LB_BTN_CLOSE = LB_EL.querySelector('.lightbox-close');
+
+      LB_BTN_PREV && LB_BTN_PREV.addEventListener('click', prevImage);
+      LB_BTN_NEXT && LB_BTN_NEXT.addEventListener('click', nextImage);
+      LB_BTN_CLOSE && LB_BTN_CLOSE.addEventListener('click', closeLightbox);
+      // Click outside image closes
+      LB_EL.addEventListener('click', (e) => { if (e.target === LB_EL) closeLightbox(); });
+      // Basic swipe
+      let startX = 0;
+      LB_EL.addEventListener('touchstart', e => { startX = (e.changedTouches?.[0]?.clientX) || 0; }, { passive: true });
+      LB_EL.addEventListener('touchend', e => {
+        const dx = ((e.changedTouches?.[0]?.clientX) || 0) - startX;
+        if (Math.abs(dx) > 40) { if (dx < 0) nextImage(); else prevImage(); }
+      }, { passive: true });
+    }
+
+    // Initial gallery + tab switching
+    createPhotoGrid('travel');
+    document.querySelectorAll('.gallery-option').forEach(option => {
+      option.addEventListener('click', e => {
+        e.preventDefault();
+        switchGallery(option.getAttribute('data-gallery'));
+      });
+    });
+
+    let t; window.addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const active = document.querySelector('.gallery-option.active').getAttribute('data-gallery');
+        createPhotoGrid(active);
+      }, 120);
+    });
+  });
+  </script>
+
 </body>
 </html>
