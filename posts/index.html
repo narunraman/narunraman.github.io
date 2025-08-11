@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Posts - Narun Raman</title>
+  <meta name="description" content="Blog posts by Narun Raman">
+  <meta name="author" content="Narun Raman">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-bright.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-serif.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/0504-31.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/0504-31.png">
+  <link rel="shortcut icon" href="/assets/images/0504-31.png">
+
+  <style>
+    :root { --text: #111; --muted: #6c757d; --link: #dc3545; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { color: var(--text); font-family: "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+
+    /* Navbar: match site */
+    .navbar-brand { font-size: 1rem !important; }
+    .container.mt-5 { margin-top: 1rem !important; }
+
+    a { color: var(--link); }
+    a:hover { color: #b02a37; text-decoration: none; }
+
+    /* Forum-like posts list */
+    .posts-wrap { max-width: 750px; margin: 2rem auto 4rem; padding: 0 1rem; }
+    .page-title { font-family: "CMU Bright", "CMU Serif", Georgia, serif; font-weight: 700; font-size: 2rem; margin: 1rem 0 1.25rem; }
+
+    .posts-list { list-style: none; padding: 0; margin: 0; }
+    .post-item { padding: 1.25rem 0; }
+    .post-item + .post-item { margin-top: 0.25rem; }
+
+    .post-title { font-size: 1.25rem; margin: 0 0 0.25rem; line-height: 1.3; }
+    .post-title a { color: inherit; text-decoration: none; }
+    .post-title a:hover { text-decoration: underline; }
+
+    .meta { color: var(--muted); font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
+    .meta .dot::before { content: "·"; margin: 0 0.35rem; color: var(--muted); }
+    .tags { display: inline-flex; gap: 0.5rem; }
+    .tag { color: var(--muted); font-size: 0.85rem; }
+
+    .excerpt { margin: 0.5rem 0 0.75rem; line-height: 1.6; }
+
+    /* TL;DR using details/summary */
+    details.tldr { margin-top: 0.25rem; }
+    details.tldr > summary { cursor: pointer; list-style: none; user-select: none; color: var(--link); }
+    details.tldr > summary::-webkit-details-marker { display: none; }
+    details.tldr > summary::before { content: "▸"; display: inline-block; margin-right: 0.4rem; transition: transform 150ms ease; }
+    details.tldr[open] > summary::before { transform: rotate(90deg); }
+    details.tldr .tldr-body { color: var(--text); margin-top: 0.5rem; }
+
+    /* Optional subtle divider without borders (using background gradient) */
+    .post-item { background-image: linear-gradient(to right, rgba(0,0,0,0.06), rgba(0,0,0,0.06)); background-repeat: no-repeat; background-size: 100% 1px; background-position: left bottom; }
+    .post-item:last-child { background: none; }
+
+    @media (max-width: 576px) {
+      .post-title { font-size: 1.1rem; }
+      .page-title { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
+      <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">Narun Raman</a>
+      <div class="navbar-nav flex-row flex-wrap justify-content-center">
+        <a class="nav-item nav-link" href="/posts" title="Posts">Posts</a>
+        <span class="nav-item navbar-text mx-1">/</span>
+        <a class="nav-item nav-link" href="/photos" title="Photos">Photos</a>
+        <span class="nav-item navbar-text mx-1">/</span>
+        <a class="nav-item nav-link" href="/recs" title="Recs">Recs</a>
+      </div>
+    </nav>
+  </div>
+
+  <main class="posts-wrap">
+    <h1 class="page-title">Posts</h1>
+    <ul class="posts-list">
+      <li class="post-item">
+        <h2 class="post-title"><a href="/posts/llms_information_economics.html">Assessing LLMs in Information Economics</a></h2>
+        <div class="meta">
+          <time datetime="2025-08-11">Aug 11, 2025</time>
+          <span class="dot"></span>
+          <span>15 min read</span>
+          <span class="dot"></span>
+          <span class="tags">
+            <span class="tag">workshop</span>
+          </span>
+        </div>
+        <p class="excerpt">An case study on whether LLMs can reason about information and uncertainty&mdash;calculating expectations, using Bayes' rule, and deciding when it's worth paying to learn more&mdash;rather than just pattern-matching.</p>
+        <!-- <details class="tldr">
+          <summary>TL;DR</summary>
+          <div class="tldr-body">
+            <ul>
+              <li>Reasoning + tool-using models do well.</li>
+              <li>SOTA models can stumble, especially on "should I buy information?"</li>
+              <li>Evaluations should score conceptual and computational skill separately.</li>
+            </ul>
+          </div>
+        </details> -->
+      </li>
+
+      <!-- <li class="post-item">
+        <h2 class="post-title"><a href="/posts/lightweight-travel-photography-workflow.html">A Lightweight Travel Photography Workflow</a></h2>
+        <div class="meta">
+          <time datetime="2025-07-14">Jul 14, 2025</time>
+          <span class="dot"></span>
+          <span>5 min read</span>
+          <span class="dot"></span>
+          <span class="tags">
+            <span class="tag">photography</span>
+            <span class="tag">workflow</span>
+          </span>
+        </div>
+        <p class="excerpt">How I cull, edit, and publish a trip’s photos using only a camera, a phone, and a small set of apps—no laptop required.</p>
+        <details class="tldr">
+          <summary>TL;DR</summary>
+          <div class="tldr-body">
+            <ul>
+              <li>Shoot RAW+JPEG, cull on mobile using star ratings.</li>
+              <li>Preset-driven edits; batch-sync, then spot-fix a few selects.</li>
+              <li>Export responsive sizes and publish from the phone.</li>
+            </ul>
+          </div>
+        </details>
+      </li> -->
+    </ul>
+  </main>
+
+  <div id="footer" class="mb-5">
+    <hr>
+    <div class="container text-center">
+      <small>By Narun Raman</small>
+    </div>
+  </div>
+</body>
+</html>

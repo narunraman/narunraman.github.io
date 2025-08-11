@@ -278,6 +278,18 @@
 }
 
 
+/* Custom ORCID icon styling */
+.orcid-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/06/ORCID_iD.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
 .pdf-icon {
     display: inline-block;
     width: 16px;
@@ -389,6 +401,10 @@
 
 .icml-link::before {
     background-image: url('../assets/logos/ICML_logo_cropped.svg');
+}
+
+.html-link::before {
+    background-image: url('../assets/logos/html_logo.svg');
 }
 
 .aaai-link::before {

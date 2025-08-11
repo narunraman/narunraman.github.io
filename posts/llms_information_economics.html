@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>STEER-ME: Assessing LLMs in Information Economics</title>
+  <meta name="description" content="A practical primer on why chain-of-thought helps, when it fails, and how to structure prompts and evaluations for reliable, interpretable LLM behavior.">
+  <meta name="author" content="Narun Raman">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-bright.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-serif.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/posts/post.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/0504-31.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/0504-31.png">
+  <link rel="shortcut icon" href="/assets/images/0504-31.png">
+
+  <style>
+    .navbar-brand { font-size: 1rem !important; }
+    .container.mt-5 { margin-top: 1rem !important; }
+    /* Page-specific overrides only */
+    .toc-title { font-size: 18pt; }
+    .toc-nav { top: 310px; } /* explicit override for this post */
+  </style>
+  <script>
+    
+    // MathJax for TeX math rendering
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        packages: { '[+]': ['ams', 'noerrors', 'noundefined', 'textmacros', 'boldsymbol'] }
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code']
+      },
+      chtml: { scale: 1, matchFontHeight: false }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
+      <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">Narun Raman</a>
+      <div class="navbar-nav flex-row flex-wrap justify-content-center">
+        <a class="nav-item nav-link" href="/posts" title="Posts">Posts</a>
+        <span class="nav-item navbar-text mx-1">/</span>
+        <a class="nav-item nav-link" href="/photos" title="Photos">Photos</a>
+        <span class="nav-item navbar-text mx-1">/</span>
+        <a class="nav-item nav-link" href="/recs" title="Recs">Recs</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Floating ToC -->
+  
+  <main class="post-wrap">
+    <h1 class="title">STEER-ME: Assessing LLMs in Information Economics</h1>
+    <div class="meta">
+      <time datetime="2025-08-11">Aug 11, 2025</time>
+      <span class="mx-1">·</span>
+      <span>15 min read</span>
+      <span class="mx-1">·</span>
+      <span class="tags"><span class="text-muted">workshop</span></span>
+    </div>
+    
+
+    <hr>
+
+    <nav class="toc-nav" aria-label="Contents" data-lock-top>
+      <div class="toc-title">Contents</div>
+      <ol class="toc-list" id="toc-list"></ol>
+    </nav>
+
+    <em>Note: this blog post deviates slightly from our Workshop paper. </em>
+    
+    <h2>Introduction</h2>
+    <p>Recently, Large Language Models (LLMs) have increasingly been deployed as decision-making engines, either directly acting as economic agents \citep{cai2023large, homo_silicus, voyager} or as essential components within broader systems designed for economic decision-making \citep{zhuge2023mindstorms, wang2023unleashing, huggingGPT}. Despite constituting promising demonstrations of LLM capabilities, such systems have also exposed significant brittleness in LLM performance: models succeeding in one scenario often fail unpredictably in closely related contexts, suggesting at least some reliance on superficial pattern matching vs robust economic reasoning \citep[e.g.,][]{hendrycks2021measuringmassivemultitasklanguage, ribeiro-etal-2020-beyond}. Despite this behavior, most existing economic benchmarks narrowly evaluate specific applications and do not rigorously assess the foundational strategic and computational reasoning skills necessary for reliable economic decision-making. We argue that before LLMs can be meaningfully evaluated or deployed in information economics, their capacities for these foundational reasoning capabilities must be systematically assessed.
+    </p>
+    <p>To address this need, we developed the STEER benchmark \citep{ramansteer}, providing a comprehensive assessment of strategic reasoning foundational to economics. STEER was constructed by taxonomizing distinct "elements of economic rationality," ultimately comprising 64 strategic reasoning elements, including core concepts from game theory and foundational decision theory. Leveraging state-of-the-art LLMs, we systematically generated diverse questions across multiple domains (e.g., finance, medicine, public policy) and varying difficulty levels, creating an extensive and continually expandable dataset for benchmarking LLM economic reasoning. Building upon this methodology, we recently expanded the scope of our benchmark with STEER-ME \citep{ramansteerme}, introducing 58 computational microeconomic reasoning elements—such as competitive market analysis, optimal consumption, and utility maximization. STEER-ME is significantly more challenging than STEER, not only because it demands precise mathematical computation but also because the evaluated concepts frequently require careful sequential reasoning, which directly underpins many critical scenarios in information economics.</p>
+
+    <h3>Information Economics in STEER-ME</h3>
+    
+    <p>In particular, STEER-ME evaluates elements essential for decision-making under uncertainty, such as correctly computing expected utility, managing state-contingent consumption, and evaluating the prices and risks inherent in uncertain economic environments. It further includes elements explicitly testing models' abilities to systematically update beliefs in response to new information, such as precisely applying Bayes' rule and optimally adapting decisions based on revised probabilities. These reasoning capabilities are foundational building blocks for canonical information economics scenarios&mdash;including costly information acquisition, adverse selection, Bayesian persuasion, and rational information disclosure&mdash;where economic agents must balance the expected value of information with its cost and dynamically update their beliefs to make rational decisions.</p>
+
+    <p>A natural way to see these building blocks working in concert is the element we call Dynamic Profit Maximization. A firm is tasked with maximizing profit across two periods. They start with some capital $K_1$, a known output function $\mathcal{O}$, a cost to growing capital described by $\mathcal{Cost}$, and tomorrow faces a price $p_2$ that may be deterministic, uncertain, or inspectable at cost $c$. Below, we show the three different objective functions that arise under each "flavor."</p>
+
+    <!-- Interactive flavor widget: buttons to switch objective function by flavor -->
+    <div class="flavor-widget" role="group" aria-label="Objective function by flavor">
+      <div class="flavor-buttons">
+        <button type="button" class="flavor-btn" data-flavor="det">Deterministic</button>
+        <button type="button" class="flavor-btn" data-flavor="unc">Uncertain (no inspection)</button>
+        <button type="button" class="flavor-btn" data-flavor="cost">Costly inspection</button>
+      </div>
+      <div class="flavor-math" aria-live="polite"></div>
+    </div>
+
+    <p>The deterministic flavor is the simplest: the agent must choose a capital $K_2$ to maximize expected profit, given that tomorrow's price is known in advance. The uncertain flavor adds uncertainty to tomorrow's price, requiring the agent to form an expectation over the distribution of $p_2$. Finally, given uncertainty over $p_2$, the costly-inspection flavor allows the agent to pay $c$ to inspect tomorrow's price before making a decision. That is, they choose (i) whether to pay the inspection fee, an indicator $I$, and (ii) a decision rule $\phi$ that maps the realized price into tomorrow's capital.
+      <!-- Before any uncertainty is resolved the agent chooses (i) whether to pay the inspection fee, an indicator $I$, and (ii) a decision rule $\phi$ that maps the realized price into tomorrow's capital.  -->
+    See below for examples of each flavor as an instantiated question.
+    </p>
+    <!-- Interactive flavor widget: placeholder question text by flavor -->
+    <div class="flavor-widget" role="group" aria-label="Question text by flavor">
+      <div class="flavor-buttons">
+        <button type="button" class="flavor-btn" data-flavor="det">Deterministic</button>
+        <button type="button" class="flavor-btn" data-flavor="unc">Uncertain (no inspection)</button>
+        <button type="button" class="flavor-btn" data-flavor="cost">Costly inspection</button>
+      </div>
+      <div class="flavor-text" aria-live="polite"></div>
+    </div>
+
+
+
+    <h2>Methods</h2>
+    
+    <h3>Models We Evaluated</h3>
+    <p>We evaluated four state-of-the-art models: Anthropic's Claude 3.5 Sonnet and Claude 3.7 Sonnet and OpenAI's GPT 4o and o3. While Claude 3.5 Sonnet and GPT 4o are standard language models, Claude 3.7 Sonnet and o3 are reasoning models. Reasoning models are fine-tuned to conduct better chain-of-thought reasoning and o3 even has the ability to interleave code execution during reasoning. For the standard LLMs we decode with temperature 0 as that is considered optimal for high-fidelity reasoning tasks. For the reasoning models we sample with temperature 0.6 as is recommended by each provider. </p>
+
+    <h3>Evaluation Procedure</h3>
+    <p>To standardize the evaluation, we presented each model with the same set of 500 questions per flavor and allowed each model to reason before coming to an answer. Each prompt lists the scenario and four labelled options; the model's task is to output the letter of its chosen option. We then scored each response for accuracy, counting an answer correct only when the returned letter matched the unique correct choice.</p>
+
+    <h2>Results</h2>
+
+    <!-- Interactive results chart: grouped bars per model for det/unc/cost -->
+    <div class="results-chart" aria-label="Model accuracies by flavor">
+      <div class="chart-header">
+        <div class="chart-spacer"></div>
+        <div class="legend">
+          <button type="button" class="legend-item active" data-flavor="det">Deterministic</button>
+          <button type="button" class="legend-item active" data-flavor="unc">Uncertain</button>
+          <button type="button" class="legend-item active" data-flavor="cost">Costly Inspection</button>
+        </div>
+      </div>
+      <div class="chart-host"></div>
+      <div class="chart-title" style="text-align: center;"><strong>Figure 1: Accuracy by flavor</strong></div>
+      <!-- Optional: override the default data by providing JSON here -->
+      <!-- <script type="application/json" class="chart-data">
+        { "models": [
+          { "name": "o3", "scores": { "det": 0.9931, "unc": 0.95, "cost": 0.96 } },
+          { "name": "Claude 3.7 Sonnet", "scores": { "det": 0.64, "unc": 0.52, "cost": 0.53 } },
+          { "name": "GPT-4o", "scores": { "det": 0.41, "unc": 0.394, "cost": 0.404 } },
+          { "name": "Claude 3.5 Sonnet", "scores": { "det": 0.373, "unc": 0.339, "cost": 0.441 } }
+        ]}
+      </script> -->
+     
+    </div>
+
+    <p>As can be seen in Figure 1, o3 was nearly flawless in the baseline deterministic-price flavor and loses only three to five percentage points as uncertainty and information acquisition are layered on. This robustness is unsurprising: o3 is the only model in the cohort with native code-execution, so once it forms the correct objective it can offload the calculus to the built-in Python sandbox&mdash;turning what is conceptually challenging but mechanically straightforward optimization into a trivial call to a solver. Claude 3.7 Sonnet Thinking ranks a clear second. Although it lacks code execution, the fine-tuned reasoning offers the model noticeably higher accuracy than both GPT-4o and Claude 3.5 Sonnet. However, we observed that it had the largest drop from deterministic to uncertain price out of all the evaluated models. That large drop suggests that Claude 3.7 Sonnet's boost in performance is susceptible to uncertainty in the information set. GPT-4o's performance mostly clusters in the low 0.4 range and exhibits little systematic difference between flavors. The flat profile implies that the step from deterministic optimization to value-of-information reasoning did not make much difference because it was already near random-guessing on the underlying calculus. Surprisingly, Claude 3.5 Sonnet showed an increase in performance for the costly inspection flavor.</p>
+    
+    <h3>Decomposing Costly Inspection Accuracy</h3>
+    <p>This does not necessarily mean that Claude 3.5 Sonnet was particularly good at value-of-information reasoning, however. Because the costly-inspection question contains two "pay" menus and two "skip" menus, the evaluation can&mdash;and should&mdash;distinguish between two very different cognitive hurdles. First, a model must decide whether paying the fee is worthwhile. This is the harder piece of reasoning: it requires forming an expectation over tomorrow's prices, computing the marginal value of information, and comparing that value to the fee. Only after the correct branch is chosen does the model face the comparatively mechanical task of selecting the correct option for that branch. To tease these skills apart we re-graded every response in two layers: (1) Strategy accuracy: Did the model pick the correct branch (pay vs. skip)? (2) Conditional-$K_2$ accuracy: Given that branch, did the model pick the menu whose $K_2$ values satisfy the conditions within that branch? </p>
+
+    <!-- Converted LaTeX table to HTML -->
+    <figure class="table-figure">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Strategy accuracy</th>
+            <th>K<sub>2</sub> accuracy | strategy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>o3</td>
+            <td>97%</td>
+            <td>98%</td>
+          </tr>
+          <tr>
+            <td>Claude 3.7 Sonnet Thinking</td>
+            <td>70%</td>
+            <td>82%</td>
+          </tr>
+          <tr>
+            <td>Claude 3.5 Sonnet</td>
+            <td>54%</td>
+            <td>80%</td>
+          </tr>
+          <tr>
+            <td>GPT-4o</td>
+            <td>51%</td>
+            <td>83%</td>
+          </tr>
+        </tbody>
+      </table>
+      <figcaption class="text-muted">Table 1. Decomposing accuracy on the costly-inspection flavor of Dynamic Profit Maximization. A random guesser achieves 50% strategy accuracy and 25% overall accuracy (two correct branches x two correct menus).</figcaption>
+    </figure>
+
+    <p>Table 1 shows that o3's near-perfect score came from both layers: it almost always chooses the correct branch and almost never mis-computes $K_2$. Claude 3.7 Sonnet Thinking got the branch decision right four times out of five and, when it did, chose the correct capital level 82% of the time. It trailed o3 but clearly outperforms non-reasoning models, suggesting fine-tuning for chain-of-thought improved both its value-of-information heuristic and its raw optimisation arithmetic despite lacking tool use. Claude 3.5 Sonnet and GPT-4o hovered between 51.26% to 54.10% on strategy accuracy&mdash;essentially indistinguishable from random guessing&mdash;but still achieved mid-80% conditional accuracy. This means they could solve the calculus when the branch is handed to them yet lacked a reliable rule for judging when information is worth its cost.</p>
+
+    <h2>Conclusions</h2>
+
+    <p>Our evaluations provide concrete evidence that weak proficiency on seemingly "low-level" elements&mdash;expectation formation, Bayes updates&mdash;manifests downstream as brittle, surface-level behavior on more elaborate economic tasks. Even competitive models such as GPT-4o and Claude 3.5 Sonnet were no better than guessing whether paying for information was worthwhile. In contrast, o3's native code-execution combined with fine-tuned reasoning delivered near-perfect performance across deterministic, uncertain, and costly-inspection variants, illustrating how tool integration can compensate for gaps in symbolic reasoning.</p>
+
+    <p>These findings underscore three broader points. First, information-economics problems expose a dimension of reasoning&mdash;valuing information and acting on contingent states&mdash;that is not well tested by classic optimization benchmarks. Second, decomposing accuracy is essential for diagnosing where models actually fail; headline scores alone can be misleading when the multiple-choice structure embeds partial credit. Third, method matters: models that can off-load algebra to external solvers enjoy a large advantage, suggesting that benchmark design should explicitly distinguish conceptual errors from computational ones.</p>
+
+    <p><a href="/posts">← Back to Posts</a></p>
+  </main>
+
+  <div id="footer" class="mb-5">
+    <hr>
+    <div class="container text-center">
+      <small>By Narun Raman</small>
+    </div>
+  </div>
+
+  <!-- Remove inline ToC/Citation JS and load external script -->
+  <script src="/posts/post.js"></script>
+</body>
+</html>
