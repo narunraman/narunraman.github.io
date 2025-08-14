@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Photos - Narun Raman</title>
-  <meta name="description" content="Narun Raman's photo gallery - coming soon.">
+  <title>Narun Raman</title>
+  <meta name="description" content="Narun's photos">
   <meta name="author" content="Narun Raman">
 
   <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@
       background: linear-gradient(to bottom, white, transparent); pointer-events: none; z-index: 1;
     }
     .splash-container::before {
-      content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+      content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 210px;
       background: linear-gradient(to top, black, transparent); pointer-events: none; z-index: 1;
     }
     .splash-overlay {
@@ -65,7 +65,7 @@
     .gallery-section {
       background-color: black;
       min-height: 100vh;
-      padding: 2rem 0;
+      padding: 1rem 0;
       color: white;
       overflow-x: hidden; /* Prevent horizontal scroll */
     }
@@ -190,6 +190,8 @@
     <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
       <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">Narun Raman</a>
       <div class="navbar-nav flex-row flex-wrap justify-content-center">
+        <a class="nav-item nav-link" href="/posts" title="Posts">Posts</a>
+        <span class="nav-item navbar-text mx-1">/</span>
         <a class="nav-item nav-link" href="/photos" title="Photos">Photos</a>
         <span class="nav-item navbar-text mx-1">/</span>
         <a class="nav-item nav-link" href="/recs" title="Recs">Recs</a>
@@ -206,9 +208,8 @@
       <div class="gallery-container">
         <div class="gallery-selector">
           <div class="gallery-options">
-            <a href="#" class="gallery-option active" data-gallery="travel">Travel</a>
+            <a href="#" class="gallery-option active" data-gallery="color">Color</a>
             <a href="#" class="gallery-option" data-gallery="bw">Black & White</a>
-            <a href="#" class="gallery-option" data-gallery="portraits">Portraits</a>
           </div>
         </div>
 
@@ -223,6 +224,9 @@
 
   <div id="footer" class="mb-5">
     <hr>
+    <div class="container text-center">
+    <a href="https://www.instagram.com/narun_pics/?hl=en" class="fab fa-instagram fa-1x" title="instagram"></a>
+    </div>
     <div class="container text-center">
       <small>By Narun Raman</small>
     </div>
@@ -239,16 +243,20 @@
   </div>
 
   <script>
-  const galleries = { travel: 34, bw: 23,  portraits: 25};
+    
+  const galleries = { color: 59, bw: 23};
 
   // Add base for asset paths so it works on file:// and GitHub Pages
-  const ASSETS_BASE = '../assets/photos';
+  const ASSETS_BASE = '/assets/photos';
   const IS_FILE = typeof location !== 'undefined' && location.protocol === 'file:';
 
   // ==== PERF KNOBS ====
   const GAP = 2;
   const MIN_ROW_H = 140, MAX_ROW_H = 380, STEP_H = 8, LAST_ROW_MIN_FILL = 0.65;
-
+  // User-tunable max row height. Change DEFAULT_USER_MAX_ROW_H here or set window.PHOTO_MAX_ROW_H before DOMContentLoaded.
+  const DEFAULT_USER_MAX_ROW_H = 140;
+  function effectiveMaxRowH() { return Math.min(MAX_ROW_H, window.PHOTO_MAX_ROW_H || DEFAULT_USER_MAX_ROW_H); }
+    
   // Cache aspect ratios by src so tab switches are instant after first view
   const arCache = new Map(); // src -> number
 
@@ -310,95 +318,91 @@
     return fromIndex.length ? fromIndex : fallbackSequentialSources(galleryType);
   }
 
+  function toThumb(src) {
+    // Insert "/thumbs" after the gallery folder: assets/photos/<gallery>/thumbs/<file>
+    try { return src.replace(/(photos\/[^/]+)\//, '$1/thumbs/').replace(/\.jpg$/, '.webp'); } catch { return src; }
+  }
+
+  // NEW: Preload full-size images just for aspect ratio (Firefox-safe)
+  async function preloadAspectRatios(srcs) {
+    const missing = srcs.filter(s => !arCache.has(s));
+    if (!missing.length) return;
+    await Promise.allSettled(missing.map(src => {
+      return new Promise(res => {
+        const im = new Image();
+        im.decoding = 'async';
+        im.loading = 'eager';
+        im.src = src; // full-size
+        const done = () => {
+          if (im.naturalWidth > 0 && im.naturalHeight > 0) {
+            const ar = im.naturalWidth / im.naturalHeight;
+            if (isFinite(ar) && ar > 0) arCache.set(src, ar);
+          }
+          res();
+        };
+        im.addEventListener('load', done, { once: true });
+        im.addEventListener('error', done, { once: true });
+        // Fallback timeout (in case neither event fires promptly)
+        setTimeout(done, 1500);
+      });
+    }));
+  }
+
   async function createPhotoGrid(galleryType) {
     const photoGrid = document.getElementById('photo-grid');
     const srcs = await sourcesFor(galleryType);
 
-    // Build photo objects up front
+    // Preload ARs from full-size images first (this is the critical fix for Firefox uniform widths)
+    await preloadAspectRatios(srcs);
+
+    // Build photo objects with ARs (may still be missing for some; we will compute lazily on thumb load)
     const photos = srcs.map((src, i) => {
       const item = document.createElement('div');
       item.className = 'photo-item';
       const img = document.createElement('img');
-      img.src = src; img.alt = '';
+      const thumb = toThumb(src);
+      img.src = thumb; img.alt = '';
       img.loading = 'lazy'; img.decoding = 'async';
+      img.setAttribute('fetchpriority', 'low');
+      img.dataset.fullsrc = src;
+      img.addEventListener('error', () => { if (img.src !== src) img.src = src; }, { once: true });
       item.appendChild(img);
-      // Make clickable for lightbox
       item.addEventListener('click', () => openLightbox(i, srcs));
-      return { item, img, ar: arCache.get(src) ?? null };
+      const ar = arCache.get(src) || null;
+      if (ar) item.style.setProperty('--ar', ar);
+      return { item, img, ar, full: src };
     });
 
     photoGrid.innerHTML = '';
 
-    // Fast path if we have all ARs
-    const haveAllARs = photos.every(p => typeof p.ar === 'number');
-    if (haveAllARs) {
+    // Layout with whatever ARs we have (should be most/all after preload)
+    const haveAll = photos.every(p => typeof p.ar === 'number');
+    if (haveAll) {
       fastLayout(photoGrid, photos);
+    } else {
+      // Compute missing ARs from thumb load events (fallback path)
+      let pending = photos.filter(p => !p.ar).length;
+      const tryLayout = () => {
+        fastLayout(photoGrid, photos.filter(p => typeof p.ar === 'number'));
+      };
       photos.forEach(p => {
-        if (!arCache.has(p.img.src)) {
-          p.img.addEventListener('load', () => {
-            if (p.img.naturalWidth) arCache.set(p.img.src, p.img.naturalWidth / p.img.naturalHeight);
-          }, { once: true });
-        }
+        if (p.ar) return;
+        const finalize = () => {
+          if (!p.ar && p.img.naturalWidth > 0) {
+            p.ar = p.img.naturalWidth / p.img.naturalHeight;
+            if (isFinite(p.ar) && p.ar > 0) arCache.set(p.full, p.ar);
+          }
+          pending--;
+          if (pending <= 0) tryLayout();
+        };
+        p.img.addEventListener('load', finalize, { once: true });
+        p.img.addEventListener('error', finalize, { once: true });
       });
-      return;
+      // Initial layout with known subset (avoid blank)
+      tryLayout();
+      // Safety: force layout after timeout even if some never load
+      setTimeout(() => { tryLayout(); }, 1600);
     }
-
-    // Slow path: wait for loads (or errors), then layout with whatever ARs we have.
-    // In Firefox file://, load/error events may not fire. Use a timer fallback with default ARs.
-    let loaded = 0; const total = photos.length;
-    let didLayoutOnce = false; let relayoutTimer; let safetyTimer;
-
-    const scheduleRelayout = (list) => {
-      clearTimeout(relayoutTimer);
-      relayoutTimer = setTimeout(() => {
-        if (!list || !list.length) return;
-        fastLayout(photoGrid, list);
-        didLayoutOnce = true;
-      }, 50);
-    };
-
-    const onready = (p) => {
-      if (!p.ar && p.img.naturalWidth) {
-        p.ar = p.img.naturalWidth / p.img.naturalHeight;
-        arCache.set(p.img.src, p.ar);
-      }
-      if (++loaded === total) {
-        clearTimeout(safetyTimer);
-        const usable = photos.filter(q => typeof q.ar === 'number' && isFinite(q.ar) && q.ar > 0);
-        if (usable.length) {
-          scheduleRelayout(usable);
-        } else {
-          photoGrid.innerHTML = '';
-        }
-      } else if (didLayoutOnce && p.ar) {
-        // Debounced relayout as real ARs arrive after a placeholder layout
-        const usable = photos.filter(q => typeof q.ar === 'number' && isFinite(q.ar) && q.ar > 0);
-        if (usable.length) scheduleRelayout(usable);
-      }
-    };
-
-    photos.forEach(p => {
-      if (p.img.complete && p.img.naturalWidth) {
-        requestAnimationFrame(() => onready(p));
-      } else {
-        p.img.addEventListener('load', () => onready(p), { once: true });
-        p.img.addEventListener('error', () => onready(p), { once: true });
-      }
-    });
-
-    // Timer fallback: if nothing has fired after 1200ms, layout with default ARs so Firefox file:// shows something.
-    safetyTimer = setTimeout(() => {
-      if (didLayoutOnce) return;
-      const usable = photos.filter(q => typeof q.ar === 'number' && isFinite(q.ar) && q.ar > 0);
-      if (usable.length) {
-        fastLayout(photoGrid, usable);
-      } else {
-        // Assign a reasonable default AR (e.g., 3:2) and layout
-        photos.forEach(q => { if (!q.ar) q.ar = 1.5; });
-        fastLayout(photoGrid, photos);
-      }
-      didLayoutOnce = true;
-    }, 1200);
   }
 
   function fastLayout(container, photos) {
@@ -413,7 +417,8 @@
 
   function pickOptimalTargetHeight(ars, W) {
     let best = { h: MIN_ROW_H, bad: Infinity };
-    for (let h = MIN_ROW_H; h <= MAX_ROW_H; h += STEP_H) {
+    const maxH = effectiveMaxRowH();
+    for (let h = MIN_ROW_H; h <= maxH; h += STEP_H) {
       const rows = simulateRows(ars, W, h);
       const last = rows[rows.length - 1];
       const lastWidth = last.sumAR * h + GAP * Math.max(0, last.len - 1);
@@ -443,7 +448,6 @@
   }
 
   function renderJustified(containerEl, photos, W, targetH, fillLastRow) {
-    // Build DOM in a fragment to reduce reflows
     const frag = document.createDocumentFragment();
     containerEl.style.rowGap = GAP + 'px';
 
@@ -455,28 +459,47 @@
       const rowDiv = document.createElement('div');
       rowDiv.className = 'photo-row';
       rowDiv.style.gap = GAP + 'px';
-      rowDiv.style.contentVisibility = 'auto';         // render perf
-      rowDiv.style.containIntrinsicSize = '1px 260px'; // reserve space cheaply
+      rowDiv.style.contentVisibility = 'auto';
+      rowDiv.style.containIntrinsicSize = '1px 260px';
 
-      const h = (!isLast || fillLastRow)
-        ? (W - GAP * Math.max(0, row.len - 1)) / row.sumAR
-        : targetH;
+      const gaps = GAP * Math.max(0, row.len - 1);
+      // Height we will use for this row
+      let h = (!isLast || fillLastRow)
+        ? (W - gaps) / row.sumAR  // justified row fills width
+        : targetH;                // ragged last row uses target height approximation
 
       const rowItems = photos.slice(row.start, row.end + 1);
-      let used = 0;
-      rowItems.forEach((p, j) => {
-        let w;
-        if (!isLast || fillLastRow) {
-          if (j < rowItems.length - 1) {
-            w = Math.round(p.ar * h);
-            used += w;
-          } else {
-            const gaps = GAP * Math.max(0, row.len - 1);
-            w = Math.max(1, Math.round(W - gaps - used));
+
+      let widths = [];
+      if (!isLast || fillLastRow) {
+        // Justify: compute ideal raw widths and distribute rounding delta across ALL items
+        const raw = rowItems.map(p => p.ar * h);
+        widths = raw.map(r => Math.round(r));
+        let total = widths.reduce((a,b) => a + b, 0) + gaps;
+        let delta = W - total; // pixels to add (positive) or remove (negative) including gaps
+        if (delta !== 0) {
+          // Work only on image widths (exclude gaps) so adjust comparing sum(widths)+gaps
+          // Build list with fractional parts for fair distribution
+          const frac = raw.map((r,i) => ({ i, frac: r - Math.floor(r) }));
+          frac.sort((a,b) => delta > 0 ? (b.frac - a.frac) : (a.frac - b.frac));
+          let j = 0;
+          while (delta !== 0 && j < frac.length * 4) { // guard loop
+            const idxAdj = frac[j % frac.length].i;
+            const adjust = delta > 0 ? 1 : -1;
+            widths[idxAdj] += adjust;
+            delta -= adjust;
+            j++;
           }
-        } else {
-          w = Math.round(p.ar * h);
+          // Final safety: if still off due to rounding extremes, push remainder into last item
+          if (delta !== 0) widths[widths.length - 1] += delta;
         }
+      } else {
+        // Ragged last row: no justification, preserve aspect ratios
+        widths = rowItems.map(p => Math.round(p.ar * h));
+      }
+
+      rowItems.forEach((p, j) => {
+        const w = Math.max(1, widths[j]);
         p.item.style.width  = w + 'px';
         p.item.style.height = Math.round(h) + 'px';
         rowDiv.appendChild(p.item);
@@ -540,7 +563,16 @@
 
   function updateLightboxImage() {
     if (!LB_IMG) return;
+    LB_IMG.setAttribute('fetchpriority', 'high');
     LB_IMG.src = LB_SOURCES[LB_INDEX];
+    preloadNeighborImages();
+  }
+
+  function preloadNeighborImages() {
+    if (!LB_SOURCES || !LB_SOURCES.length) return;
+    const next = LB_SOURCES[(LB_INDEX + 1) % LB_SOURCES.length];
+    const prev = LB_SOURCES[(LB_INDEX - 1 + LB_SOURCES.length) % LB_SOURCES.length];
+    [next, prev].forEach(src => { const im = new Image(); im.decoding = 'async'; im.loading = 'eager'; im.src = src; });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -567,7 +599,7 @@
     }
 
     // Initial gallery + tab switching
-    try { createPhotoGrid('travel'); } catch (e) { console.error('createPhotoGrid failed', e); }
+    try { createPhotoGrid('color'); } catch (e) { console.error('createPhotoGrid failed', e); }
     document.querySelectorAll('.gallery-option').forEach(option => {
       option.addEventListener('click', e => {
         e.preventDefault();
