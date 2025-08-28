@@ -417,8 +417,12 @@
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0d/Microsoft_Office_PowerPoint_%282019%E2%80%93present%29.svg');
 }
 
+.slides-link {
+    gap: 6px; /* Custom gap for slides links */
+}
+
 .huggingface-link::before {
-    background-image: url('https://cas-bridge.xethub.hf.co/xet-bridge-us/63d3eec885118edc0439bd98/b5b6c9df87c8c406e1f861d53537050e7f0ed7aaee4f7768fe9087ee7db54992?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cas%2F20250808%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250808T193453Z&X-Amz-Expires=3600&X-Amz-Signature=f5cc28bd1e7f2f59aa2c220b7df8015619e67d18ce26216b8c7b00dad060baf4&X-Amz-SignedHeaders=host&X-Xet-Cas-Uid=public&response-content-disposition=inline%3B+filename*%3DUTF-8%27%27hf-logo.svg%3B+filename%3D%22hf-logo.svg%22%3B&response-content-type=image%2Fsvg%2Bxml&x-id=GetObject&Expires=1754685293&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc1NDY4NTI5M319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2FzLWJyaWRnZS54ZXRodWIuaGYuY28veGV0LWJyaWRnZS11cy82M2QzZWVjODg1MTE4ZWRjMDQzOWJkOTgvYjViNmM5ZGY4N2M4YzQwNmUxZjg2MWQ1MzUzNzA1MGU3ZjBlZDdhYWVlNGY3NzY4ZmU5MDg3ZWU3ZGI1NDk5MioifV19&Signature=A7uADtNo1AzczymWSD01D1-t6LZGy-k64lJ-FN%7Em5mbelkyzYgw4quNuVbWqzvcBoRVf0VfyUJKeYpMdq9y2B8I0PxfPA-BW1Nv8ApuiNKtPQGD7Wse%7EjOExAIHizAwiMj8LrGr9W7HGDULN5NENl5PmQIh%7EAWxAiJ26sHX%7EtLiEhOsMmREMdohbXeQVL81PPyRTck96wSsZy10VrjmsgMTz9Ujz%7EvVq-eL4LUV-8ez5ANt-UAAbCqBkAO6cD48p31%7EyUM26aiTwQh6wWMvpJIZs-5t8oqC72bKrLLbn9HbXbeUDup9tKxqq44JGQvbCoTTHcdy3VqOxB7d5E-kMzA__&Key-Pair-Id=K2L8F4GPSG1IFC');
+    background-image: url('../assets/logos/hf_logo.svg');
 }
 
 .springer-nature-link::before {
@@ -433,9 +437,6 @@
     gap: 6px; /* Custom gap for DNA links */
 }
 
-.slides-link {
-    gap: 6px; /* Custom gap for slides links */
-}
 
 /* Generic link styling for other types */
 .link-text {
