@@ -403,6 +403,10 @@
     background-image: url('../assets/logos/ICML_logo_cropped.svg');
 }
 
+.neurips-link::before {
+    background-image: url('../assets/logos/neurips_logo.svg');
+}
+
 .html-link::before {
     background-image: url('../assets/logos/html_logo.svg');
 }
@@ -778,4 +782,31 @@
         font-size: 15px;
         padding: 3px 6px;
     }
+}
+
+/* Checkerboard pattern on same line as year headings */
+h3[id="2025"]::after,
+h3[id="2024"]::after,
+h3[id="2020"]::after {
+    content: '';
+    display: inline-block;
+    height: 20px;
+    margin-left: 20px;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: 
+        conic-gradient(from 90deg at 50% 50%, #333 0deg, #333 90deg, #fff 90deg, #fff 180deg, #333 180deg, #333 270deg, #fff 270deg);
+    background-size: 20px 20px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    width: calc(100% - 20px);
+    width: calc((100% - 20px) / 20px * 20px);
+}
+
+h3[id="2025"],
+h3[id="2024"],
+h3[id="2020"] {
+    display: flex;
+    align-items: center;
 }
