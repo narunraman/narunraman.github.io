@@ -1,0 +1,199 @@
+/* Restaurant page specific styles */
+
+/* Navbar: match site */
+.navbar-brand {
+    font-size: 1rem !important;
+}
+
+.container.mt-5 {
+    margin-top: 1rem !important;
+}
+
+.restaurants-wrap {
+    max-width: 750px;
+    margin: 2rem auto 4rem;
+    padding: 0 1rem;
+}
+
+.page-title {
+    font-family: "CMU Bright", "CMU Serif", Georgia, serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 1rem 0 0.5rem;
+}
+
+.intro-text {
+    color: #6c757d;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+/* Mount Rushmore section */
+.rushmore-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 3rem;
+}
+
+.rushmore-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.rushmore-item:last-child {
+    border-bottom: none;
+}
+
+.president-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+    object-fit: cover;
+    position: relative;
+    box-shadow: inset 0 0 30px 20px rgba(255, 255, 255, 0.5);
+}
+
+.restaurant-info {
+    flex: 1;
+}
+
+.restaurant-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+    color: #222;
+}
+
+.restaurant-location {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+.restaurant-description {
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Search/Filter section */
+.filter-section {
+    margin: 3rem 0 2rem;
+}
+
+.filter-section h2 {
+    font-family: "CMU Bright", "CMU Serif", Georgia, serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    transition: border-color 0.2s;
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: #dc3545;
+}
+
+/* Honorable mentions by region */
+.region-section {
+    margin-bottom: 2.5rem;
+}
+
+.region-section h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #dc3545;
+}
+
+.restaurant-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.restaurant-list li {
+    padding: 0.5rem 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+.restaurant-list li::before {
+    content: "·";
+    color: #dc3545;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* In Memoriam section */
+.memoriam-section {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-left: 4px solid #6c757d;
+    border-radius: 0 8px 8px 0;
+}
+
+.memoriam-section h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin: 0 0 1rem;
+}
+
+.memoriam-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.memoriam-list li {
+    padding: 0.4rem 0;
+    color: #6c757d;
+}
+
+.memoriam-list li::before {
+    content: "💀";
+    margin-right: 0.5rem;
+}
+
+/* Hidden class for search filtering */
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 576px) {
+    .president-icon {
+        width: 60px;
+        height: 60px;
+        margin-right: 1rem;
+    }
+
+    .restaurant-name {
+        font-size: 1.2rem;
+    }
+
+    .page-title {
+        font-size: 1.75rem;
+    }
+}

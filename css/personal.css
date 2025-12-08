@@ -1,0 +1,118 @@
+:root {
+    --text: #111;
+    --muted: #6c757d;
+    --link: #dc3545;
+}
+
+/* Navbar: match site */
+.navbar-brand {
+    font-size: 1rem !important;
+}
+
+.container.mt-5 {
+    margin-top: 1rem !important;
+}
+
+/* Personal page layout */
+.personal-wrap {
+    max-width: 750px;
+    margin: 2rem auto 4rem;
+    padding: 0 1rem;
+}
+
+.page-title {
+    font-family: "CMU Bright", "CMU Serif", Georgia, serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 1rem 0 0.5rem;
+}
+
+.intro-text {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+/* List with icons */
+.section-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.section-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.section-item:last-child {
+    border-bottom: none;
+}
+
+.section-header {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.section-icon {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+}
+
+.section-title.coming-soon::after {
+    content: "(coming soon)";
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+.section-description {
+    margin: 0.5rem 0 0.75rem 1.25rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.section-link {
+    margin-left: 1.25rem;
+    display: inline-block;
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.section-link::after {
+    content: " →";
+}
+
+.section-link:hover {
+    color: #b02a37;
+}
+
+.section-item.inactive .section-description {
+    color: #adb5bd;
+}
+
+@media (max-width: 576px) {
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .section-icon {
+        font-size: 1.3rem;
+    }
+}
