@@ -785,9 +785,7 @@
 }
 
 /* Checkerboard pattern on same line as year headings */
-h3[id="2025"]::after,
-h3[id="2024"]::after,
-h3[id="2020"]::after {
+.year-heading::after {
     content: '';
     display: inline-block;
     height: 20px;
@@ -804,9 +802,7 @@ h3[id="2020"]::after {
     width: calc((100% - 20px) / 20px * 20px);
 }
 
-h3[id="2025"],
-h3[id="2024"],
-h3[id="2020"] {
+.year-heading {
     display: flex;
     align-items: center;
 }
