@@ -127,6 +127,117 @@
     padding-left: 0;
 }
 
+#content ol.publication-list {
+    counter-reset: none;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1.25rem;
+}
+
+#content ol.publication-list > li {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+#content ol.publication-list > li:before {
+    content: none;
+    display: none;
+}
+
+.publication-entry {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 12px;
+    align-items: start;
+}
+
+.publication-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding-top: 2px;
+}
+
+.publication-badge {
+    min-width: 36px;
+    padding: 1px 6px;
+    border-radius: 0;
+    color: #fff;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: lowercase;
+}
+
+.publication-badge-conference {
+    background-color: #3f6db5;
+}
+
+.publication-badge-journal {
+    background-color: #7a4cc2;
+}
+
+.publication-badge-informal {
+    background-color: #7c8087;
+}
+
+.publication-copy-button {
+    display: block;
+    border: 0;
+    padding: 0;
+    min-width: 36px;
+    background-color: transparent;
+    color: #9aa0a6;
+    cursor: pointer;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem;
+    line-height: 1;
+    text-align: center;
+    text-transform: lowercase;
+    transition: color 0.15s ease;
+}
+
+.publication-copy-button:hover {
+    color: #666;
+    text-decoration: underline;
+}
+
+.publication-copy-button:focus {
+    outline: none;
+}
+
+.publication-copy-button.copied {
+    color: #2f6b39;
+}
+
+.publication-copy-button.error {
+    color: #b23a48;
+}
+
+.publication-content {
+    min-width: 0;
+}
+
+.publication-content > .horizontal-links {
+    margin-top: 4px;
+}
+
+@media (max-width: 530px) {
+    .publication-entry {
+        grid-template-columns: 1fr;
+        row-gap: 8px;
+    }
+
+    .publication-meta {
+        gap: 4px;
+        padding-top: 0;
+    }
+}
+
 #content ul {
     list-style: inside;
     padding-left: 2rem;
@@ -270,7 +381,7 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Scholar_logo.svg');
+    background-image: url('/assets/logos/google_scholar_logo.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -283,7 +394,7 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/06/ORCID_iD.svg');
+    background-image: url('/assets/logos/orcid_id.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -412,13 +523,13 @@
 }
 
 .aaai-link::before {
-    background-image: url('https://aaai.org/wp-content/uploads/2024/03/AAAI-Logo-Title-FullColor.svg');
+    background-image: url('../assets/logos/aaai_logo.svg');
     background-size: 350%; /* Make the image larger than the container */
     background-position: left center; /* Position to show only the left part */
 }
 
 .slides-link::before {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/25/Microsoft_Office_PowerPoint_%282019%E2%80%932025%29.svg');
+    background-image: url('../assets/logos/powerpoint_logo.svg');
 }
 
 .slides-link {

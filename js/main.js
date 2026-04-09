@@ -21,6 +21,211 @@ function wrapName(fullName) {
 // Enhanced footnote system with click-to-stick functionality
 document.addEventListener('DOMContentLoaded', function() {
     let activeMarginNote = null;
+    let bibtexLibraryPromise = null;
+
+    function initializeProfilePills() {
+        const pillTemplate = document.getElementById('profile-pill-template');
+        const pillTargets = document.querySelectorAll('[data-pill-target]');
+
+        if (!pillTemplate || pillTargets.length === 0) return;
+
+        pillTargets.forEach(function(target) {
+            target.replaceChildren(pillTemplate.content.cloneNode(true));
+        });
+    }
+
+    function getPublicationTypeLabel(type) {
+        if (type === 'conference') return 'Conference';
+        if (type === 'journal') return 'Journal';
+        return 'Informal';
+    }
+
+    async function copyTextToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return;
+        }
+
+        const helper = document.createElement('textarea');
+        helper.value = text;
+        helper.setAttribute('readonly', '');
+        helper.style.position = 'absolute';
+        helper.style.left = '-9999px';
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand('copy');
+        document.body.removeChild(helper);
+    }
+
+    function parseBibtexEntries(rawBibtex) {
+        const entries = {};
+        let cursor = 0;
+
+        while (cursor < rawBibtex.length) {
+            const entryStart = rawBibtex.indexOf('@', cursor);
+            if (entryStart === -1) break;
+
+            const bodyStart = rawBibtex.indexOf('{', entryStart);
+            if (bodyStart === -1) break;
+
+            let depth = 0;
+            let entryEnd = -1;
+
+            for (let i = bodyStart; i < rawBibtex.length; i += 1) {
+                const char = rawBibtex[i];
+
+                if (char === '{') {
+                    depth += 1;
+                } else if (char === '}') {
+                    depth -= 1;
+                    if (depth === 0) {
+                        entryEnd = i;
+                        break;
+                    }
+                }
+            }
+
+            if (entryEnd === -1) break;
+
+            const entryText = rawBibtex.slice(entryStart, entryEnd + 1).trim();
+            const entryBody = rawBibtex.slice(bodyStart + 1, entryEnd);
+            const firstComma = entryBody.indexOf(',');
+
+            if (firstComma !== -1) {
+                const key = entryBody.slice(0, firstComma).trim();
+                if (key) {
+                    entries[key] = entryText;
+                }
+            }
+
+            cursor = entryEnd + 1;
+        }
+
+        return entries;
+    }
+
+    async function loadBibtexLibrary() {
+        if (!bibtexLibraryPromise) {
+            bibtexLibraryPromise = fetch('/assets/bibtex/my_pubs.bib')
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error(`Failed to load BibTeX library: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(parseBibtexEntries);
+        }
+
+        return bibtexLibraryPromise;
+    }
+
+    function resetCopyButton(button) {
+        button.classList.remove('copied', 'error');
+        button.textContent = 'cite';
+        button.title = 'Copy BibTeX';
+        button.setAttribute('aria-label', `Copy BibTeX for ${button.dataset.publicationCode}`);
+    }
+
+    function setCopyButtonState(button, state) {
+        if (button.dataset.resetTimer) {
+            window.clearTimeout(Number(button.dataset.resetTimer));
+        }
+
+        button.classList.remove('copied', 'error');
+
+        if (state === 'copied') {
+            button.classList.add('copied');
+            button.textContent = 'copied';
+            button.title = 'Copied';
+            button.setAttribute('aria-label', `BibTeX copied for ${button.dataset.publicationCode}`);
+        } else if (state === 'error') {
+            button.classList.add('error');
+            button.textContent = 'error';
+            button.title = 'Copy failed';
+            button.setAttribute('aria-label', `Copy failed for ${button.dataset.publicationCode}`);
+        } else {
+            resetCopyButton(button);
+            return;
+        }
+
+        button.dataset.resetTimer = window.setTimeout(function() {
+            resetCopyButton(button);
+        }, 1600);
+    }
+
+    async function initializePublications() {
+        const counters = {
+            conference: 0,
+            journal: 0,
+            informal: 0
+        };
+
+        const prefixes = {
+            conference: 'c',
+            journal: 'j',
+            informal: 'i'
+        };
+
+        const publicationItems = document.querySelectorAll('.publication-item');
+        const copyButtons = document.querySelectorAll('.publication-copy-button');
+
+        copyButtons.forEach(function(button) {
+            button.hidden = true;
+        });
+
+        let bibtexEntries = {};
+
+        try {
+            bibtexEntries = await loadBibtexLibrary();
+        } catch (error) {
+            console.error(error);
+        }
+
+        publicationItems.forEach(function(item) {
+            const type = item.getAttribute('data-publication-type') || 'informal';
+            counters[type] = (counters[type] || 0) + 1;
+        });
+
+        publicationItems.forEach(function(item) {
+            const type = item.getAttribute('data-publication-type') || 'informal';
+            const bibtexKey = item.getAttribute('data-bibtex-key');
+            const badge = item.querySelector('.publication-badge');
+            const copyButton = item.querySelector('.publication-copy-button');
+            const prefix = prefixes[type] || 'i';
+
+            const code = prefix + String(counters[type]).padStart(2, '0');
+            counters[type] -= 1;
+
+            item.setAttribute('data-publication-code', code);
+
+            if (badge) {
+                badge.textContent = code;
+                badge.classList.add(`publication-badge-${type}`);
+                badge.setAttribute('title', `${getPublicationTypeLabel(type)} publication`);
+                badge.setAttribute('aria-label', `${getPublicationTypeLabel(type)} publication ${code}`);
+            }
+
+            if (!copyButton) return;
+
+            if (!bibtexKey || !bibtexEntries[bibtexKey]) {
+                copyButton.hidden = true;
+                return;
+            }
+
+            copyButton.dataset.publicationCode = code;
+            copyButton.hidden = false;
+            resetCopyButton(copyButton);
+
+            copyButton.addEventListener('click', async function() {
+                try {
+                    await copyTextToClipboard(bibtexEntries[bibtexKey]);
+                    setCopyButtonState(copyButton, 'copied');
+                } catch (error) {
+                    setCopyButtonState(copyButton, 'error');
+                }
+            });
+        });
+    }
     
     // Handle text footnotes
     const footnotes = document.querySelectorAll('.footnote-ref');
@@ -262,6 +467,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initial calls and event listeners
+    initializeProfilePills();
+    initializePublications();
     shortenNames();
     adjustTooltipPosition();
     createImageTooltips();

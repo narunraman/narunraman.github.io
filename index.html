@@ -12,7 +12,7 @@
     <meta name="author" content='Narun Raman'>
 
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-bright.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-serif.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -21,7 +21,7 @@
     
     <link rel="stylesheet" href="/css/custom.css">
     
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js" defer></script>
 
 </head>
 
@@ -57,17 +57,11 @@
 <div id="content">
 <div class="container">
 <div class="hero-section">
-    <figure class="avatar"><img src="./assets/images/avatar.jpg"
+    <figure class="avatar"><img src="./assets/images/avatar.jpg" width="2000" height="2000"
              alt="avatar"/>
     </figure>
     
-    <div class="pill-buttons mobile-pills">
-        <a href="https://scholar.google.com/citations?hl=en&pli=1&user=SEWbKagAAAAJ" class="pill-button"><span class="scholar-icon"></span>Google Scholar</a>
-        <a href="https://github.com/narunraman" class="pill-button"><i class="fab fa-github"></i>GitHub</a>
-        <a href="https://www.linkedin.com/in/narun-raman-019857132/" class="pill-button"><i class="fab fa-linkedin"></i>LinkedIn</a>
-        <a href="assets/Curriculum_Vitae.pdf" class="pill-button"><span class="pdf-icon"></span>CV</a>
-        <a href="assets/Resume.pdf" class="pill-button"><span class="pdf-icon"></span>Resume</a>
-    </div>
+    <div class="pill-buttons mobile-pills" data-pill-target="mobile"></div>
 </div>
 
 <p>I pronounce my name like Maroon (with an N) Ramen&ndash;quite an unappetizing sight.<a href="#" class="footnote-ref" data-footnote="Some people have interpreted this slightly incorrectly and called me Manun, so maybe I should find a new explanation."><sup>1</sup></a> Having said that, please feel free to email me pictures of oddly colored noodles that you have made or found:</p>
@@ -79,13 +73,15 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
    data-image-alt="Figure 1: For Canadians"
    data-image-caption="Figure 1: For Canadians"><sup>4</sup></a> which culminated in an undergraduate thesis on predicting Wikipedia article quality. I have also worked as a software engineer; you can find more details about my work experiences in my resume.</p>
 
-<div class="pill-buttons desktop-pills">
+<div class="pill-buttons desktop-pills" data-pill-target="desktop"></div>
+
+<template id="profile-pill-template">
     <a href="https://scholar.google.com/citations?hl=en&pli=1&user=SEWbKagAAAAJ" class="pill-button"><span class="scholar-icon"></span>Google Scholar</a>
     <a href="https://github.com/narunraman" class="pill-button"><i class="fab fa-github"></i>GitHub</a>
     <a href="https://www.linkedin.com/in/narun-raman-019857132/" class="pill-button"><i class="fab fa-linkedin"></i>LinkedIn</a>
     <a href="assets/Curriculum_Vitae.pdf" class="pill-button"><span class="pdf-icon"></span>CV</a>
     <a href="assets/Resume.pdf" class="pill-button"><span class="pdf-icon"></span>Resume</a>
-</div>
+</template>
 
 
 
@@ -114,124 +110,255 @@ Previously, I completed my Master's in Computer Science at UBC under the supervi
 
 <h2 id="publications-and-pre-prints">Publications, Working Papers, and Presentations</h2>
 <h3 id="2026" class="year-heading">2026</h3>
-<ol>
-
-    <li><strong>Conspicuous Consumption of NFTs: Empirical Insights from a Data-Rich Market.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun  Raman</span>, <span class="author-name" data-full-name="Scott D. Kominers" data-short-name="S. Kominers">Scott D. Kominers</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. <span class="cmu-serif-italic">Working Paper</span>.
+<ol class="publication-list">
+    <li class="publication-item" data-publication-id="nfts-empirical-insights-2026" data-publication-type="informal">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>Conspicuous Consumption of NFTs: Empirical Insights from a Data-Rich Market.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun  Raman</span>, <span class="author-name" data-full-name="Scott D. Kominers" data-short-name="S. Kominers">Scott D. Kominers</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. <span class="cmu-serif-italic">Working Paper</span>.
+            </div>
+        </div>
     </li>
-    <li><strong>QuickScope: Certifying Hard Questions in Dynamic LLM Benchmarks.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun  Raman</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. <span class="cmu-serif-italic">Working Paper</span>.
-    </li><li><strong>I Can Stop Whenever I Want: On the Effect of Vigilance, Friction and Timers on Digital Self-Control.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Sophie Greenwood" data-short-name="S. Greenwood">Sophie Greenwood</span>, <span class="author-name" data-full-name="David Rand" data-short-name="D. Rand">David Rand</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jon Kleinberg" data-short-name="J. Kleinberg">Jon Kleinberg</span>. <span class="cmu-serif-italic">Working Paper</span>.
+    <li class="publication-item" data-publication-id="quickscope-2026" data-publication-type="informal">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>QuickScope: Certifying Hard Questions in Dynamic LLM Benchmarks.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun  Raman</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. <span class="cmu-serif-italic">Working Paper</span>.
+            </div>
+        </div>
+    </li>
+    <li class="publication-item" data-publication-id="digital-self-control-2026" data-publication-type="informal">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>I Can Stop Whenever I Want: On the Effect of Vigilance, Friction and Timers on Digital Self-Control.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Sophie Greenwood" data-short-name="S. Greenwood">Sophie Greenwood</span>, <span class="author-name" data-full-name="David Rand" data-short-name="D. Rand">David Rand</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jon Kleinberg" data-short-name="J. Kleinberg">Jon Kleinberg</span>. <span class="cmu-serif-italic">Working Paper</span>.
+            </div>
+        </div>
     </li>
 </ol>
 <h3 id="2025" class="year-heading">2025</h3>
-<ol>
-    <li><strong>Reasoning Models are Test Exploiters: Rethinking Multiple Choice.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">Workshop on Assessing and Improving Reliability of Foundation Models in the Real World (AAAI '26).</span>
-        <ul class="horizontal-links">
-            <li>
-                <a href="https://arxiv.org/abs/2507.15337" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
-            </li>
-        </ul>
+<ol class="publication-list">
+    <li class="publication-item" data-publication-id="test-exploiters-2025" data-publication-type="informal" data-bibtex-key="raman2025testexploiters">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>Reasoning Models are Test Exploiters: Rethinking Multiple Choice.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">Workshop on Assessing and Improving Reliability of Foundation Models in the Real World (AAAI '26).</span>
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="https://arxiv.org/abs/2507.15337" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
-    
-    <li><strong>STEER-ME: Assessing the Microeconomic Reasoning of Large Language Models.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Thiago Amin" data-short-name="T. Amin">Thiago Amin</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jesse Perla" data-short-name="J. Perla">Jesse Perla</span>. In <span class="cmu-serif-italic">Conference on Neural Information Processing Systems (NeurIPS '25).</span>
-        <ul class="horizontal-links">
-            <li>
-                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/28846" class="icon-link neurips-link"><span class="link-text">paper</span></a>
-            </li>
-            <li>
-                <a href="https://arxiv.org/abs/2502.13119" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
-            </li>
-            <li>
-                <a href="assets/posters/steer_me_neurips_poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
-            </li>
-            <li>
-                <a href="assets/talks/STEER + STEER-ME.pptx" class="icon-link slides-link"><span class="link-text">slides</span></a>
-            </li>
-            <li>
-                <a href="https://huggingface.co/datasets/narunraman/steer_me" class="icon-link huggingface-link"><span class="link-text">dataset</span></a>
-            </li>
-        </ul>
+    <li class="publication-item" data-publication-id="steer-me-2025" data-publication-type="conference" data-bibtex-key="raman2025steerme">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>STEER-ME: Assessing the Microeconomic Reasoning of Large Language Models.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Thiago Amin" data-short-name="T. Amin">Thiago Amin</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jesse Perla" data-short-name="J. Perla">Jesse Perla</span>. Forthcoming in <span class="cmu-serif-italic">Conference on Neural Information Processing Systems (NeurIPS '25).</span>
+                <ul class="horizontal-links">
+                    <!-- <li>
+                        <a href="https://ojs.aaai.org/index.php/AAAI/article/view/28846" class="icon-link neurips-link"><span class="link-text">paper</span></a>
+                    </li> -->
+                    <li>
+                        <a href="https://arxiv.org/abs/2502.13119" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+                    </li>
+                    <li>
+                        <a href="assets/posters/steer_me_neurips_poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+                    </li>
+                    <li>
+                        <a href="assets/talks/STEER + STEER-ME.pptx" class="icon-link slides-link"><span class="link-text">slides</span></a>
+                    </li>
+                    <li>
+                        <a href="https://huggingface.co/datasets/narunraman/steer_me" class="icon-link huggingface-link"><span class="link-text">dataset</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
-
-    <li><strong>Evaluating LLMs in Information Economics.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Thiago Amin" data-short-name="T. Amin">Thiago Amin</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jesse Perla" data-short-name="J. Perla">Jesse Perla</span>. In <span class="cmu-serif-italic">Workshop on Information Economics x Large Language Models at Economics and Computation (EC '25).</span>
-        <ul class="horizontal-links">
-            <li>
-                <a href="assets/papers/STEER_ME_EC_2025_Workshop.pdf" class="icon-link pdf-link"><span class="link-text">pdf</span></a>
-            </li>
-            <li>
-                <a href="/posts/llms_information_economics.html" class="icon-link html-link"><span class="link-text">post</span></a>
-            </li>
-        </ul>
+    <li class="publication-item" data-publication-id="info-econ-llms-2025" data-publication-type="informal">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>Evaluating LLMs in Information Economics.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Thiago Amin" data-short-name="T. Amin">Thiago Amin</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Jesse Perla" data-short-name="J. Perla">Jesse Perla</span>. In <span class="cmu-serif-italic">Workshop on Information Economics x Large Language Models at Economics and Computation (EC '25).</span>
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="assets/papers/STEER_ME_EC_2025_Workshop.pdf" class="icon-link pdf-link"><span class="link-text">pdf</span></a>
+                    </li>
+                    <li>
+                        <a href="/posts/llms_information_economics.html" class="icon-link html-link"><span class="link-text">post</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
-
-    <li><strong>NFTs as a Data-Rich Test Bed: Conspicuous Consumption and its Determinants.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Scott D. Kominers" data-short-name="S. Kominers">Scott D. Kominers</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">TheWebConference (WWW '25)</span>. 
-        <ul class="horizontal-links">
-            <li>
-                <a href="https://doi.org/10.1145/3696410.3714724" class="icon-link doi-link"><span class="link-text">paper</span></a>
-            </li>
-            <li>
-                <a href="https://arxiv.org/abs/2503.17457" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
-            </li>
-            <li>
-                <a href="assets/posters/NFT_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
-            </li>
-        </ul>
+    <li class="publication-item" data-publication-id="nfts-test-bed-2025" data-publication-type="conference" data-bibtex-key="lundy2025nfts">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>NFTs as a Data-Rich Test Bed: Conspicuous Consumption and its Determinants.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Scott D. Kominers" data-short-name="S. Kominers">Scott D. Kominers</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">TheWebConference (WWW '25)</span>.
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="https://doi.org/10.1145/3696410.3714724" class="icon-link doi-link"><span class="link-text">paper</span></a>
+                    </li>
+                    <li>
+                        <a href="https://arxiv.org/abs/2503.17457" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+                    </li>
+                    <li>
+                        <a href="assets/posters/NFT_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
 </ol>
 <h3 id="2024" class="year-heading">2024</h3>
-<ol>
-
-    <li><strong>Pay to (Not) Play: Monetizing Impatience in Mobile Games.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Hu Fu" data-short-name="H. Fu">Hu Fu</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">AAAI Conference on Artificial Intelligence (AAAI '24)</span> 
-        <ul class="horizontal-links">
-            <li>
-                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/28846" class="icon-link aaai-link"><span class="link-text">paper</span></a>
-            </li>
-            <li>
-                <a href="https://arxiv.org/abs/2312.10205" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
-            </li>
-            <li>
-                <a href="assets/posters/MobileGames_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
-            </li>
-            <li>
-                <a href="bellairs.pptx" class="icon-link slides-link"><span class="link-text">slides</span></a>
-            </li>
-        </ul>
+<ol class="publication-list">
+    <li class="publication-item" data-publication-id="alch-2020" data-publication-type="journal" data-bibtex-key="klinge2024alch">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>ALCH: An Imperative Language for the CRN-TAM.</strong> <span class="author-name" data-full-name="Titus H. Klinge" data-short-name="T. Klinge">Titus H. Klinge</span>, <span class="author-name" data-full-name="James I. Lathrop" data-short-name="J. Lathrop">James I. Lathrop</span>, <span class="author-name" data-full-name="Sonia Moreno" data-short-name="S. Moreno">Sonia Moreno</span>, <span class="author-name" data-full-name="Hugh D. Potter" data-short-name="H. Potter">Hugh D. Potter</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Matthew R. Riley" data-short-name="M. Riley">Matthew R. Riley</span>. In <span class="cmu-serif-italic">The Springer Nature Journal</span>
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="https://link.springer.com/article/10.1007/s11047-021-09878-8" class="icon-link springer-nature-link"><span class="link-text">journal</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
-    <li><strong>STEER: Assessing the Economic Rationality in Large Language Models.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Samuel J. Amouyal" data-short-name="S. Amouyal">Samuel J. Amouyal</span>, <span class="author-name" data-full-name="Yoav Levine" data-short-name="Y. Levine">Yoav Levine</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Moshe Tennenholtz" data-short-name="M. Tennenholtz">Moshe Tennenholtz</span>. In <span class="cmu-serif-italic">International Conference on Machine Learning (ICML '24)</span>
-        <ul class="horizontal-links">
-            <li>
-                <a href="https://icml.cc/virtual/2024/poster/33120" class="icon-link icml-link"><span class="link-text">paper</span></a>
-            </li>
-            <li>
-                <a href="https://arxiv.org/abs/2402.09552" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
-            </li>
-            <li>
-                <a href="assets/posters/STEER_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
-            </li>
-        </ul>
+    <li class="publication-item" data-publication-id="pay-to-not-play-2024" data-publication-type="conference" data-bibtex-key="lundy2025paytonotplay">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>Pay to (Not) Play: Monetizing Impatience in Mobile Games.</strong> <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Hu Fu" data-short-name="H. Fu">Hu Fu</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>. In <span class="cmu-serif-italic">AAAI Conference on Artificial Intelligence (AAAI '24)</span>
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="https://ojs.aaai.org/index.php/AAAI/article/view/28846" class="icon-link aaai-link"><span class="link-text">paper</span></a>
+                    </li>
+                    <li>
+                        <a href="https://arxiv.org/abs/2312.10205" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+                    </li>
+                    <li>
+                        <a href="assets/posters/MobileGames_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+                    </li>
+                    <li>
+                        <a href="assets/talks/bellairs.pptx" class="icon-link slides-link"><span class="link-text">slides</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </li>
+    <li class="publication-item" data-publication-id="steer-2024" data-publication-type="conference" data-bibtex-key="raman2024steer">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>STEER: Assessing the Economic Rationality in Large Language Models.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Taylor Lundy" data-short-name="T. Lundy">Taylor Lundy</span>, <span class="author-name" data-full-name="Samuel J. Amouyal" data-short-name="S. Amouyal">Samuel J. Amouyal</span>, <span class="author-name" data-full-name="Yoav Levine" data-short-name="Y. Levine">Yoav Levine</span>, <span class="author-name" data-full-name="Kevin Leyton-Brown" data-short-name="K. Leyton-Brown">Kevin Leyton-Brown</span>, <span class="author-name" data-full-name="Moshe Tennenholtz" data-short-name="M. Tennenholtz">Moshe Tennenholtz</span>. In <span class="cmu-serif-italic">International Conference on Machine Learning (ICML '24)</span>
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="https://icml.cc/virtual/2024/poster/33120" class="icon-link icml-link"><span class="link-text">paper</span></a>
+                    </li>
+                    <li>
+                        <a href="https://arxiv.org/abs/2402.09552" class="icon-link arxiv-link"><span class="link-text">arXiv</span></a>
+                    </li>
+                    <li>
+                        <a href="assets/posters/STEER_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
 </ol>
 <h3 id="2020" class="year-heading">2020</h3>
-<ol>
-
-    <li><strong>Classifying Wikipedia Article Quality with Revision History Networks.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Nathaniel Sauerberg" data-short-name="N. Sauerberg">Nathaniel Sauerberg</span>, <span class="author-name" data-full-name="Jonah Fisher" data-short-name="J. Fisher">Jonah Fisher</span>, <span class="author-name" data-full-name="Addison Partida" data-short-name="A. Partida">Addison Partida</span>, <span class="author-name" data-full-name="Sneha Narayan" data-short-name="S. Narayan">Sneha Narayan</span>. In <span class="cmu-serif-italic">The International Symposium on Open Collaboration (OpenSym '20)</span> 
-        <ul class="horizontal-links">
-            <li>
-                <a href="https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf" class="icon-link pdf-link"><span class="link-text">paper</span></a>
-            </li>
-        </ul>
+<ol class="publication-list">
+    <li class="publication-item" data-publication-id="wikipedia-quality-2020" data-publication-type="conference" data-bibtex-key="raman2020classifying">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>Classifying Wikipedia Article Quality with Revision History Networks.</strong> <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Nathaniel Sauerberg" data-short-name="N. Sauerberg">Nathaniel Sauerberg</span>, <span class="author-name" data-full-name="Jonah Fisher" data-short-name="J. Fisher">Jonah Fisher</span>, <span class="author-name" data-full-name="Sneha Narayan" data-short-name="S. Narayan">Sneha Narayan</span>. In <span class="cmu-serif-italic">The International Symposium on Open Collaboration (OpenSym '20)</span>
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf" class="icon-link pdf-link"><span class="link-text">paper</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
-    <li><strong>ALCH: An Imperative Language for the CRN-TAM.</strong>  <span class="author-name" data-full-name="Titus H. Klinge" data-short-name="T. Klinge">Titus H. Klinge</span>, <span class="author-name" data-full-name="James I. Lathrop" data-short-name="J. Lathrop">James I. Lathrop</span>, <span class="author-name" data-full-name="Sonia Moreno" data-short-name="S. Moreno">Sonia Moreno</span>, <span class="author-name" data-full-name="Hugh D. Potter" data-short-name="H. Potter">Hugh D. Potter</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Matthew R. Riley" data-short-name="M. Riley">Matthew R. Riley</span>. In  <span class="cmu-serif-italic">The International Conference on DNA Computing and Molecular Programming (DNA '20)</span>
-        <ul class="horizontal-links">
-            <li>
-                <a href="https://cs.emis.de/LIPIcs/frontdoor_d8ee.html" class="icon-link dna-link"><span class="link-text">paper</span></a>
-            </li>
-            <li>
-                <a href="https://link.springer.com/article/10.1007/s11047-021-09878-8" class="icon-link springer-nature-link"><span class="link-text">journal</span></a>
-            </li>
-            <li>
-                <a href="assets/posters/ALCH_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
-            </li>
-        </ul>
+    <li class="publication-item" data-publication-id="alch-2020" data-publication-type="conference" data-bibtex-key="klinge2020alch">
+        <div class="publication-entry">
+            <div class="publication-meta">
+                <span class="publication-badge"></span>
+                <button class="publication-copy-button" type="button" title="Copy BibTeX" aria-label="Copy BibTeX">
+                    cite
+                </button>
+            </div>
+            <div class="publication-content">
+                <strong>ALCH: An Imperative Language for the CRN-TAM.</strong> <span class="author-name" data-full-name="Titus H. Klinge" data-short-name="T. Klinge">Titus H. Klinge</span>, <span class="author-name" data-full-name="James I. Lathrop" data-short-name="J. Lathrop">James I. Lathrop</span>, <span class="author-name" data-full-name="Sonia Moreno" data-short-name="S. Moreno">Sonia Moreno</span>, <span class="author-name" data-full-name="Hugh D. Potter" data-short-name="H. Potter">Hugh D. Potter</span>, <span class="author-name" data-full-name="Narun K. Raman" data-short-name="N. Raman">Narun K. Raman</span>, <span class="author-name" data-full-name="Matthew R. Riley" data-short-name="M. Riley">Matthew R. Riley</span>. In <span class="cmu-serif-italic">The International Conference on DNA Computing and Molecular Programming (DNA '20)</span>
+                <ul class="horizontal-links">
+                    <li>
+                        <a href="https://cs.emis.de/LIPIcs/frontdoor_d8ee.html" class="icon-link dna-link"><span class="link-text">paper</span></a>
+                    </li>
+                    <li>
+                        <a href="assets/posters/ALCH_Poster.pdf" class="icon-link pdf-link"><span class="link-text">poster</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </li>
 </ol>
 
