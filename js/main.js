@@ -126,6 +126,48 @@ document.addEventListener('DOMContentLoaded', function() {
         button.setAttribute('aria-label', `Copy BibTeX for ${button.dataset.publicationCode}`);
     }
 
+    function initializePublicationsHeadingWrap() {
+        const heading = document.getElementById('publications-and-pre-prints');
+        if (!heading) return;
+
+        const measurer = heading.cloneNode(true);
+        measurer.removeAttribute('id');
+        measurer.setAttribute('aria-hidden', 'true');
+        measurer.classList.add('publications-heading-measurer');
+        heading.parentNode.insertBefore(measurer, heading.nextSibling);
+
+        const lead = measurer.querySelector('.publications-heading-lead');
+        const desktopTail = measurer.querySelector('.publications-heading-desktop-tail');
+        if (!lead || !desktopTail) {
+            measurer.remove();
+            return;
+        }
+
+        function updateHeadingText() {
+            measurer.classList.remove('publications-heading-short');
+            measurer.style.width = `${heading.getBoundingClientRect().width}px`;
+
+            const leadRect = lead.getBoundingClientRect();
+            const tailRect = desktopTail.getBoundingClientRect();
+            const tailWrapped = tailRect.top > leadRect.top + 1;
+
+            heading.classList.toggle('publications-heading-short', tailWrapped);
+        }
+
+        updateHeadingText();
+
+        if (window.ResizeObserver) {
+            const observer = new ResizeObserver(updateHeadingText);
+            observer.observe(heading.parentElement);
+        } else {
+            window.addEventListener('resize', updateHeadingText);
+        }
+
+        if (document.fonts) {
+            document.fonts.ready.then(updateHeadingText);
+        }
+    }
+
     function setCopyButtonState(button, state) {
         if (button.dataset.resetTimer) {
             window.clearTimeout(Number(button.dataset.resetTimer));
@@ -468,6 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial calls and event listeners
     initializeProfilePills();
+    initializePublicationsHeadingWrap();
     initializePublications();
     shortenNames();
     adjustTooltipPosition();
