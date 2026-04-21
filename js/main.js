@@ -6,22 +6,27 @@ function getBreakpoint() {
     return parseInt(breakpoint);
 }
 
-function wrapName(fullName) {
-    // Convert "First Middle Last" to "F. Last" 
-    const parts = fullName.split(' ');
-    if (parts.length === 1) return fullName; // Single name, return as is
-    
-    const firstName = parts[0];
-    const lastName = parts[parts.length - 1];
-    const shortName = firstName.charAt(0) + '. ' + lastName;
-    
-    return `<span class="author-name" data-full-name="${fullName}" data-short-name="${shortName}">${fullName}</span>`;
-}
-
 // Enhanced footnote system with click-to-stick functionality
 document.addEventListener('DOMContentLoaded', function() {
     let activeMarginNote = null;
     let bibtexLibraryPromise = null;
+    const publicationDataUrl = '/assets/publications/publications.json';
+    const publicationAuthorsUrl = '/assets/publications/authors.json';
+    const publicationBibliographyUrl = '/assets/publications/bibliography.bib';
+    const linkKindClasses = {
+        aaai: 'aaai-link',
+        arxiv: 'arxiv-link',
+        dna: 'dna-link',
+        doi: 'doi-link',
+        html: 'html-link',
+        huggingface: 'huggingface-link',
+        icml: 'icml-link',
+        neurips: 'neurips-link',
+        pdf: 'pdf-link',
+        poster: 'pdf-link',
+        slides: 'slides-link',
+        'springer-nature': 'springer-nature-link'
+    };
 
     function initializeProfilePills() {
         const pillTemplate = document.getElementById('profile-pill-template');
@@ -38,6 +43,172 @@ document.addEventListener('DOMContentLoaded', function() {
         if (type === 'conference') return 'Conference';
         if (type === 'journal') return 'Journal';
         return 'Informal';
+    }
+
+    function getShortAuthorName(fullName) {
+        const parts = fullName.trim().split(/\s+/);
+        if (parts.length <= 1) return fullName;
+        return `${parts[0].charAt(0)}. ${parts[parts.length - 1]}`;
+    }
+
+    async function loadJson(url) {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${url}: ${response.status}`);
+        }
+        return response.json();
+    }
+
+    function appendText(parent, text) {
+        parent.appendChild(document.createTextNode(text));
+    }
+
+    function createAuthorElement(authorId, authors) {
+        const author = authors[authorId];
+        const fullName = author ? author.full : authorId;
+        const shortName = author && author.short ? author.short : getShortAuthorName(fullName);
+        const authorElement = document.createElement('span');
+
+        if (!author) {
+            console.warn(`Missing author metadata for ${authorId}`);
+        }
+
+        authorElement.className = 'author-name';
+        authorElement.dataset.fullName = fullName;
+        authorElement.dataset.shortName = shortName;
+        authorElement.textContent = fullName;
+
+        return authorElement;
+    }
+
+    function createPublicationLinks(links) {
+        if (!links || links.length === 0) return null;
+
+        const linkList = document.createElement('ul');
+        linkList.className = 'horizontal-links';
+
+        links.forEach(function(link) {
+            const item = document.createElement('li');
+            const anchor = document.createElement('a');
+            const label = document.createElement('span');
+            const iconClass = linkKindClasses[link.kind] || `${link.kind}-link`;
+
+            anchor.href = link.href;
+            anchor.className = `icon-link ${iconClass}`;
+
+            label.className = 'link-text';
+            label.textContent = link.label;
+
+            anchor.appendChild(label);
+            item.appendChild(anchor);
+            linkList.appendChild(item);
+        });
+
+        return linkList;
+    }
+
+    function createPublicationItem(publication, authors) {
+        const item = document.createElement('li');
+        const entry = document.createElement('div');
+        const meta = document.createElement('div');
+        const badge = document.createElement('span');
+        const copyButton = document.createElement('button');
+        const content = document.createElement('div');
+        const title = document.createElement('strong');
+        const venue = document.createElement('span');
+        const links = createPublicationLinks(publication.links);
+
+        item.className = 'publication-item';
+        item.dataset.publicationId = publication.id;
+        item.dataset.publicationType = publication.type || 'informal';
+        if (publication.bibtexKey) {
+            item.dataset.bibtexKey = publication.bibtexKey;
+        }
+
+        entry.className = 'publication-entry';
+        meta.className = 'publication-meta';
+        badge.className = 'publication-badge';
+
+        copyButton.className = 'publication-copy-button';
+        copyButton.type = 'button';
+        copyButton.title = 'Copy BibTeX';
+        copyButton.setAttribute('aria-label', 'Copy BibTeX');
+        copyButton.textContent = 'cite';
+        copyButton.hidden = true;
+
+        content.className = 'publication-content';
+        title.textContent = publication.title;
+
+        content.appendChild(title);
+        appendText(content, ' ');
+
+        publication.authors.forEach(function(authorId, index) {
+            if (index > 0) {
+                appendText(content, ', ');
+            }
+            content.appendChild(createAuthorElement(authorId, authors));
+        });
+
+        appendText(content, '. ');
+
+        if (publication.venuePrefix) {
+            appendText(content, `${publication.venuePrefix} `);
+        }
+
+        venue.className = 'cmu-serif-italic';
+        venue.textContent = publication.venue;
+        content.appendChild(venue);
+
+        if (links) {
+            content.appendChild(links);
+        }
+
+        meta.appendChild(badge);
+        meta.appendChild(copyButton);
+        entry.appendChild(meta);
+        entry.appendChild(content);
+        item.appendChild(entry);
+
+        return item;
+    }
+
+    function renderPublications(publications, authors) {
+        const root = document.getElementById('publications-root');
+        if (!root) return;
+
+        let activeYear = null;
+        let activeList = null;
+
+        root.replaceChildren();
+
+        publications.forEach(function(publication) {
+            if (publication.year !== activeYear) {
+                const yearHeading = document.createElement('h3');
+
+                activeYear = publication.year;
+                activeList = document.createElement('ol');
+
+                yearHeading.id = String(publication.year);
+                yearHeading.className = 'year-heading';
+                yearHeading.textContent = publication.year;
+
+                activeList.className = 'publication-list';
+
+                root.appendChild(yearHeading);
+                root.appendChild(activeList);
+            }
+
+            activeList.appendChild(createPublicationItem(publication, authors));
+        });
+    }
+
+    async function initializePublicationSection() {
+        const data = await Promise.all([
+            loadJson(publicationDataUrl),
+            loadJson(publicationAuthorsUrl)
+        ]);
+
+        renderPublications(data[0], data[1]);
     }
 
     async function copyTextToClipboard(text) {
@@ -106,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function loadBibtexLibrary() {
         if (!bibtexLibraryPromise) {
-            bibtexLibraryPromise = fetch('/assets/bibtex/my_pubs.bib')
+            bibtexLibraryPromise = fetch(publicationBibliographyUrl)
                 .then(function(response) {
                     if (!response.ok) {
                         throw new Error(`Failed to load BibTeX library: ${response.status}`);
@@ -511,8 +682,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial calls and event listeners
     initializeProfilePills();
     initializePublicationsHeadingWrap();
-    initializePublications();
-    shortenNames();
+    initializePublicationSection()
+        .then(function() {
+            initializePublications();
+            shortenNames();
+        })
+        .catch(function(error) {
+            console.error(error);
+            initializePublications();
+            shortenNames();
+        });
     adjustTooltipPosition();
     createImageTooltips();
     

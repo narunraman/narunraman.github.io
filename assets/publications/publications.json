@@ -1,0 +1,246 @@
+[
+  {
+    "id": "nfts-empirical-insights-2026",
+    "year": 2026,
+    "type": "informal",
+    "title": "Conspicuous Consumption of NFTs: Empirical Insights from a Data-Rich Market.",
+    "authors": ["taylor-lundy", "narun", "scott-kominers", "kevin-leyton-brown"],
+    "venue": "Working Paper"
+  },
+  {
+    "id": "digital-self-control-2026",
+    "year": 2026,
+    "type": "informal",
+    "title": "I Can Stop Whenever I Want: On the Effect of Vigilance, Friction and Timers on Digital Self-Control.",
+    "authors": ["narun", "sophie-greenwood", "david-rand", "kevin-leyton-brown", "jon-kleinberg"],
+    "venue": "Working Paper"
+  },
+  {
+    "id": "quickscope-2026",
+    "year": 2026,
+    "type": "informal",
+    "bibtexKey": "lundy2026quickscopecertifyinghardquestions",
+    "title": "QuickScope: Certifying Hard Questions in Dynamic LLM Benchmarks.",
+    "authors": ["taylor-lundy", "narun", "kevin-leyton-brown"],
+    "venue": "Working Paper.",
+    "links": [
+      {
+        "kind": "arxiv",
+        "label": "arXiv",
+        "href": "https://arxiv.org/abs/2604.17842"
+      }
+    ]
+  },
+  {
+    "id": "test-exploiters-2025",
+    "year": 2025,
+    "type": "informal",
+    "bibtexKey": "raman2025testexploiters",
+    "title": "Reasoning Models are Test Exploiters: Rethinking Multiple Choice.",
+    "authors": ["narun", "taylor-lundy", "kevin-leyton-brown"],
+    "venuePrefix": "In",
+    "venue": "Workshop on Assessing and Improving Reliability of Foundation Models in the Real World (AAAI '26).",
+    "links": [
+      {
+        "kind": "arxiv",
+        "label": "arXiv",
+        "href": "https://arxiv.org/abs/2507.15337"
+      }
+    ]
+  },
+  {
+    "id": "steer-me-2025",
+    "year": 2025,
+    "type": "conference",
+    "bibtexKey": "raman2025steerme",
+    "title": "STEER-ME: Assessing the Microeconomic Reasoning of Large Language Models.",
+    "authors": ["narun", "taylor-lundy", "thiago-amin", "kevin-leyton-brown", "jesse-perla"],
+    "venuePrefix": "Forthcoming in",
+    "venue": "Conference on Neural Information Processing Systems (NeurIPS '25).",
+    "links": [
+      {
+        "kind": "arxiv",
+        "label": "arXiv",
+        "href": "https://arxiv.org/abs/2502.13119"
+      },
+      {
+        "kind": "poster",
+        "label": "poster",
+        "href": "/assets/publications/steer-me-2025/poster-neurips-2025.pdf"
+      },
+      {
+        "kind": "slides",
+        "label": "slides",
+        "href": "/assets/publications/steer-me-2025/slides-steer-steer-me.pptx"
+      },
+      {
+        "kind": "huggingface",
+        "label": "dataset",
+        "href": "https://huggingface.co/datasets/narunraman/steer_me"
+      }
+    ]
+  },
+  {
+    "id": "info-econ-llms-2025",
+    "year": 2025,
+    "type": "informal",
+    "title": "Evaluating LLMs in Information Economics.",
+    "authors": ["narun", "taylor-lundy", "thiago-amin", "kevin-leyton-brown", "jesse-perla"],
+    "venuePrefix": "In",
+    "venue": "Workshop on Information Economics x Large Language Models at Economics and Computation (EC '25).",
+    "links": [
+      {
+        "kind": "pdf",
+        "label": "pdf",
+        "href": "/assets/publications/info-econ-llms-2025/paper-ec-workshop.pdf"
+      },
+      {
+        "kind": "html",
+        "label": "post",
+        "href": "/posts/llms_information_economics.html"
+      }
+    ]
+  },
+  {
+    "id": "nfts-test-bed-2025",
+    "year": 2025,
+    "type": "conference",
+    "bibtexKey": "lundy2025nfts",
+    "title": "NFTs as a Data-Rich Test Bed: Conspicuous Consumption and its Determinants.",
+    "authors": ["taylor-lundy", "narun", "scott-kominers", "kevin-leyton-brown"],
+    "venuePrefix": "In",
+    "venue": "TheWebConference (WWW '25).",
+    "links": [
+      {
+        "kind": "doi",
+        "label": "paper",
+        "href": "https://doi.org/10.1145/3696410.3714724"
+      },
+      {
+        "kind": "arxiv",
+        "label": "arXiv",
+        "href": "https://arxiv.org/abs/2503.17457"
+      },
+      {
+        "kind": "poster",
+        "label": "poster",
+        "href": "/assets/publications/nfts-test-bed-2025/poster-www-2025.pdf"
+      }
+    ]
+  },
+  {
+    "id": "alch-2024",
+    "year": 2024,
+    "type": "journal",
+    "bibtexKey": "klinge2024alch",
+    "title": "ALCH: An Imperative Language for the CRN-TAM.",
+    "authors": ["titus-klinge", "james-lathrop", "sonia-moreno", "hugh-potter", "narun", "matthew-riley"],
+    "venuePrefix": "In",
+    "venue": "The Springer Nature Journal",
+    "links": [
+      {
+        "kind": "springer-nature",
+        "label": "paper",
+        "href": "https://link.springer.com/article/10.1007/s11047-021-09878-8"
+      }
+    ]
+  },
+  {
+    "id": "pay-to-not-play-2024",
+    "year": 2024,
+    "type": "conference",
+    "bibtexKey": "lundy2025paytonotplay",
+    "title": "Pay to (Not) Play: Monetizing Impatience in Mobile Games.",
+    "authors": ["taylor-lundy", "narun", "hu-fu", "kevin-leyton-brown"],
+    "venuePrefix": "In",
+    "venue": "AAAI Conference on Artificial Intelligence (AAAI '24)",
+    "links": [
+      {
+        "kind": "aaai",
+        "label": "paper",
+        "href": "https://ojs.aaai.org/index.php/AAAI/article/view/28846"
+      },
+      {
+        "kind": "arxiv",
+        "label": "arXiv",
+        "href": "https://arxiv.org/abs/2312.10205"
+      },
+      {
+        "kind": "poster",
+        "label": "poster",
+        "href": "/assets/publications/pay-to-not-play-2024/poster-aaai-2024.pdf"
+      },
+      {
+        "kind": "slides",
+        "label": "slides",
+        "href": "/assets/publications/pay-to-not-play-2024/slides-bellairs.pptx"
+      }
+    ]
+  },
+  {
+    "id": "steer-2024",
+    "year": 2024,
+    "type": "conference",
+    "bibtexKey": "raman2024steer",
+    "title": "STEER: Assessing the Economic Rationality in Large Language Models.",
+    "authors": ["narun", "taylor-lundy", "samuel-amouyal", "yoav-levine", "kevin-leyton-brown", "moshe-tennenholtz"],
+    "venuePrefix": "In",
+    "venue": "International Conference on Machine Learning (ICML '24)",
+    "links": [
+      {
+        "kind": "icml",
+        "label": "paper",
+        "href": "https://icml.cc/virtual/2024/poster/33120"
+      },
+      {
+        "kind": "arxiv",
+        "label": "arXiv",
+        "href": "https://arxiv.org/abs/2402.09552"
+      },
+      {
+        "kind": "poster",
+        "label": "poster",
+        "href": "/assets/publications/steer-2024/poster-icml-2024.pdf"
+      }
+    ]
+  },
+  {
+    "id": "wikipedia-quality-2020",
+    "year": 2020,
+    "type": "conference",
+    "bibtexKey": "raman2020classifying",
+    "title": "Classifying Wikipedia Article Quality with Revision History Networks.",
+    "authors": ["narun", "nathaniel-sauerberg", "jonah-fisher", "sneha-narayan"],
+    "venuePrefix": "In",
+    "venue": "The International Symposium on Open Collaboration (OpenSym '20)",
+    "links": [
+      {
+        "kind": "pdf",
+        "label": "paper",
+        "href": "https://opensym.org/wp-content/uploads/2020/08/os20-paper-a5-raman.pdf"
+      }
+    ]
+  },
+  {
+    "id": "alch-2020",
+    "year": 2020,
+    "type": "conference",
+    "bibtexKey": "klinge2020alch",
+    "title": "ALCH: An Imperative Language for the CRN-TAM.",
+    "authors": ["titus-klinge", "james-lathrop", "sonia-moreno", "hugh-potter", "narun", "matthew-riley"],
+    "venuePrefix": "In",
+    "venue": "The International Conference on DNA Computing and Molecular Programming (DNA '20)",
+    "links": [
+      {
+        "kind": "dna",
+        "label": "paper",
+        "href": "https://cs.emis.de/LIPIcs/frontdoor_d8ee.html"
+      },
+      {
+        "kind": "poster",
+        "label": "poster",
+        "href": "/assets/publications/alch-2020/poster-dna-2020.pdf"
+      }
+    ]
+  }
+]
