@@ -18,6 +18,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png">
     <link rel="shortcut icon" href="../assets/images/favicon-32.png">
+    <script src="/js/software.js" defer></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -40,36 +41,7 @@
             Selected tools and research artifacts.
         </p>
 
-        <ul class="software-project-list">
-            <li class="software-project-item">
-                <div class="software-project-main">
-                    <h2 class="software-project-title">QuickScope</h2>
-                    <p class="software-project-description">
-                        Finds and certifies hard regions in dynamic LLM benchmarks, focusing evaluation budget where models keep failing reliably.
-                    </p>
-                    <ul class="software-project-resources" aria-label="QuickScope resources">
-                        <li><a href="https://github.com/narunraman/quickscope">code</a></li>
-                        <li><a href="https://www.cs.ubc.ca/~narunram/quickscope/paper">paper</a></li>
-                    </ul>
-                </div>
-                <a href="https://www.cs.ubc.ca/~narunram/quickscope/" class="software-project-link">Open project</a>
-            </li>
-
-            <li class="software-project-item">
-                <div class="software-project-main">
-                    <h2 class="software-project-title">STEER Benchmark</h2>
-                    <p class="software-project-description">
-                        Explore benchmark artifacts for assessing economic rationality and microeconomic reasoning in large language models.
-                    </p>
-                    <ul class="software-project-resources" aria-label="STEER Benchmark resources">
-                        <li><a href="https://huggingface.co/datasets/narunraman/steer_me">dataset</a></li>
-                        <li><a href="https://arxiv.org/abs/2402.09552">STEER paper</a></li>
-                        <li><a href="https://arxiv.org/abs/2502.13119">STEER-ME paper</a></li>
-                    </ul>
-                </div>
-                <a href="https://steer-benchmark.cs.ubc.ca/" class="software-project-link">Open project</a>
-            </li>
-        </ul>
+        <div id="software-project-root"></div>
     </main>
 
     <div id="footer" class="mb-5">

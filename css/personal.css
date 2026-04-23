@@ -129,6 +129,15 @@
     margin: 0;
 }
 
+.software-project-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.software-project-title a:hover {
+    color: var(--link);
+}
+
 .software-project-description {
     color: var(--muted);
     line-height: 1.5;
@@ -174,11 +183,131 @@
 }
 
 .software-project-link::after {
-    content: " →";
+    content: " ↗";
 }
 
 .software-project-link:hover {
     color: #b02a37;
+}
+
+.software-project-item-focused {
+    border-bottom: none;
+    grid-template-columns: minmax(0, 1fr) max-content;
+}
+
+.software-project-item-focused .software-project-main {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.software-project-item-focused .software-project-link {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.software-back-link {
+    color: var(--muted);
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.9rem;
+    grid-column: 1 / -1;
+    text-decoration: none;
+}
+
+.software-back-link::before {
+    content: "< ";
+}
+
+.software-back-link:hover {
+    color: var(--link);
+}
+
+.software-project-details {
+    margin-top: 1.3rem;
+}
+
+.software-detail-section {
+    border-top: 1px solid #e9ecef;
+    padding: 1.1rem 0 0;
+}
+
+.software-detail-section + .software-detail-section {
+    margin-top: 1.1rem;
+}
+
+.software-detail-section-title {
+    color: var(--text);
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.8rem;
+    text-transform: uppercase;
+}
+
+.software-detail-list,
+.software-related-publications {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.software-detail-item {
+    display: grid;
+    gap: 0.18rem;
+    grid-template-columns: minmax(7rem, 0.32fr) minmax(0, 1fr);
+    padding: 0.7rem 0;
+}
+
+.software-detail-item:first-child {
+    padding-top: 0;
+}
+
+.software-detail-item + .software-detail-item {
+    border-top: 1px solid #f1f3f5;
+}
+
+.software-detail-header {
+    min-width: 0;
+}
+
+.software-detail-title {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.software-detail-description {
+    color: var(--muted);
+    grid-column: 2 / 3;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.software-detail-url {
+    color: #8a929a;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.86rem;
+    grid-column: 2 / 3;
+    text-decoration: none;
+    word-break: break-word;
+}
+
+.software-detail-url:hover,
+.software-related-publications a:hover {
+    color: var(--link);
+}
+
+.software-related-publications li {
+    line-height: 1.45;
+    margin: 0.25rem 0;
+}
+
+.software-related-publications a {
+    color: var(--link);
+    text-decoration: none;
+}
+
+.software-related-publications a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 576px) {
@@ -198,7 +327,21 @@
         grid-template-columns: 1fr;
     }
 
+    .software-project-item-focused .software-project-main,
+    .software-project-item-focused .software-project-link {
+        grid-column: 1 / -1;
+    }
+
     .software-project-title {
         font-size: 1.2rem;
+    }
+
+    .software-detail-item {
+        grid-template-columns: 1fr;
+    }
+
+    .software-detail-description,
+    .software-detail-url {
+        grid-column: 1 / -1;
     }
 }

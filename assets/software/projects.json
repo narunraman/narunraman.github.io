@@ -1,0 +1,114 @@
+[
+  {
+    "id": "quickscope",
+    "title": "QuickScope",
+    "homepage": "https://www.cs.ubc.ca/~narunram/quickscope/",
+    "summary": "Bayesian-optimal evaluation for finding and certifying hard regions in dynamic LLM benchmarks.",
+    "description": "QuickScope adaptively allocates evaluation budget across a benchmark's configuration space, helping identify model weak spots without uniformly evaluating every generated question. It is built around COUP-style Bayesian optimization and supports pluggable datasets, utilities, and benchmark generators.",
+    "resources": [
+      {
+        "kind": "github",
+        "label": "code",
+        "title": "Code",
+        "href": "https://github.com/narunraman/quickscope",
+        "description": "Python CLI and library for adaptive evaluation, fixed-budget baselines, offline datasets, result summaries, and utility plots."
+      },
+      {
+        "kind": "paper",
+        "label": "paper",
+        "title": "Paper",
+        "href": "https://arxiv.org/abs/2604.17842",
+        "description": "Introduces the method for certifying hard questions in dynamic benchmarks, with modifications that make Bayesian optimization practical for LLM evaluation pipelines."
+      }
+    ],
+    "relatedLinks": [
+      {
+        "kind": "html",
+        "label": "DyVal",
+        "title": "DyVal Benchmark",
+        "href": "https://llm-eval.github.io/pages/leaderboard/dyval.html",
+        "description": "Dynamic evaluation benchmark supported by QuickScope's built-in DyVal scenario."
+      },
+      {
+        "kind": "github",
+        "label": "BOCOEL",
+        "title": "BOCOEL",
+        "href": "https://github.com/rentruewang/bocoel",
+        "description": "Related Bayesian-optimization toolkit for reducing the cost of evaluating language models."
+      }
+    ],
+    "relatedPublications": [
+      {
+        "title": "Practical, Utilitarian Algorithm Configuration",
+        "href": "https://arxiv.org/abs/2510.14683"
+      }
+    ],
+    "publications": ["quickscope-2026"]
+  },
+  {
+    "id": "steer-benchmark",
+    "title": "STEER Benchmark",
+    "homepage": "https://steer-benchmark.cs.ubc.ca/",
+    "summary": "Benchmark family for evaluating economic reasoning in language models across strategic and non-strategic settings.",
+    "description": "STEER is a benchmark family for evaluating economic reasoning in language models. STEER focuses on strategic economic settings with multiple-choice questions, while STEER-ME extends the suite to non-strategic microeconomic reasoning and includes both multiple-choice and free-text formats.",
+    "resources": [
+      {
+        "kind": "huggingface",
+        "label": "dataset",
+        "title": "Dataset",
+        "href": "https://huggingface.co/datasets/narunraman/steer_me",
+        "description": "Hugging Face dataset for STEER-ME benchmark artifacts."
+      },
+      {
+        "kind": "arxiv",
+        "label": "STEER paper",
+        "title": "STEER Paper",
+        "href": "https://arxiv.org/abs/2402.09552",
+        "description": "Paper introducing the STEER benchmark for assessing economic rationality in large language models."
+      },
+      {
+        "kind": "arxiv",
+        "label": "STEER-ME paper",
+        "title": "STEER-ME Paper",
+        "href": "https://arxiv.org/abs/2502.13119",
+        "description": "Paper introducing STEER-ME for assessing microeconomic reasoning in large language models."
+      }
+    ],
+    "relatedPublications": [
+      {
+        "title": "EconEvals: Benchmarks and Litmus Tests for Economic Decision-Making by LLM Agents",
+        "href": "https://arxiv.org/abs/2503.18825"
+      }
+    ],
+    "publications": ["steer-2024", "steer-me-2025"]
+  },
+  {
+    "id": "Auto-steer",
+    "title": "Auto-STEER",
+    "summary": "Template-based pipeline for building economics benchmark suites from human-written seeds.",
+    "description": "Auto-STEER is the generation and testing pipeline behind STEER-ME. Given human-written seeds in the expected format, it supports creating numerical variations, checking generated instances, and producing full suites of multiple-choice and free-text economics questions.",
+    "resources": [
+      {
+        "kind": "github",
+        "label": "code",
+        "title": "Code",
+        "href": "https://github.com/narunraman/autosteer",
+        "description": "Generation and testing pipeline for authoring benchmark templates, producing numerical variations, and assembling economics question suites."
+      },
+      {
+        "kind": "arxiv",
+        "label": "paper",
+        "title": "STEER-ME Paper",
+        "href": "https://arxiv.org/abs/2502.13119",
+        "description": "Paper describing the benchmark and generation methodology supported by Auto-STEER."
+      }
+    ],
+    "relatedPublications": [
+      {
+        "title": "GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in Large Language Models",
+        "href": "https://arxiv.org/abs/2410.05229"
+      }
+    ],
+    "publications": ["steer-me-2025"]
+  }
+]

@@ -12,7 +12,16 @@
     "year": 2026,
     "type": "informal",
     "title": "I Can Stop Whenever I Want: On the Effect of Vigilance, Friction and Timers on Digital Self-Control.",
-    "authors": ["narun", "sophie-greenwood", "david-rand", "kevin-leyton-brown", "jon-kleinberg"],
+    "authors": [
+      {
+        "id": "narun",
+        "equalContribution": true
+      },
+      {
+        "id": "sophie-greenwood", 
+        "equalContribution": true
+      },
+      "david-rand", "kevin-leyton-brown", "jon-kleinberg"],
     "venue": "Working Paper"
   },
   {
@@ -21,13 +30,28 @@
     "type": "informal",
     "bibtexKey": "lundy2026quickscopecertifyinghardquestions",
     "title": "QuickScope: Certifying Hard Questions in Dynamic LLM Benchmarks.",
-    "authors": ["taylor-lundy", "narun", "kevin-leyton-brown"],
+    "authors": [
+      {
+        "id": "taylor-lundy",
+        "equalContribution": true
+      },
+      {
+        "id": "narun",
+        "equalContribution": true
+      },
+      "kevin-leyton-brown"
+    ],
     "venue": "Working Paper.",
     "links": [
       {
         "kind": "arxiv",
         "label": "arXiv",
         "href": "https://arxiv.org/abs/2604.17842"
+      },
+      {
+        "kind": "software",
+        "label": "software",
+        "href": "/software/#quickscope"
       }
     ]
   },
@@ -77,6 +101,11 @@
         "kind": "huggingface",
         "label": "dataset",
         "href": "https://huggingface.co/datasets/narunraman/steer_me"
+      },
+      {
+        "kind": "software",
+        "label": "software",
+        "href": "/software/#steer-benchmark"
       }
     ]
   },
@@ -201,6 +230,11 @@
         "kind": "poster",
         "label": "poster",
         "href": "/assets/publications/steer-2024/poster-icml-2024.pdf"
+      },
+      {
+        "kind": "software",
+        "label": "software",
+        "href": "/software/#steer-benchmark"
       }
     ]
   },

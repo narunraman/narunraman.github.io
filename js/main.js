@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         neurips: 'neurips-link',
         pdf: 'pdf-link',
         poster: 'pdf-link',
+        software: 'software-link',
         slides: 'slides-link',
         'springer-nature': 'springer-nature-link'
     };
@@ -63,20 +64,50 @@ document.addEventListener('DOMContentLoaded', function() {
         parent.appendChild(document.createTextNode(text));
     }
 
-    function createAuthorElement(authorId, authors) {
-        const author = authors[authorId];
-        const fullName = author ? author.full : authorId;
+    function getAuthorRecord(authorEntry) {
+        if (typeof authorEntry === 'string') {
+            return {
+                id: authorEntry
+            };
+        }
+
+        return authorEntry || {};
+    }
+
+    function updateAuthorDisplay(authorElement, useShortName) {
+        const text = useShortName ? authorElement.dataset.shortName : authorElement.dataset.fullName;
+
+        authorElement.replaceChildren(document.createTextNode(text));
+
+        if (authorElement.dataset.equalContribution === 'true') {
+            const marker = document.createElement('sup');
+            marker.className = 'author-marker';
+            marker.textContent = '=';
+            marker.title = 'Equal contribution';
+            marker.setAttribute('aria-label', 'equal contribution');
+            authorElement.appendChild(marker);
+        }
+    }
+
+    function createAuthorElement(authorEntry, authors) {
+        const authorRecord = getAuthorRecord(authorEntry);
+        const author = authors[authorRecord.id];
+        const fullName = author ? author.full : authorRecord.id;
         const shortName = author && author.short ? author.short : getShortAuthorName(fullName);
         const authorElement = document.createElement('span');
 
         if (!author) {
-            console.warn(`Missing author metadata for ${authorId}`);
+            console.warn(`Missing author metadata for ${authorRecord.id}`);
         }
 
         authorElement.className = 'author-name';
         authorElement.dataset.fullName = fullName;
         authorElement.dataset.shortName = shortName;
-        authorElement.textContent = fullName;
+        if (authorRecord.equalContribution) {
+            authorElement.dataset.equalContribution = 'true';
+        }
+
+        updateAuthorDisplay(authorElement, false);
 
         return authorElement;
     }
@@ -119,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const links = createPublicationLinks(publication.links);
 
         item.className = 'publication-item';
+        item.id = publication.id;
         item.dataset.publicationId = publication.id;
         item.dataset.publicationType = publication.type || 'informal';
         if (publication.bibtexKey) {
@@ -535,9 +567,9 @@ document.addEventListener('DOMContentLoaded', function() {
         nameElements.forEach(function(element) {
             const fullName = element.getAttribute('data-full-name');
             const shortName = element.getAttribute('data-short-name');
-            
+
             if (fullName && shortName) {
-                element.textContent = isNarrowScreen ? shortName : fullName;
+                updateAuthorDisplay(element, isNarrowScreen);
             }
         });
     }

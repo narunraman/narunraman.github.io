@@ -544,6 +544,15 @@
     background-image: url('../assets/logos/html_logo.svg');
 }
 
+.software-link::before {
+    background-image: url('../assets/logos/software_logo.png');
+    border-radius: 2px;
+}
+
+.software-link {
+    gap: 6px;
+}
+
 .aaai-link::before {
     background-image: url('../assets/logos/aaai_logo.svg');
     background-size: 350%; /* Make the image larger than the container */
