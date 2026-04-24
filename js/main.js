@@ -82,11 +82,40 @@ document.addEventListener('DOMContentLoaded', function() {
         if (authorElement.dataset.equalContribution === 'true') {
             const marker = document.createElement('sup');
             marker.className = 'author-marker';
-            marker.textContent = '=';
+            marker.textContent = '\u22C7';
             marker.title = 'Equal contribution';
             marker.setAttribute('aria-label', 'equal contribution');
             authorElement.appendChild(marker);
         }
+    }
+
+    function getDisplayAuthors(authorEntries) {
+        const displayAuthors = authorEntries.slice();
+        let index = 0;
+
+        while (index < displayAuthors.length) {
+            const authorRecord = getAuthorRecord(displayAuthors[index]);
+
+            if (!authorRecord.equalContribution) {
+                index += 1;
+                continue;
+            }
+
+            const start = index;
+            while (
+                index < displayAuthors.length &&
+                getAuthorRecord(displayAuthors[index]).equalContribution
+            ) {
+                index += 1;
+            }
+
+            if (index - start > 1 && Math.random() < 0.5) {
+                const equalContributionAuthors = displayAuthors.slice(start, index).reverse();
+                displayAuthors.splice(start, equalContributionAuthors.length, ...equalContributionAuthors);
+            }
+        }
+
+        return displayAuthors;
     }
 
     function createAuthorElement(authorEntry, authors) {
@@ -174,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         content.appendChild(title);
         appendText(content, ' ');
 
-        publication.authors.forEach(function(authorId, index) {
+        getDisplayAuthors(publication.authors).forEach(function(authorId, index) {
             if (index > 0) {
                 appendText(content, ', ');
             }
