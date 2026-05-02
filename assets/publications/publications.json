@@ -56,6 +56,23 @@
     ]
   },
   {
+    "id": "test-exploiters-2026",
+    "year": 2026,
+    "type": "conference",
+    "bibtexKey": "raman2026testexploiters",
+    "title": "Reasoning Models are Test Exploiters: Rethinking Multiple Choice.",
+    "authors": ["narun", "taylor-lundy", "kevin-leyton-brown"],
+    "venuePrefix": "Forthcoming in",
+    "venue": "International Conference on Machine Learning (ICML '26)",
+    "links": [
+      {
+        "kind": "arxiv",
+        "label": "arXiv",
+        "href": "https://arxiv.org/abs/2507.15337"
+      }
+    ]
+  },
+  {
     "id": "test-exploiters-2025",
     "year": 2025,
     "type": "informal",
