@@ -250,6 +250,32 @@
     pointer-events: none;
 }
 
+.news-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+}
+
+#content .news-list > li {
+    display: grid;
+    grid-template-columns: 3.7rem minmax(0, 1fr);
+    column-gap: 0.7rem;
+    margin-left: 0;
+    margin-bottom: 0.35rem;
+}
+
+.news-list .news-date {
+    color: #777;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.86rem;
+    font-weight: 400;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.news-list .news-copy {
+    min-width: 0;
+}
+
 @media (max-width: 530px) {
     .publication-entry {
         column-gap: 8px;
