@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.id = publication.id;
         item.dataset.publicationId = publication.id;
         item.dataset.publicationType = publication.type || 'informal';
+        item.dataset.publicationYear = publication.year;
         if (publication.bibtexKey) {
             item.dataset.bibtexKey = publication.bibtexKey;
         }
@@ -251,9 +252,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 yearHeading.id = String(publication.year);
                 yearHeading.className = 'year-heading';
+                yearHeading.dataset.publicationYear = publication.year;
                 yearHeading.textContent = publication.year;
 
                 activeList.className = 'publication-list';
+                activeList.dataset.publicationYear = publication.year;
 
                 root.appendChild(yearHeading);
                 root.appendChild(activeList);
@@ -263,6 +266,208 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function createPublicationFilterButton(label, group, value) {
+        const button = document.createElement('button');
+
+        button.className = 'publication-filter-pill';
+        button.type = 'button';
+        button.dataset.filterGroup = group;
+        button.dataset.filterValue = value;
+        button.textContent = label;
+
+        return button;
+    }
+
+    function createPublicationFilterGroup(label, buttons) {
+        const group = document.createElement('div');
+        const groupLabel = document.createElement('span');
+
+        group.className = 'publication-filter-group';
+        groupLabel.className = 'publication-filter-label';
+        groupLabel.textContent = label;
+
+        group.appendChild(groupLabel);
+        buttons.forEach(function(button) {
+            group.appendChild(button);
+        });
+
+        return group;
+    }
+
+    function getPublicationTypeFilterLabel(type) {
+        if (type === 'conference') return 'Conferences';
+        if (type === 'journal') return 'Journals';
+        return 'Working papers';
+    }
+
+    function initializePublicationFilters(publications) {
+        const root = document.getElementById('publications-root');
+        const heading = document.getElementById('publications-and-pre-prints');
+        if (!root || !heading || document.querySelector('.publication-filters')) return;
+
+        const filterState = {
+            type: 'all',
+            year: 'all'
+        };
+        const typeOrder = ['conference', 'journal', 'informal'];
+        const types = typeOrder.filter(function(type) {
+            return publications.some(function(publication) {
+                return (publication.type || 'informal') === type;
+            });
+        });
+        const years = Array.from(new Set(publications.map(function(publication) {
+            return publication.year;
+        }))).sort(function(a, b) {
+            return b - a;
+        });
+        const filterBar = document.createElement('div');
+        const emptyMessage = document.createElement('p');
+        const scrollSpacer = document.createElement('div');
+        let spacerArmed = false;
+        let spacerLastScrollY = 0;
+
+        filterBar.className = 'publication-filters';
+        filterBar.setAttribute('aria-label', 'Publication filters');
+
+        emptyMessage.className = 'publication-filter-empty';
+        emptyMessage.hidden = true;
+        emptyMessage.textContent = 'No publications match these filters.';
+
+        scrollSpacer.className = 'publication-filter-scroll-spacer';
+        scrollSpacer.setAttribute('aria-hidden', 'true');
+
+        filterBar.appendChild(createPublicationFilterGroup('Category', [
+            createPublicationFilterButton('All', 'type', 'all')
+        ].concat(types.map(function(type) {
+            return createPublicationFilterButton(getPublicationTypeFilterLabel(type), 'type', type);
+        }))));
+        filterBar.appendChild(createPublicationFilterGroup('Year', years.map(function(year) {
+            return createPublicationFilterButton(String(year), 'year', String(year));
+        })));
+
+        heading.parentNode.insertBefore(filterBar, root);
+        root.parentNode.insertBefore(emptyMessage, root.nextSibling);
+        emptyMessage.parentNode.insertBefore(scrollSpacer, emptyMessage.nextSibling);
+
+        function filterIsEmpty() {
+            return filterState.type === 'all' &&
+                filterState.year === 'all';
+        }
+
+        function clearScrollSpacer() {
+            scrollSpacer.style.height = '0';
+            spacerArmed = false;
+            spacerLastScrollY = window.scrollY;
+        }
+
+        function updateButtons() {
+            filterBar.querySelectorAll('.publication-filter-pill').forEach(function(button) {
+                const group = button.dataset.filterGroup;
+                const value = button.dataset.filterValue;
+                const isActive = group === 'type' && value === 'all' ?
+                    filterIsEmpty() :
+                    filterState[group] === value;
+
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+        }
+
+        function updateVisiblePublications() {
+            const items = Array.from(root.querySelectorAll('.publication-item'));
+            let visibleCount = 0;
+
+            items.forEach(function(item) {
+                const typeMatches = filterState.type === 'all' || item.dataset.publicationType === filterState.type;
+                const yearMatches = filterState.year === 'all' || item.dataset.publicationYear === filterState.year;
+                const visible = typeMatches && yearMatches;
+
+                item.hidden = !visible;
+                if (visible) visibleCount += 1;
+            });
+
+            root.querySelectorAll('.publication-list').forEach(function(list) {
+                const hasVisibleItem = Boolean(list.querySelector('.publication-item:not([hidden])'));
+                const year = list.dataset.publicationYear;
+                const headingForYear = root.querySelector(`.year-heading[data-publication-year="${year}"]`);
+
+                list.hidden = !hasVisibleItem;
+                if (headingForYear) {
+                    headingForYear.hidden = !hasVisibleItem;
+                }
+            });
+
+            emptyMessage.hidden = visibleCount > 0;
+            updateButtons();
+        }
+
+        function preserveScrollSpace(previousScrollHeight, previousScrollY) {
+            const viewportHeight = window.innerHeight;
+            const requiredHeight = previousScrollY + viewportHeight;
+            const currentSpacerHeight = scrollSpacer.getBoundingClientRect().height;
+            const naturalScrollHeight = document.documentElement.scrollHeight - currentSpacerHeight;
+            const neededSpacerHeight = Math.max(0, requiredHeight - naturalScrollHeight);
+
+            if (neededSpacerHeight > 0 && previousScrollHeight > naturalScrollHeight) {
+                scrollSpacer.style.height = `${neededSpacerHeight + 24}px`;
+                spacerArmed = true;
+                window.scrollTo(0, previousScrollY);
+                spacerLastScrollY = previousScrollY;
+            } else {
+                clearScrollSpacer();
+            }
+        }
+
+        filterBar.addEventListener('click', function(event) {
+            const button = event.target.closest('.publication-filter-pill');
+            if (!button) return;
+
+            const group = button.dataset.filterGroup;
+            const value = button.dataset.filterValue;
+            const previousScrollHeight = document.documentElement.scrollHeight;
+            const previousScrollY = window.scrollY;
+
+            clearScrollSpacer();
+            scrollSpacer.style.height = `${previousScrollHeight}px`;
+
+            if (group === 'type' && value === 'all') {
+                filterState.type = 'all';
+                filterState.year = 'all';
+            } else {
+                filterState[group] = filterState[group] === value ? 'all' : value;
+            }
+
+            updateVisiblePublications();
+            preserveScrollSpace(previousScrollHeight, previousScrollY);
+        });
+
+        window.addEventListener('scroll', function() {
+            if (!spacerArmed) return;
+
+            const currentScrollY = window.scrollY;
+            const upwardDistance = Math.max(0, spacerLastScrollY - currentScrollY);
+
+            if (upwardDistance > 0) {
+                const currentSpacerHeight = scrollSpacer.getBoundingClientRect().height;
+                const nextSpacerHeight = Math.max(0, currentSpacerHeight - upwardDistance);
+
+                scrollSpacer.style.height = `${nextSpacerHeight}px`;
+
+                if (nextSpacerHeight === 0) {
+                    spacerArmed = false;
+                }
+            }
+
+            spacerLastScrollY = currentScrollY;
+
+            if (filterIsEmpty()) {
+                clearScrollSpacer();
+            }
+        });
+
+        updateVisiblePublications();
+    }
+
     async function initializePublicationSection() {
         const data = await Promise.all([
             loadJson(publicationDataUrl),
@@ -270,6 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ]);
 
         renderPublications(data[0], data[1]);
+        initializePublicationFilters(data[0]);
     }
 
     async function copyTextToClipboard(text) {

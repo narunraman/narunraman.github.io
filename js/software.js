@@ -249,9 +249,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             list.appendChild(createFocusedProject(focusedProject, publicationsById));
         } else {
-            if (intro) {
-                intro.textContent = 'Selected tools and research artifacts.';
-            }
+            // if (intro) {
+            //     intro.textContent = '';
+            // }
             projects.forEach(function(project) {
                 list.appendChild(createCompactProject(project));
             });
