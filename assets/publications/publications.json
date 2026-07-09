@@ -69,6 +69,11 @@
         "kind": "arxiv",
         "label": "arXiv",
         "href": "https://arxiv.org/abs/2507.15337"
+      },
+      {
+        "kind": "poster",
+        "label": "poster",
+        "href": "/assets/publications/test-exploiters-2026/poster-icml-2026.pdf"
       }
     ]
   },
