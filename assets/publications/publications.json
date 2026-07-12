@@ -78,23 +78,6 @@
     ]
   },
   {
-    "id": "test-exploiters-2025",
-    "year": 2025,
-    "type": "informal",
-    "bibtexKey": "raman2025testexploiters",
-    "title": "Reasoning Models are Test Exploiters: Rethinking Multiple Choice.",
-    "authors": ["narun", "taylor-lundy", "kevin-leyton-brown"],
-    "venuePrefix": "In",
-    "venue": "Workshop on Assessing and Improving Reliability of Foundation Models in the Real World (AAAI '26).",
-    "links": [
-      {
-        "kind": "arxiv",
-        "label": "arXiv",
-        "href": "https://arxiv.org/abs/2507.15337"
-      }
-    ]
-  },
-  {
     "id": "steer-me-2025",
     "year": 2025,
     "type": "conference",
