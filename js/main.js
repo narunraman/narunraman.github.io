@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPublicationTypeLabel(type) {
         if (type === 'conference') return 'Conference';
         if (type === 'journal') return 'Journal';
+        if (type === 'talk') return 'Talk';
         return 'Informal';
     }
 
@@ -297,6 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getPublicationTypeFilterLabel(type) {
         if (type === 'conference') return 'Conferences';
         if (type === 'journal') return 'Journals';
+        if (type === 'talk') return 'Talks';
         return 'Working papers';
     }
 
@@ -309,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
             type: 'all',
             year: 'all'
         };
-        const typeOrder = ['conference', 'journal', 'informal'];
+        const typeOrder = ['conference', 'journal', 'informal', 'talk'];
         const types = typeOrder.filter(function(type) {
             return publications.some(function(publication) {
                 return (publication.type || 'informal') === type;
@@ -637,13 +639,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const counters = {
             conference: 0,
             journal: 0,
-            informal: 0
+            informal: 0,
+            talk: 0
         };
 
         const prefixes = {
             conference: 'c',
             journal: 'j',
-            informal: 'i'
+            informal: 'i',
+            talk: 't'
         };
 
         const publicationItems = document.querySelectorAll('.publication-item');
@@ -672,6 +676,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const badge = item.querySelector('.publication-badge');
             const copyButton = item.querySelector('.publication-copy-button');
             const prefix = prefixes[type] || 'i';
+            const typeLabel = getPublicationTypeLabel(type);
+            const badgeLabel = type === 'talk' ? typeLabel : `${typeLabel} publication`;
 
             const code = prefix + String(counters[type]).padStart(2, '0');
             counters[type] -= 1;
@@ -681,8 +687,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (badge) {
                 badge.textContent = code;
                 badge.classList.add(`publication-badge-${type}`);
-                badge.setAttribute('title', `${getPublicationTypeLabel(type)} publication`);
-                badge.setAttribute('aria-label', `${getPublicationTypeLabel(type)} publication ${code}`);
+                badge.setAttribute('title', badgeLabel);
+                badge.setAttribute('aria-label', `${badgeLabel} ${code}`);
             }
 
             if (!copyButton) return;
