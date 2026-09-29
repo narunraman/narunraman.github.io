@@ -37,7 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
         pillTargets.forEach(function(target) {
             target.replaceChildren(pillTemplate.content.cloneNode(true));
+            fitPills(target);
+            if ('ResizeObserver' in window) new ResizeObserver(function() { fitPills(target); }).observe(target);
         });
+        if (document.fonts) document.fonts.ready.then(function() { pillTargets.forEach(fitPills); });
+    }
+
+    // Before the pills would wrap onto a second line, shorten "Google Scholar" to "Scholar".
+    function fitPills(target) {
+        const pills = target.querySelectorAll('.pill-button');
+        if (pills.length < 2) return;
+        target.classList.remove('pills-compact');
+        const firstTop = pills[0].offsetTop;
+        const wraps = Array.prototype.some.call(pills, function(pill) { return pill.offsetTop > firstTop + 2; });
+        target.classList.toggle('pills-compact', wraps);
     }
 
     function getPublicationTypeLabel(type) {

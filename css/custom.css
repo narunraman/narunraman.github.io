@@ -485,6 +485,27 @@
 }
 
 /* Custom Google Scholar icon styling */
+.pills-compact .scholar-prefix {
+    display: none;
+}
+
+/* The label is a span inside the link, so it must follow the pill's colour (#content a * would make it red) */
+.pill-button .pill-label,
+.pill-button .pill-label * {
+    color: inherit !important;
+}
+
+.kalam-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('/assets/logos/kalam_logo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
 .scholar-icon {
     display: inline-block;
     width: 16px;
@@ -1033,4 +1054,73 @@
 .year-heading {
     display: flex;
     align-items: center;
+}
+
+/* rows only matter on phones; elsewhere the pills flow as one line */
+.pill-row {
+    display: contents;
+}
+
+/* Phones: pills in two rows beside the photo (Scholar, GitHub, LinkedIn / Kalam, CV, Resume), each
+   pill as wide as its text. The pill block is as wide as its longer row, and the photo fills the
+   rest of the width, up to 160px. Pill text scales with the screen so three fit per row. */
+@media (max-width: 530px) {
+    .mobile-pills {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        flex: 0 0 auto;
+        max-width: none;
+    }
+
+    .mobile-pills .pill-row {
+        display: flex;
+        gap: 6px;
+    }
+
+    .mobile-pills .pill-button {
+        font-size: clamp(10.5px, 3.25vw, 15px);
+        padding: 3px clamp(3px, 1.3vw, 8px);
+        gap: 4px;
+    }
+
+    .mobile-pills .pill-button i,
+    .mobile-pills .scholar-icon,
+    .mobile-pills .kalam-icon,
+    .mobile-pills .pdf-icon {
+        width: 14px;
+        height: 14px;
+        font-size: 14px;
+    }
+
+    .hero-section {
+        gap: 15px;
+    }
+
+    #content .avatar {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    #content .avatar > img {
+        width: 100%;
+        max-width: 160px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}
+
+/* The narrowest phones (older, under 360px wide): slightly smaller pills */
+@media (max-width: 360px) {
+    .mobile-pills,
+    .mobile-pills .pill-row {
+        gap: 4px;
+    }
+
+    .mobile-pills .pill-button {
+        font-size: 10.5px;
+        padding: 2px 4px;
+        gap: 3px;
+    }
 }
