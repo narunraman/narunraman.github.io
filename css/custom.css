@@ -1047,8 +1047,9 @@
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
-    width: calc(100% - 20px);
-    width: calc((100% - 20px) / 20px * 20px);
+    /* fill whatever room the year leaves, instead of a fixed width that overflows on phones */
+    flex: 1 1 auto;
+    min-width: 20px;
 }
 
 .year-heading {
@@ -1123,4 +1124,10 @@
         padding: 2px 4px;
         gap: 3px;
     }
+}
+
+/* This CSS-only image popup never shows (browsers don't support attr(... url)); the popup is built
+   in main.js. Hidden but laid out, it made the page scrollable sideways, so take it out of layout. */
+.image-footnote-ref::after {
+    display: none;
 }

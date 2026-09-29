@@ -131,3 +131,11 @@ a.cite:hover { text-decoration: underline; }
 .table-figure table thead th {
     border-top: none;
 }
+
+/* Display math wider than the screen scrolls inside its own box instead of widening the page */
+mjx-container[display="true"] {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
