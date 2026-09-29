@@ -2,6 +2,10 @@
   {
     "id": "quickscope",
     "title": "QuickScope",
+    "year": 2026,
+    "domain": "machine-behavior",
+    "kind": "Adaptive evaluation",
+    "primaryHref": "https://www.cs.ubc.ca/~narunram/quickscope/",
     "homepage": "https://www.cs.ubc.ca/~narunram/quickscope/",
     "summary": "Bayesian-optimal evaluation for finding and certifying hard regions in dynamic LLM benchmarks.",
     "description": "QuickScope adaptively allocates evaluation budget across a benchmark's configuration space, helping identify model weak spots without uniformly evaluating every generated question. It is built around COUP-style Bayesian optimization and supports pluggable datasets, utilities, and benchmark generators.",
@@ -48,6 +52,10 @@
   {
     "id": "steer-benchmark",
     "title": "STEER Benchmark",
+    "year": 2024,
+    "domain": "machine-behavior",
+    "kind": "Benchmark suite",
+    "primaryHref": "https://steer-benchmark.cs.ubc.ca/",
     "homepage": "https://steer-benchmark.cs.ubc.ca/",
     "summary": "Benchmark family for evaluating economic reasoning in language models across strategic and non-strategic settings.",
     "description": "STEER is a benchmark family for evaluating economic reasoning in language models. STEER focuses on strategic economic settings with multiple-choice questions, while STEER-ME extends the suite to non-strategic microeconomic reasoning and includes both multiple-choice and free-text formats.",
@@ -85,6 +93,10 @@
   {
     "id": "Auto-steer",
     "title": "Auto-STEER",
+    "year": 2025,
+    "domain": "machine-behavior",
+    "kind": "Generation pipeline",
+    "primaryHref": "https://github.com/narunraman/autosteer",
     "summary": "Template-based pipeline for building economics benchmark suites from human-written seeds.",
     "description": "Auto-STEER is the generation and testing pipeline behind STEER-ME. Given human-written seeds in the expected format, it supports creating numerical variations, checking generated instances, and producing full suites of multiple-choice and free-text economics questions.",
     "resources": [
@@ -110,5 +122,24 @@
       }
     ],
     "publications": ["steer-me-2025"]
+  },
+  {
+    "id": "nft-research",
+    "title": "NFTs as a Testbed for Conspicuous Consumption",
+    "year": 2025,
+    "domain": "human-behavior",
+    "kind": "Research code",
+    "primaryHref": "https://github.com/narunraman/nft_research",
+    "summary": "Code for quantifying the degree to which NFT purchase data on the blockchain gives evidence for conspicuous consumption dynamics, notably the snob and bandwagon effects.",
+    "resources": [
+      {
+        "kind": "github",
+        "label": "code",
+        "title": "Code",
+        "href": "https://github.com/narunraman/nft_research",
+        "description": "Research code for analyzing NFT purchase data and testing conspicuous consumption dynamics."
+      }
+    ],
+    "publications": ["nfts-test-bed-2025"]
   }
 ]

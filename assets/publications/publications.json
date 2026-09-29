@@ -51,7 +51,7 @@
       {
         "kind": "software",
         "label": "software",
-        "href": "/software/#quickscope"
+        "href": "https://www.cs.ubc.ca/~narunram/quickscope/"
       }
     ]
   },
@@ -125,7 +125,7 @@
       {
         "kind": "software",
         "label": "software",
-        "href": "/software/#steer-benchmark"
+        "href": "https://steer-benchmark.cs.ubc.ca/"
       }
     ]
   },
@@ -254,7 +254,7 @@
       {
         "kind": "software",
         "label": "software",
-        "href": "/software/#steer-benchmark"
+        "href": "https://steer-benchmark.cs.ubc.ca/"
       }
     ]
   },
