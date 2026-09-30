@@ -1,6 +1,14 @@
 /* Post-specific base styles extracted from llms_information_economics.html */
 
 .post-wrap { max-width: 750px; margin: 2rem auto 4rem; padding: 0 1rem; }
+.post-masthead { margin: 2.75rem 0 1.5rem; }
+.post-kicker { color: #6c757d; font-family: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.post-wrap .title { --title-default-size: clamp(2rem, 5vw, 3.25rem); font-size: var(--title-size, var(--title-default-size)); line-height: 1.08; margin: .45rem 0 .85rem; }
+.post-standfirst { font-family: "CMU Serif", Georgia, serif; font-size: 1.25rem; line-height: 1.45; margin: 0 0 1rem; }
+.post-hero { margin: 0 0 2rem; }
+.post-hero + .post-kicker { margin-top: -1rem; margin-bottom: 1rem; }
+.post-hero img { display: block; width: 100%; height: auto; }
+.post-hero figcaption { color: #6c757d; font-size: .85rem; margin-top: .45rem; }
 .post-wrap p { line-height: 1.9; margin: 0.75rem 0; }
 .post-wrap h2 { margin-top: 1.5rem; font-size: 1.35rem; font-weight: bold; }
 .post-wrap h3 { margin-top: 1.5rem; font-size: 1.1rem; font-weight: bold;}
@@ -139,3 +147,9 @@ mjx-container[display="true"] {
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+/* Linkable headings: a quiet # appears on hover and links to the section */
+.post-wrap h2, .post-wrap h3 { position: relative; scroll-margin-top: 1.5rem; }
+.heading-anchor { margin-left: .4em; color: var(--muted, #6c757d); text-decoration: none; opacity: 0; font-weight: 400; transition: opacity .15s; }
+.post-wrap h2:hover .heading-anchor, .post-wrap h3:hover .heading-anchor, .heading-anchor:focus { opacity: 1; }
+@media (hover: none) { .heading-anchor { opacity: .35; } }

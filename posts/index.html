@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Narun Raman · Posts</title>
+  <title>Narun Raman</title>
+  <link rel="canonical" href="https://www.narunraman.com/posts/">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png">
   <link rel="shortcut icon" href="../assets/images/favicon-32.png">
@@ -30,15 +31,29 @@
     a { color: var(--link); }
     a:hover { color: #b02a37; text-decoration: none; }
 
-    /* Forum-like posts list */
+    /* Editorial post index */
     .posts-wrap { max-width: 750px; margin: 2rem auto 4rem; padding: 0 1rem; }
-    .page-title { font-family: "CMU Bright", "CMU Serif", Georgia, serif; font-weight: 700; font-size: 2rem; margin: 1rem 0 1.25rem; }
+
+    .featured-post { padding-bottom: 2.25rem; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+    .featured-image { display: block; position: relative; overflow: hidden; }
+    .featured-image img { display: block; width: 100%; height: 100%; aspect-ratio: 16 / 7; object-fit: cover; }
+    .featured-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, #fff 0, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, #fff 100%), linear-gradient(to right, #fff 0, rgba(255, 255, 255, 0) 16%, rgba(255, 255, 255, 0) 84%, #fff 100%); pointer-events: none; }
+    .featured-copy { margin-top: 1.25rem; }
+    .featured-kicker, .archive-heading { color: var(--muted); font-family: Inconsolata, ui-monospace, monospace; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .featured-title { --title-default-size: clamp(1.65rem, 3.5vw, 2.25rem); font-family: "CMU Bright", "CMU Serif", Georgia, serif; font-size: var(--title-size, var(--title-default-size)); line-height: 1.12; margin: 0 0 .55rem; }
+    .featured-kicker { margin: 0 0 .75rem; }
+    .featured-title a { color: inherit; text-decoration: none; }
+    .featured-title a:hover { text-decoration: underline; }
+    .featured-excerpt { line-height: 1.6; margin: .75rem 0 1rem; }
+    .featured-action { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+    .read-link { font-weight: 700; text-decoration: none; }
+    .archive { margin-top: 2rem; }
+    .archive-heading { margin: 0 0 .5rem; }
 
     .posts-list { list-style: none; padding: 0; margin: 0; }
-    .post-item { padding: 1.25rem 0; }
-    .post-item + .post-item { margin-top: 0.25rem; }
+    .post-item { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 1rem; padding: 1rem 0; }
 
-    .post-title { font-size: 1.25rem; margin: 0 0 0.25rem; line-height: 1.3; }
+    .post-title { font-size: 1.15rem; margin: 0 0 0.3rem; line-height: 1.3; }
     .post-title a { color: inherit; text-decoration: none; }
     .post-title a:hover { text-decoration: underline; }
 
@@ -47,23 +62,14 @@
     .tags { display: inline-flex; gap: 0.5rem; }
     .tag { color: var(--muted); font-size: 0.85rem; }
 
-    .excerpt { margin: 0.5rem 0 0.75rem; line-height: 1.6; }
-
-    /* TL;DR using details/summary */
-    details.tldr { margin-top: 0.25rem; }
-    details.tldr > summary { cursor: pointer; list-style: none; user-select: none; color: var(--link); }
-    details.tldr > summary::-webkit-details-marker { display: none; }
-    details.tldr > summary::before { content: "▸"; display: inline-block; margin-right: 0.4rem; transition: transform 150ms ease; }
-    details.tldr[open] > summary::before { transform: rotate(90deg); }
-    details.tldr .tldr-body { color: var(--text); margin-top: 0.5rem; }
-
-    /* Optional subtle divider without borders (using background gradient) */
-    .post-item { background-image: linear-gradient(to right, rgba(0,0,0,0.06), rgba(0,0,0,0.06)); background-repeat: no-repeat; background-size: 100% 1px; background-position: left bottom; }
-    .post-item:last-child { background: none; }
+    .archive-date { color: var(--muted); font-size: .9rem; padding-top: .15rem; white-space: nowrap; }
+    .post-item { border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
 
     @media (max-width: 576px) {
+      .featured-image img { aspect-ratio: 16 / 10; }
+      .post-item { grid-template-columns: 1fr; gap: .25rem; }
+      .archive-date { padding-top: 0; }
       .post-title { font-size: 1.1rem; }
-      .page-title { font-size: 1.75rem; }
     }
   </style>
 </head>
@@ -72,68 +78,27 @@
     <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
       <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">Narun Raman</a>
       <div class="navbar-nav flex-row flex-wrap justify-content-center">
-        <a class="nav-item nav-link" href="/posts" title="Writing">Writing</a>
+        <a class="nav-item nav-link" href="/posts/" title="Writing">Writing</a>
         <span class="nav-item navbar-text mx-1">/</span>
-        <a class="nav-item nav-link" href="/software" title="Software">Software</a>
+        <a class="nav-item nav-link" href="/software/" title="Software">Software</a>
         <span class="nav-item navbar-text mx-1">/</span>
-        <a class="nav-item nav-link" href="/personal" title="Personal">Personal</a>
+        <a class="nav-item nav-link" href="/personal/" title="Personal">Personal</a>
       </div>
     </nav>
   </div>
   <hr>
 
   <main class="posts-wrap">
-    <h1 class="page-title">Writing</h1>
-    <ul class="posts-list">
-      <li class="post-item">
-        <h2 class="post-title"><a href="/posts/llms_information_economics.html">Assessing LLMs in Information Economics</a></h2>
-        <div class="meta">
-          <time datetime="2025-08-11">Aug 11, 2025</time>
-          <span class="dot"></span>
-          <span>15 min read</span>
-          <span class="dot"></span>
-          <span class="tags">
-            <span class="tag">workshop</span>
-          </span>
-        </div>
-        <p class="excerpt">An case study on whether LLMs can reason about information and uncertainty&mdash;calculating expectations, using Bayes' rule, and deciding when it's worth paying to learn more.</p>
-        <!-- <details class="tldr">
-          <summary>TL;DR</summary>
-          <div class="tldr-body">
-            <ul>
-              <li>Reasoning + tool-using models do well.</li>
-              <li>SOTA models can stumble, especially on "should I buy information?"</li>
-              <li>Evaluations should score conceptual and computational skill separately.</li>
-            </ul>
-          </div>
-        </details> -->
-      </li>
-
-      <!-- <li class="post-item">
-        <h2 class="post-title"><a href="/posts/lightweight-travel-photography-workflow.html">A Lightweight Travel Photography Workflow</a></h2>
-        <div class="meta">
-          <time datetime="2025-07-14">Jul 14, 2025</time>
-          <span class="dot"></span>
-          <span>5 min read</span>
-          <span class="dot"></span>
-          <span class="tags">
-            <span class="tag">photography</span>
-            <span class="tag">workflow</span>
-          </span>
-        </div>
-        <p class="excerpt">How I cull, edit, and publish a trip’s photos using only a camera, a phone, and a small set of apps—no laptop required.</p>
-        <details class="tldr">
-          <summary>TL;DR</summary>
-          <div class="tldr-body">
-            <ul>
-              <li>Shoot RAW+JPEG, cull on mobile using star ratings.</li>
-              <li>Preset-driven edits; batch-sync, then spot-fix a few selects.</li>
-              <li>Export responsive sizes and publish from the phone.</li>
-            </ul>
-          </div>
-        </details>
-      </li> -->
-    </ul>
+    <article class="featured-post">
+      <a class="featured-image" href="/posts/llms_information_economics.html" aria-label="Assessing LLMs in Information Economics">
+        <img src="/assets/post-heroes/llms_information_economics.png" alt="Abstract illustration for Assessing LLMs in Information Economics.">
+      </a>
+      <div class="featured-copy">
+        <h2 class="featured-title" data-fit-title><a href="/posts/llms_information_economics.html">Assessing LLMs in Information Economics</a></h2>
+        <p class="featured-kicker">Workshop · Aug 11, 2025</p>
+        <p class="featured-excerpt">A case study on whether LLMs can reason about information and uncertainty: calculating expectations, using Bayes' rule, and deciding when it's worth paying to learn more.</p>
+      </div>
+    </article>
   </main>
 
   <div id="footer" class="mb-5">
@@ -142,5 +107,6 @@
       <small>By Narun Raman</small>
     </div>
   </div>
+  <script src="/posts/title-fit.js?v=20260831"></script>
 </body>
 </html>

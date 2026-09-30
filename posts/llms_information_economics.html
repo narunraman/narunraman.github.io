@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Narun Raman · STEER-ME: Assessing LLMs in Information Economics</title>
+  <title>Narun Raman</title>
+  <link rel="canonical" href="https://www.narunraman.com/posts/llms_information_economics.html">
   <meta name="description" content="A practical primer on why chain-of-thought helps, when it fails, and how to structure prompts and evaluations for reliable, interpretable LLM behavior.">
   <meta name="author" content="Narun Raman">
 
@@ -22,9 +23,6 @@
   <style>
     .navbar-brand { font-size: 1rem !important; }
     .container.mt-5 { margin-top: 1rem !important; }
-    /* Page-specific overrides only */
-    .toc-title { font-size: 18pt; }
-    .toc-nav { top: 310px; } /* explicit override for this post */
   </style>
   <script>
     
@@ -50,38 +48,27 @@
     <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
       <a class="navbar-brand mx-0 mr-sm-auto" href="/" title="Narun Raman">Narun Raman</a>
       <div class="navbar-nav flex-row flex-wrap justify-content-center">
-        <a class="nav-item nav-link" href="/posts" title="Writing">Writing</a>
+        <a class="nav-item nav-link" href="/posts/" title="Writing">Writing</a>
         <span class="nav-item navbar-text mx-1">/</span>
-        <a class="nav-item nav-link" href="/software" title="Software">Software</a>
+        <a class="nav-item nav-link" href="/software/" title="Software">Software</a>
         <span class="nav-item navbar-text mx-1">/</span>
-        <a class="nav-item nav-link" href="/personal" title="Personal">Personal</a>
+        <a class="nav-item nav-link" href="/personal/" title="Personal">Personal</a>
       </div>
     </nav>
   </div>
 
-  <!-- Floating ToC -->
-  
-  <main class="post-wrap">
-    <h1 class="title">STEER-ME: Assessing LLMs in Information Economics</h1>
-    <div class="meta">
-      <time datetime="2025-08-11">Aug 11, 2025</time>
-      <span class="mx-1">·</span>
-      <span>15 min read</span>
-      <span class="mx-1">·</span>
-      <span class="tags"><span class="text-muted">workshop</span></span>
-    </div>
+  <main class="post-wrap workshop-post">
+    <header class="post-masthead">
+      <h1 class="title">Assessing LLMs in Information Economics</h1>
+    </header>
+
+    <figure class="post-hero">
+      <img src="/assets/post-heroes/llms_information_economics.png" alt="Abstract visual illustration for Assessing LLMs in Information Economics.">
+    </figure>
+
+    <div class="post-kicker">Workshop · Aug 11, 2025</div>
+    <p><em>Note: this blog post deviates slightly from our EC'25 Workshop paper.</em></p>
     
-
-    <hr>
-
-    <nav class="toc-nav" aria-label="Contents" data-lock-top>
-      <div class="toc-title">Contents</div>
-      <ol class="toc-list" id="toc-list"></ol>
-    </nav>
-
-    <em>Note: this blog post deviates slightly from our Workshop paper. </em>
-    
-    <h2>Introduction</h2>
     <p>Recently, Large Language Models (LLMs) have increasingly been deployed as decision-making engines, either directly acting as economic agents \citep{cai2023large, homo_silicus, voyager} or as essential components within broader systems designed for economic decision-making \citep{zhuge2023mindstorms, wang2023unleashing, huggingGPT}. Despite constituting promising demonstrations of LLM capabilities, such systems have also exposed significant brittleness in LLM performance: models succeeding in one scenario often fail unpredictably in closely related contexts, suggesting at least some reliance on superficial pattern matching vs robust economic reasoning \citep[e.g.,][]{hendrycks2021measuringmassivemultitasklanguage, ribeiro-etal-2020-beyond}. Despite this behavior, most existing economic benchmarks narrowly evaluate specific applications and do not rigorously assess the foundational strategic and computational reasoning skills necessary for reliable economic decision-making. We argue that before LLMs can be meaningfully evaluated or deployed in information economics, their capacities for these foundational reasoning capabilities must be systematically assessed.
     </p>
     <p>To address this need, we developed the STEER benchmark \citep{ramansteer}, providing a comprehensive assessment of strategic reasoning foundational to economics. STEER was constructed by taxonomizing distinct "elements of economic rationality," ultimately comprising 64 strategic reasoning elements, including core concepts from game theory and foundational decision theory. Leveraging state-of-the-art LLMs, we systematically generated diverse questions across multiple domains (e.g., finance, medicine, public policy) and varying difficulty levels, creating an extensive and continually expandable dataset for benchmarking LLM economic reasoning. Building upon this methodology, we recently expanded the scope of our benchmark with STEER-ME \citep{ramansteerme}, introducing 58 computational microeconomic reasoning elements—such as competitive market analysis, optimal consumption, and utility maximization. STEER-ME is significantly more challenging than STEER, not only because it demands precise mathematical computation but also because the evaluated concepts frequently require careful sequential reasoning, which directly underpins many critical scenarios in information economics.</p>
@@ -201,7 +188,7 @@
 
     <p>These findings underscore three broader points. First, information-economics problems expose a dimension of reasoning&mdash;valuing information and acting on contingent states&mdash;that is not well tested by classic optimization benchmarks. Second, decomposing accuracy is essential for diagnosing where models actually fail; headline scores alone can be misleading when the multiple-choice structure embeds partial credit. Third, method matters: models that can off-load algebra to external solvers enjoy a large advantage, suggesting that benchmark design should explicitly distinguish conceptual errors from computational ones.</p>
 
-    <p><a href="/posts">← Back to Posts</a></p>
+    <p><a href="/posts/">← Back to Posts</a></p>
   </main>
 
   <div id="footer" class="mb-5">
@@ -212,6 +199,7 @@
   </div>
 
   <!-- Remove inline ToC/Citation JS and load external script -->
-  <script src="/posts/post.js"></script>
+  <script src="/posts/title-fit.js?v=20260831"></script>
+  <script src="/posts/post.js?v=20260831"></script>
 </body>
 </html>

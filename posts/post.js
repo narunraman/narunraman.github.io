@@ -623,3 +623,24 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+// Linkable headings: give each section heading an id and a small # link to it
+(function () {
+  function slug(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+  function addAnchors() {
+    document.querySelectorAll('.post-wrap h2, .post-wrap h3').forEach(function (h) {
+      if (h.querySelector('.heading-anchor')) return;
+      if (!h.id) h.id = slug(h.textContent);
+      var a = document.createElement('a');
+      a.className = 'heading-anchor';
+      a.href = '#' + h.id;
+      a.setAttribute('aria-label', 'Link to this section');
+      a.textContent = '#';
+      h.appendChild(a);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', addAnchors);
+  else addAnchors();
+})();
