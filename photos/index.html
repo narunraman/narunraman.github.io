@@ -9,8 +9,10 @@
   <meta name="description" content="Narun's photos">
   <meta name="author" content="Narun Raman">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-bright.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.2/cmu-serif.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -128,7 +130,7 @@
     /* IMPORTANT: remove margin-stacking approach; gaps are controlled above */
     /* .photo-row + .photo-row { margin-top: 2px; }  <-- deleted on purpose */
 
-    .photo-item { position: relative; overflow: hidden; flex: 0 0 auto; margin: 0; padding: 0; }
+    .photo-item { position: relative; overflow: hidden; flex: 0 0 auto; min-width: 0; margin: 0; padding: 0; }
     .photo-item img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
     /* Remove old responsive fixed heights; JS controls heights precisely */
@@ -202,7 +204,12 @@
 
   <div id="content">
     <div class="splash-container">
-      <img src="/assets/photos/wide_splash_photo.jpg" alt="Photo Gallery" class="splash-photo">
+      <picture>
+        <source type="image/webp"
+                srcset="/assets/photos/resized/wide_splash_photo-1280.webp 1280w, /assets/photos/resized/wide_splash_photo-1920.webp 1920w, /assets/photos/resized/wide_splash_photo-2560.webp 2560w, /assets/photos/resized/wide_splash_photo-3840.webp 3840w"
+                sizes="max(100vw, calc((100vh - 60px) * 1.824))">
+        <img src="/assets/photos/wide_splash_photo.jpg" alt="Photo Gallery" class="splash-photo" width="5472" height="3000" fetchpriority="high">
+      </picture>
     </div>
 
     <div class="gallery-section">
@@ -260,15 +267,21 @@
     
   // Cache aspect ratios by src so tab switches are instant after first view
   const arCache = new Map(); // src -> number
+  // Originals whose resized copies exist (listed in photo-index.json "dims"; made by generate_thumbnails.fish)
+  const HAS_RESIZED = new Set();
+  const GRID_2X = 800, THUMB_EDGE = 400, LIGHTBOX_EDGE = 2048;
+  const VARIANT_W = new Map(); // src -> {thumb, x2} pixel widths for srcset
 
   // Manifest of photos (loaded at runtime). GH Pages cannot list directories, so we use a JSON index.
-  let PHOTO_INDEX = null;
-  async function ensurePhotoIndex() {
-    if (PHOTO_INDEX) return PHOTO_INDEX;
+  let PHOTO_INDEX = null, PHOTO_INDEX_PROMISE = null;
+  function ensurePhotoIndex() {
+    return PHOTO_INDEX_PROMISE || (PHOTO_INDEX_PROMISE = loadPhotoIndex());
+  }
+  async function loadPhotoIndex() {
     // Firefox blocks fetch() on file://. In file mode, skip fetch and use fallback filenames.
     if (IS_FILE) { PHOTO_INDEX = {}; return PHOTO_INDEX; }
     try {
-      const res = await fetch(`${ASSETS_BASE}/photo-index.json`, { cache: 'no-store' });
+      const res = await fetch(`${ASSETS_BASE}/photo-index.json`, { cache: 'no-cache' });
       if (res.ok) {
         PHOTO_INDEX = await res.json();
       } else {
@@ -281,6 +294,8 @@
     }
     return PHOTO_INDEX;
   }
+
+  ensurePhotoIndex(); // start fetching the manifest while the rest of the page loads
 
   function gridWidthPx(el) {
     try {
@@ -324,49 +339,50 @@
     try { return src.replace(/(photos\/[^/]+)\//, '$1/thumbs/').replace(/\.jpg$/, '.webp'); } catch { return src; }
   }
 
-  // NEW: Preload full-size images just for aspect ratio (Firefox-safe)
-  async function preloadAspectRatios(srcs) {
-    const missing = srcs.filter(s => !arCache.has(s));
-    if (!missing.length) return;
-    await Promise.allSettled(missing.map(src => {
-      return new Promise(res => {
-        const im = new Image();
-        im.decoding = 'async';
-        im.loading = 'eager';
-        im.src = src; // full-size
-        const done = () => {
-          if (im.naturalWidth > 0 && im.naturalHeight > 0) {
-            const ar = im.naturalWidth / im.naturalHeight;
-            if (isFinite(ar) && ar > 0) arCache.set(src, ar);
-          }
-          res();
-        };
-        im.addEventListener('load', done, { once: true });
-        im.addEventListener('error', done, { once: true });
-        // Fallback timeout (in case neither event fires promptly)
-        setTimeout(done, 1500);
-      });
-    }));
+  // assets/photos/<gallery>/photoN.jpg -> assets/photos/<gallery>/resized/photoN-<edge>.webp
+  function toResized(src, edge) {
+    return src.replace(/(photos\/[^/]+)\/([^/]+)\.jpg$/, `$1/resized/$2-${edge}.webp`);
   }
 
-  async function createPhotoGrid(galleryType) {
-    const photoGrid = document.getElementById('photo-grid');
-    const srcs = await sourcesFor(galleryType);
+  // Aspect ratios come from the pixel sizes in photo-index.json, so the grid can be laid out
+  // before any image is downloaded (previously every full-size original was fetched for this).
+  function seedFromIndex(indexObj, galleryType) {
+    const dims = indexObj?.dims?.[galleryType];
+    if (!dims) return;
+    for (const [name, wh] of Object.entries(dims)) {
+      const [w, h] = Array.isArray(wh) ? wh : [];
+      if (!(w > 0 && h > 0)) continue;
+      const src = `${ASSETS_BASE}/${galleryType}/${name}`;
+      arCache.set(src, w / h);
+      HAS_RESIZED.add(src);
+      const fit = edge => Math.round(w * Math.min(1, edge / Math.max(w, h)));
+      VARIANT_W.set(src, { thumb: fit(THUMB_EDGE), x2: fit(GRID_2X) });
+    }
+  }
 
-    // Preload ARs from full-size images first (this is the critical fix for Firefox uniform widths)
-    await preloadAspectRatios(srcs);
+  // Slot width for `sizes`, capped at 2x density: 3x phones get the 800 px images, not originals
+  function sizesFor(w) {
+    const dpr = window.devicePixelRatio || 1;
+    return Math.max(1, Math.round(w * Math.min(1, 2 / dpr))) + 'px';
+  }
 
-    // Build photo objects with ARs (may still be missing for some; we will compute lazily on thumb load)
+  // Photo elements are built once per gallery and reused on tab switches and resizes
+  const gridCache = new Map(); // galleryType -> photos
+  let ACTIVE_GALLERY = 'color';
+  let LAST_LAYOUT_W = 0;
+
+  function buildPhotos(galleryType, srcs) {
     const photos = srcs.map((src, i) => {
       const item = document.createElement('div');
       item.className = 'photo-item';
       const img = document.createElement('img');
-      const thumb = toThumb(src);
-      img.src = thumb; img.alt = '';
+      img.alt = '';
       img.loading = 'lazy'; img.decoding = 'async';
       img.setAttribute('fetchpriority', 'low');
       img.dataset.fullsrc = src;
-      img.addEventListener('error', () => { if (img.src !== src) img.src = src; }, { once: true });
+      img.addEventListener('error', () => {
+        if (img.src !== new URL(src, location.href).href) { img.removeAttribute('srcset'); img.src = src; }
+      }, { once: true });
       item.appendChild(img);
       item.addEventListener('click', () => openLightbox(i, srcs));
       const ar = arCache.get(src) || null;
@@ -374,36 +390,71 @@
       return { item, img, ar, full: src };
     });
 
-    photoGrid.innerHTML = '';
-
-    // Layout with whatever ARs we have (should be most/all after preload)
-    const haveAll = photos.every(p => typeof p.ar === 'number');
-    if (haveAll) {
-      fastLayout(photoGrid, photos);
-    } else {
-      // Compute missing ARs from thumb load events (fallback path)
-      let pending = photos.filter(p => !p.ar).length;
-      const tryLayout = () => {
-        fastLayout(photoGrid, photos.filter(p => typeof p.ar === 'number'));
+    // Fallback for photos missing from photo-index.json "dims" (generate_thumbnails.fish not re-run):
+    // load their thumbnail now to learn the aspect ratio, then lay out again.
+    const missing = photos.filter(p => !p.ar);
+    let pending = missing.length;
+    missing.forEach(p => {
+      const finalize = () => {
+        if (!p.ar && p.img.naturalWidth > 0) {
+          p.ar = p.img.naturalWidth / p.img.naturalHeight;
+          if (isFinite(p.ar) && p.ar > 0) arCache.set(p.full, p.ar); else p.ar = null;
+        }
+        pending--;
+        if (pending <= 0 && ACTIVE_GALLERY === galleryType) layoutActive(true);
       };
-      photos.forEach(p => {
-        if (p.ar) return;
-        const finalize = () => {
-          if (!p.ar && p.img.naturalWidth > 0) {
-            p.ar = p.img.naturalWidth / p.img.naturalHeight;
-            if (isFinite(p.ar) && p.ar > 0) arCache.set(p.full, p.ar);
-          }
-          pending--;
-          if (pending <= 0) tryLayout();
-        };
-        p.img.addEventListener('load', finalize, { once: true });
-        p.img.addEventListener('error', finalize, { once: true });
-      });
-      // Initial layout with known subset (avoid blank)
-      tryLayout();
-      // Safety: force layout after timeout even if some never load
-      setTimeout(() => { tryLayout(); }, 1600);
+      p.img.addEventListener('load', finalize, { once: true });
+      p.img.addEventListener('error', finalize, { once: true });
+      p.img.loading = 'eager';
+      p.img.src = toThumb(p.full);
+    });
+    if (missing.length) setTimeout(() => { if (ACTIVE_GALLERY === galleryType) layoutActive(true); }, 1600);
+    return photos;
+  }
+
+  // The rows currently on screen. Full rows scale with the window in pure CSS (each photo's flex-grow
+  // is its aspect ratio), so while a resize leaves every row at a sensible height nothing is redone;
+  // photos move between rows only when a row would get too tall or too short.
+  let CURRENT_ROWS = null; // { gallery, rows, targetH }
+
+  function rowsStillFit(W) {
+    if (!CURRENT_ROWS || CURRENT_ROWS.gallery !== ACTIVE_GALLERY) return false;
+    const { rows, targetH } = CURRENT_ROWS;
+    const lo = MIN_ROW_H * 0.8, hi = effectiveMaxRowH() * 1.15;
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i], gaps = GAP * Math.max(0, r.len - 1);
+      if (i < rows.length - 1) {
+        const h = (W - gaps) / r.sumAR;
+        if (h < lo || (h > hi && r.len > 1)) return false; // a lone photo can't be split anyway
+      } else if (r.sumAR * targetH + gaps > W * 1.25) {
+        return false; // the ragged last row would have to shrink a lot: rebalance instead
+      }
     }
+    return true;
+  }
+
+  function layoutActive(force) {
+    const photos = gridCache.get(ACTIVE_GALLERY);
+    if (!photos) return;
+    const photoGrid = document.getElementById('photo-grid');
+    const W = gridWidthPx(photoGrid);
+    if (!force && W === LAST_LAYOUT_W) return; // e.g. phone address bar showing/hiding: nothing to redo
+    if (!force && rowsStillFit(W)) { LAST_LAYOUT_W = W; return; }
+    fastLayout(photoGrid, photos.filter(p => typeof p.ar === 'number'));
+  }
+
+  async function createPhotoGrid(galleryType) {
+    ACTIVE_GALLERY = galleryType;
+    let photos = gridCache.get(galleryType);
+    if (!photos) {
+      const indexObj = await ensurePhotoIndex();
+      seedFromIndex(indexObj, galleryType);
+      const srcs = await sourcesFor(galleryType);
+      photos = gridCache.get(galleryType) || buildPhotos(galleryType, srcs);
+      gridCache.set(galleryType, photos);
+    }
+    if (ACTIVE_GALLERY !== galleryType) return; // another tab was picked meanwhile
+    layoutActive(true);
   }
 
   function fastLayout(container, photos) {
@@ -414,6 +465,7 @@
     const ars = photos.map(p => p.ar);
     const best = pickOptimalTargetHeight(ars, W);
     renderJustified(container, photos, W, best.h, false);
+    LAST_LAYOUT_W = W;
   }
 
   function pickOptimalTargetHeight(ars, W) {
@@ -455,13 +507,19 @@
     const ars = photos.map(p => p.ar);
     const rows = simulateRows(ars, W, targetH);
 
+    // Same rows as on screen already? Then CSS has scaled them; keep the DOM as it is.
+    const sig = rows.map(r => `${r.start}-${r.end}`).join(',') + `|${fillLastRow}`;
+    if (CURRENT_ROWS && CURRENT_ROWS.gallery === ACTIVE_GALLERY && CURRENT_ROWS.sig === sig &&
+        containerEl.childElementCount === rows.length) {
+      CURRENT_ROWS.targetH = targetH;
+      return;
+    }
+
     rows.forEach((row, idx) => {
       const isLast = idx === rows.length - 1;
       const rowDiv = document.createElement('div');
       rowDiv.className = 'photo-row';
       rowDiv.style.gap = GAP + 'px';
-      rowDiv.style.contentVisibility = 'auto';
-      rowDiv.style.containIntrinsicSize = '1px 260px';
 
       const gaps = GAP * Math.max(0, row.len - 1);
       // Height we will use for this row
@@ -499,10 +557,32 @@
         widths = rowItems.map(p => Math.round(p.ar * h));
       }
 
+      const fluid = !isLast || fillLastRow;
       rowItems.forEach((p, j) => {
         const w = Math.max(1, widths[j]);
-        p.item.style.width  = w + 'px';
-        p.item.style.height = Math.round(h) + 'px';
+        if (fluid) {
+          // width proportional to the photo's shape, height from its aspect ratio: the row
+          // rescales smoothly with the window without any script
+          // (x100: flex-grow values summing to under 1 would leave part of the row empty)
+          p.item.style.flex = `${p.ar * 100} 1 0px`;
+          p.item.style.aspectRatio = String(p.ar);
+          p.item.style.width = '';
+          p.item.style.height = '';
+        } else {
+          // ragged last row: its natural size, shrinking in proportion if the window narrows
+          p.item.style.flex = `0 1 ${w}px`;
+          p.item.style.aspectRatio = String(p.ar);
+          p.item.style.width = '';
+          p.item.style.height = '';
+        }
+        const vw = VARIANT_W.get(p.full);
+        if (vw) {
+          p.img.sizes = sizesFor(w);
+          if (!p.img.getAttribute('srcset')) {
+            p.img.srcset = `${toThumb(p.full)} ${vw.thumb}w, ${toResized(p.full, GRID_2X)} ${vw.x2}w`;
+          }
+        }
+        if (!p.img.getAttribute('src')) p.img.src = toThumb(p.full);
         rowDiv.appendChild(p.item);
       });
 
@@ -511,6 +591,14 @@
 
     containerEl.innerHTML = '';
     containerEl.appendChild(frag);
+    CURRENT_ROWS = { gallery: ACTIVE_GALLERY, rows, targetH, sig };
+  }
+
+  // After a resize settles, tell the browser each photo's new display width (picks 400 vs 800 px)
+  function refreshSizes() {
+    (gridCache.get(ACTIVE_GALLERY) || []).forEach(p => {
+      if (p.img.getAttribute('srcset')) p.img.sizes = sizesFor(p.item.getBoundingClientRect().width);
+    });
   }
 
   function switchGallery(galleryType) {
@@ -562,10 +650,18 @@
     updateLightboxImage();
   }
 
+  // Lightbox shows the 2048 px copy; the full-size original is only used if that copy is missing
+  function lightboxSrc(src) { return HAS_RESIZED.has(src) ? toResized(src, LIGHTBOX_EDGE) : src; }
+
   function updateLightboxImage() {
     if (!LB_IMG) return;
+    const full = LB_SOURCES[LB_INDEX];
     LB_IMG.setAttribute('fetchpriority', 'high');
-    LB_IMG.src = LB_SOURCES[LB_INDEX];
+    LB_IMG.onerror = () => {
+      LB_IMG.onerror = null;
+      if (LB_IMG.src !== new URL(full, location.href).href) LB_IMG.src = full;
+    };
+    LB_IMG.src = lightboxSrc(full);
     preloadNeighborImages();
   }
 
@@ -573,7 +669,7 @@
     if (!LB_SOURCES || !LB_SOURCES.length) return;
     const next = LB_SOURCES[(LB_INDEX + 1) % LB_SOURCES.length];
     const prev = LB_SOURCES[(LB_INDEX - 1 + LB_SOURCES.length) % LB_SOURCES.length];
-    [next, prev].forEach(src => { const im = new Image(); im.decoding = 'async'; im.loading = 'eager'; im.src = src; });
+    [next, prev].forEach(src => { const im = new Image(); im.decoding = 'async'; im.loading = 'eager'; im.src = lightboxSrc(src); });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -608,12 +704,13 @@
       });
     });
 
-    let t; window.addEventListener('resize', () => {
-      clearTimeout(t);
-      t = setTimeout(() => {
-        const active = document.querySelector('.gallery-option.active').getAttribute('data-gallery');
-        createPhotoGrid(active);
-      }, 120);
+    // Re-justify only when the grid width changes (not on height-only resizes such as a phone's
+    // address bar collapsing while scrolling)
+    let frame = 0, settle;
+    window.addEventListener('resize', () => {
+      if (!frame) frame = requestAnimationFrame(() => { frame = 0; layoutActive(false); });
+      clearTimeout(settle);
+      settle = setTimeout(refreshSizes, 250);
     });
   });
   </script>
