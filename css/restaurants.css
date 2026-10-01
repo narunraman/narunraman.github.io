@@ -1,199 +1,346 @@
-/* Restaurant page specific styles */
+/* Restaurants: the page is a map. Pins open a card with what I have to say about the place. */
 
-/* Navbar: match site */
-.navbar-brand {
-    font-size: 1rem !important;
-}
-
-.container.mt-5 {
-    margin-top: 1rem !important;
-}
-
-.restaurants-wrap {
-    max-width: 750px;
-    margin: 2rem auto 4rem;
-    padding: 0 1rem;
-}
-
-.page-title {
-    font-family: "CMU Bright", "CMU Serif", Georgia, serif;
-    font-weight: 700;
-    font-size: 2rem;
-    margin: 1rem 0 0.5rem;
-}
-
-.intro-text {
-    color: #6c757d;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
-}
-
-/* Mount Rushmore section */
-.rushmore-list {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0 3rem;
-}
-
-.rushmore-item {
+.restaurants-page {
     display: flex;
-    align-items: flex-start;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #e9ecef;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
 }
 
-.rushmore-item:last-child {
-    border-bottom: none;
-}
-
-.president-icon {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    margin-right: 1.5rem;
-    flex-shrink: 0;
-    object-fit: cover;
-    position: relative;
-    box-shadow: inset 0 0 30px 20px rgba(255, 255, 255, 0.5);
-}
-
-.restaurant-info {
+/* compact navbar, as on the photos page; the map takes the rest of the screen */
+.rmap {
+    display: flex;
     flex: 1;
+    flex-direction: column;
 }
 
-.restaurant-name {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 0 0 0.25rem;
-    color: #222;
+.rmap-stage {
+    position: relative;
+    flex: 1;
+    min-height: 420px;
 }
 
-.restaurant-location {
-    color: #6c757d;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-    font-style: italic;
+/* the map fades into the page at its top edge, like the photos page's splash */
+.rmap-stage::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 450; /* over the map, under the zoom buttons and city shortcuts */
+    height: 90px;
+    background: linear-gradient(to bottom, #fff, rgba(255, 255, 255, 0));
+    pointer-events: none;
 }
 
-.restaurant-description {
-    color: #555;
-    line-height: 1.6;
-    margin: 0;
+.rmap-map {
+    position: absolute;
+    inset: 0;
+    background: #d4d4d6; /* close to the basemap's water, for the space beyond the poles */
 }
 
-/* Search/Filter section */
-.filter-section {
-    margin: 3rem 0 2rem;
+/* --- pins --- */
+.rmap-pin {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #dc3545;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    transition: transform 0.12s ease;
 }
 
-.filter-section h2 {
-    font-family: "CMU Bright", "CMU Serif", Georgia, serif;
-    font-weight: 700;
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
+.rmap-pin.closed {
+    background: #b9b9b9;
 }
 
-.search-bar {
+.rmap-pin.fav {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.rmap-pin.fav::before {
+    content: "★";
+}
+
+.leaflet-marker-icon:hover .rmap-pin,
+.rmap-pin.selected {
+    transform: scale(1.35);
+}
+
+.rmap-pin.selected {
+    background: #222;
+}
+
+/* --- the floating side column: a panel (search, meals, cities) and, below it, the place card --- */
+.rmap-side {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    bottom: 24px;
+    z-index: 1000; /* above Leaflet's panes and controls */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 330px;
+    pointer-events: none; /* the map stays draggable around the panel */
+}
+
+.rmap-panel,
+.rmap-card {
+    flex: none;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+}
+
+.rmap-panel {
+    padding: 12px;
+}
+
+.rmap-search-wrap {
+    position: relative;
+}
+
+.rmap-search {
     width: 100%;
-    max-width: 400px;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
-    border: 1px solid #dee2e6;
-    border-radius: 6px;
-    margin-bottom: 2rem;
-    transition: border-color 0.2s;
-}
-
-.search-bar:focus {
-    outline: none;
-    border-color: #dc3545;
-}
-
-/* Honorable mentions by region */
-.region-section {
-    margin-bottom: 2.5rem;
-}
-
-.region-section h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    background: #f6f6f5;
+    padding: 6px 14px;
     color: #222;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #dc3545;
+    font: inherit;
+    font-size: 15px;
+    outline: none;
 }
 
-.restaurant-list {
-    list-style: none;
-    padding: 0;
+.rmap-search:focus {
+    border-color: #bbb;
+    background: #fff;
+}
+
+.rmap-results {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    max-height: 320px;
     margin: 0;
+    overflow-y: auto;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+    padding: 4px 0;
+    list-style: none;
 }
 
-.restaurant-list li {
-    padding: 0.5rem 0;
-    color: #555;
+.rmap-results li {
+    cursor: pointer;
+    padding: 6px 14px;
+    line-height: 1.25;
+}
+
+.rmap-results li:hover,
+.rmap-results li.on {
+    background: #f1f1ef;
+}
+
+.rmap-results small {
+    display: block;
+    color: #888;
+}
+
+.rmap-results li.city {
+    border-bottom: 1px solid #eee;
+}
+
+.rmap-results .empty {
+    cursor: default;
+    color: #888;
+}
+
+.rmap-meals,
+.rmap-cities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.rmap-chip {
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    background: #fff;
+    padding: 2px 10px;
+    color: #333;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13.5px;
     line-height: 1.5;
 }
 
-.restaurant-list li::before {
-    content: "·";
-    color: #dc3545;
-    font-weight: bold;
+.rmap-chip:hover {
+    border-color: #999;
+}
+
+.rmap-chip.active {
+    border-color: #222;
+    background: #222;
+    color: #fff;
+}
+
+.rmap-chip .n {
+    margin-left: 3px;
+    opacity: 0.55;
+    font-size: 12px;
+}
+
+.rmap-chip.active .n {
+    color: #fff;
+    opacity: 0.8;
+}
+
+.rmap-cities {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.rmap-count {
+    margin-top: 8px;
+    color: #888;
+    font-size: 12.5px;
+}
+
+/* --- the place card --- */
+.rmap-card {
+    position: relative;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 16px 18px 14px;
+    flex: 0 1 auto;
+}
+
+.rmap-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    border: 0;
+    background: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.rmap-close:hover {
+    color: #222;
+}
+
+.rmap-card h2 {
+    margin: 0 1.5rem 0.1rem 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.rmap-where {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.rmap-badge {
     display: inline-block;
-    width: 1em;
-    margin-left: -1em;
+    margin: 0.45rem 0 0;
+    border-radius: 3px;
+    background: #dc3545;
+    padding: 0 6px;
+    color: #fff;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
-/* In Memoriam section */
-.memoriam-section {
-    margin-top: 3rem;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-left: 4px solid #6c757d;
-    border-radius: 0 8px 8px 0;
+.rmap-badge.closed {
+    background: #999;
 }
 
-.memoriam-section h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #6c757d;
-    margin: 0 0 1rem;
+.rmap-note {
+    margin: 0.6rem 0 0;
+    font-size: 1rem;
+    line-height: 1.45;
 }
 
-.memoriam-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.rmap-note.closed-note {
+    color: #777;
+    font-style: italic;
 }
 
-.memoriam-list li {
-    padding: 0.4rem 0;
-    color: #6c757d;
+.rmap-tags {
+    margin-top: 0.55rem;
+    color: #888;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.85rem;
 }
 
-.memoriam-list li::before {
-    content: "💀";
-    margin-right: 0.5rem;
-}
-
-/* Hidden class for search filtering */
-.hidden {
-    display: none !important;
+.rmap-actions {
+    margin-top: 0.7rem;
+    font-size: 0.95rem;
 }
 
 @media (max-width: 576px) {
-    .president-icon {
-        width: 60px;
-        height: 60px;
-        margin-right: 1rem;
+    .rmap-stage {
+        min-height: 360px;
     }
 
-    .restaurant-name {
-        font-size: 1.2rem;
+    /* the panel spans the top; the card becomes a bottom sheet */
+    .rmap-side {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 0;
+        width: auto;
     }
 
-    .page-title {
-        font-size: 1.75rem;
+    .rmap-panel {
+        padding: 8px;
+    }
+
+    .rmap-meals,
+    .rmap-cities {
+        flex-wrap: nowrap;
+        margin-top: 7px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+    }
+
+    .rmap-meals::-webkit-scrollbar,
+    .rmap-cities::-webkit-scrollbar {
+        display: none;
+    }
+
+    .rmap-chip {
+        flex: none;
+    }
+
+    .rmap-cities {
+        padding-top: 7px;
+    }
+
+    .rmap-count {
+        display: none;
+    }
+
+    .rmap-card {
+        margin: auto -8px 0;
+        max-height: 55%;
+        border-radius: 14px 14px 0 0;
+        padding: 18px 18px 22px;
     }
 }

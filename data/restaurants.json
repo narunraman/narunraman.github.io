@@ -1,0 +1,1420 @@
+{
+  "updated": "2026-08-31",
+  "restaurants": [
+    {
+      "id": "ratna-cafe-chennai",
+      "name": "Ratna Cafe",
+      "city": "Chennai",
+      "area": "Adyar",
+      "region": "Tamil Nadu",
+      "country": "India",
+      "address": "55 Adyar Bridge Road",
+      "lat": 13.007951,
+      "lng": 80.259399,
+      "cuisine": [
+        "South Indian"
+      ],
+      "meal": [
+        "breakfast",
+        "lunch"
+      ],
+      "topRated": true,
+      "status": "open",
+      "note": "My dad's favorite hometown cafe, probably the best sambar in the world, the vada and idli sambar are worth a trip.",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "magari-by-oca-vancouver",
+      "name": "Magari by Oca",
+      "city": "Vancouver",
+      "area": "Commercial Drive",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "1260 Commercial Drive",
+      "lat": 49.273375,
+      "lng": -123.069379,
+      "cuisine": [
+        "Italian",
+        "Pasta"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": true,
+      "status": "open",
+      "note": "A pasta tasting menu. Seven courses. No phone, no reservation, no menu. Show up at open. Oh, and get the Cannanau.",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "is-that-french-vancouver",
+      "name": "Is That French",
+      "city": "Vancouver",
+      "area": "Gastown",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "45 Blood Alley Square",
+      "lat": 49.283263,
+      "lng": -123.105588,
+      "cuisine": [
+        "French",
+        "Wine Bar"
+      ],
+      "meal": [
+        "dinner",
+        "drinks"
+      ],
+      "topRated": true,
+      "status": "open",
+      "note": "So, this place has no kitchen. But the summer menu is always great and the Basque cheesecake is yummy.",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "little-collins-amsterdam",
+      "name": "Little Collins",
+      "city": "Amsterdam",
+      "area": "De Pijp",
+      "region": "North Holland",
+      "country": "Netherlands",
+      "address": "19F Eerste Sweelinckstraat",
+      "lat": 52.35586,
+      "lng": 4.898049,
+      "cuisine": [
+        "Brunch",
+        "Australian"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": true,
+      "status": "open",
+      "note": "The sister location for brunch/breakfast in De Pijp, they have a rotating menu but the yogurt sucuk bowl was the best breakfast I have had in a while.",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "per-se-social-corner-vancouver",
+      "name": "per se Social Corner",
+      "city": "Vancouver",
+      "area": "Downtown",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "891 Homer Street",
+      "lat": 49.278605,
+      "lng": -123.118459,
+      "cuisine": [
+        "Italian",
+        "Pizza"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "maenam-vancouver",
+      "name": "Maenam",
+      "city": "Vancouver",
+      "area": "Kitsilano",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "1938 West 4th Avenue",
+      "lat": 49.267909,
+      "lng": -123.148911,
+      "cuisine": [
+        "Thai"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "little-bird-dim-sum-vancouver",
+      "name": "Little Bird Dim Sum",
+      "city": "Vancouver",
+      "area": "Kitsilano",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "2958 West 4th Avenue",
+      "lat": 49.268299,
+      "lng": -123.171538,
+      "cuisine": [
+        "Chinese",
+        "Dim Sum"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "yuwa-japanese-cuisine-vancouver",
+      "name": "Yuwa Japanese Cuisine",
+      "city": "Vancouver",
+      "area": "Kitsilano",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "2775 West 16th Avenue",
+      "lat": 49.257953,
+      "lng": -123.167822,
+      "cuisine": [
+        "Japanese"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "casereccio-foods-vancouver",
+      "name": "Casereccio Foods",
+      "city": "Vancouver",
+      "area": "Kitsilano",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "2480 Vine Street",
+      "lat": 49.26418,
+      "lng": -123.15747,
+      "cuisine": [
+        "Italian",
+        "Pasta"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "temaki-sushi-vancouver",
+      "name": "Temaki Sushi",
+      "city": "Vancouver",
+      "area": "Kitsilano",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "2156 West Broadway",
+      "lat": 49.263669,
+      "lng": -123.15418,
+      "cuisine": [
+        "Japanese",
+        "Sushi"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "marche-mon-pitou-vancouver",
+      "name": "Marche Mon Pitou",
+      "city": "Vancouver",
+      "area": "Fairview",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "1387 West 7th Avenue",
+      "lat": 49.26542,
+      "lng": -123.135727,
+      "cuisine": [
+        "French",
+        "Cafe",
+        "Sandwiches"
+      ],
+      "meal": [
+        "breakfast",
+        "lunch"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "acquafarina-vancouver",
+      "name": "acquafarina",
+      "city": "Vancouver",
+      "area": "Downtown",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "425 West Georgia Street",
+      "lat": 49.281039,
+      "lng": -123.115157,
+      "cuisine": [
+        "Italian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "lupo-vancouver",
+      "name": "Lupo",
+      "city": "Vancouver",
+      "area": "Downtown",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "869 Hamilton Street",
+      "lat": 49.278158,
+      "lng": -123.117244,
+      "cuisine": [
+        "Italian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "kissa-tanto-vancouver",
+      "name": "Kissa Tanto",
+      "city": "Vancouver",
+      "area": "Chinatown",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "263 East Pender Street",
+      "lat": 49.280478,
+      "lng": -123.098177,
+      "cuisine": [
+        "Japanese",
+        "Italian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "khaghan-north-vancouver",
+      "name": "Khaghan",
+      "city": "North Vancouver",
+      "area": "Lower Lonsdale",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "935 Marine Drive",
+      "lat": 49.321625,
+      "lng": -123.100274,
+      "cuisine": [
+        "Persian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "fable-diner-bar-vancouver",
+      "name": "Fable Diner & Bar",
+      "city": "Vancouver",
+      "area": "Downtown",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "755 Richards Street",
+      "lat": 49.280752,
+      "lng": -123.117186,
+      "cuisine": [
+        "Diner",
+        "American"
+      ],
+      "meal": [
+        "breakfast",
+        "lunch"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "earnest-ice-cream-vancouver",
+      "name": "Earnest Ice Cream",
+      "city": "Vancouver",
+      "area": "Mount Pleasant",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "3992 Fraser Street",
+      "lat": 49.249353,
+      "lng": -123.089884,
+      "cuisine": [
+        "Ice Cream"
+      ],
+      "meal": [
+        "dessert"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "sing-sing-vancouver",
+      "name": "Sing Sing",
+      "city": "Vancouver",
+      "area": "Mount Pleasant",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "2718 Main Street",
+      "lat": 49.26069,
+      "lng": -123.100699,
+      "cuisine": [
+        "Asian",
+        "Beer Bar"
+      ],
+      "meal": [
+        "dinner",
+        "drinks"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "brassneck-brewery-vancouver",
+      "name": "Brassneck Brewery",
+      "city": "Vancouver",
+      "area": "Mount Pleasant",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "2148 Main Street",
+      "lat": 49.265802,
+      "lng": -123.100362,
+      "cuisine": [
+        "Brewery"
+      ],
+      "meal": [
+        "drinks"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "beta5-chocolates-vancouver",
+      "name": "BETA5 Chocolates",
+      "city": "Vancouver",
+      "area": "Strathcona",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "409 Industrial Avenue",
+      "lat": 49.270072,
+      "lng": -123.095868,
+      "cuisine": [
+        "Chocolate"
+      ],
+      "meal": [
+        "dessert"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "tandoori-flame-delta",
+      "name": "Tandoori Flame",
+      "city": "Delta",
+      "area": "North Delta",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "11970 88 Avenue",
+      "lat": 49.162647,
+      "lng": -122.891028,
+      "cuisine": [
+        "Indian"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "green-lettuce-surrey",
+      "name": "Green Lettuce",
+      "city": "Surrey",
+      "area": "Newton",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "112-6350 120 Street",
+      "lat": 49.117933,
+      "lng": -122.88925,
+      "cuisine": [
+        "Indian",
+        "Chinese"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "fox-and-oak-squamish",
+      "name": "Fox and Oak",
+      "city": "Squamish",
+      "area": "",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "1396 Main Street",
+      "lat": 49.696685,
+      "lng": -123.155257,
+      "cuisine": [
+        "Cafe",
+        "Donuts"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "green-olive-market-cafe-squamish",
+      "name": "Green Olive Market & Cafe",
+      "city": "Squamish",
+      "area": "",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "Cleveland Avenue",
+      "lat": 49.700779,
+      "lng": -123.151778,
+      "cuisine": [
+        "Cafe"
+      ],
+      "meal": [
+        "breakfast",
+        "lunch"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "besharam-san-francisco",
+      "name": "Besharam",
+      "city": "San Francisco",
+      "area": "Dogpatch",
+      "region": "California",
+      "country": "United States",
+      "address": "1275 Minnesota Street",
+      "lat": 37.754281,
+      "lng": -122.38972,
+      "cuisine": [
+        "Indian",
+        "Gujarati"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "damnfine-pizza-san-francisco",
+      "name": "DAMNFiNE pizza",
+      "city": "San Francisco",
+      "area": "Outer Sunset",
+      "region": "California",
+      "country": "United States",
+      "address": "3410 Judah Street",
+      "lat": 37.760877,
+      "lng": -122.498735,
+      "cuisine": [
+        "Pizza"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "la-taqueria-san-francisco",
+      "name": "La Taqueria",
+      "city": "San Francisco",
+      "area": "Mission",
+      "region": "California",
+      "country": "United States",
+      "address": "2889 Mission Street",
+      "lat": 37.750874,
+      "lng": -122.418158,
+      "cuisine": [
+        "Mexican"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "mensho-tokyo-san-francisco",
+      "name": "Mensho Tokyo",
+      "city": "San Francisco",
+      "area": "Tenderloin",
+      "region": "California",
+      "country": "United States",
+      "address": "672 Geary Street",
+      "lat": 37.7867,
+      "lng": -122.414315,
+      "cuisine": [
+        "Japanese",
+        "Ramen"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "plow-san-francisco",
+      "name": "Plow",
+      "city": "San Francisco",
+      "area": "Potrero Hill",
+      "region": "California",
+      "country": "United States",
+      "address": "1299 18th Street",
+      "lat": 37.762535,
+      "lng": -122.395394,
+      "cuisine": [
+        "American",
+        "Brunch"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "rooh-san-francisco",
+      "name": "ROOH",
+      "city": "San Francisco",
+      "area": "SoMa",
+      "region": "California",
+      "country": "United States",
+      "address": "333 Brannan Street",
+      "lat": 37.781188,
+      "lng": -122.392645,
+      "cuisine": [
+        "Indian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "taqueria-el-farolito-san-francisco",
+      "name": "Taqueria El Farolito",
+      "city": "San Francisco",
+      "area": "Mission",
+      "region": "California",
+      "country": "United States",
+      "address": "2779 Mission Street",
+      "lat": 37.752669,
+      "lng": -122.418241,
+      "cuisine": [
+        "Mexican"
+      ],
+      "meal": [
+        "lunch",
+        "dinner",
+        "late night"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "la-note-berkeley",
+      "name": "La Note",
+      "city": "Berkeley",
+      "area": "",
+      "region": "California",
+      "country": "United States",
+      "address": "2377 Shattuck Avenue",
+      "lat": 37.866207,
+      "lng": -122.267273,
+      "cuisine": [
+        "French",
+        "Brunch"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "spoon-korean-bistro-berkeley",
+      "name": "Spoon Korean Bistro",
+      "city": "Berkeley",
+      "area": "",
+      "region": "California",
+      "country": "United States",
+      "address": "933 Ashby Avenue",
+      "lat": 37.851616,
+      "lng": -122.289905,
+      "cuisine": [
+        "Korean"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "pasta-moon-half-moon-bay",
+      "name": "Pasta Moon",
+      "city": "Half Moon Bay",
+      "area": "",
+      "region": "California",
+      "country": "United States",
+      "address": "845 Main Street",
+      "lat": 37.457694,
+      "lng": -122.430032,
+      "cuisine": [
+        "Italian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "ivy-varley-salt-lake-city",
+      "name": "Ivy & Varley",
+      "city": "Salt Lake City",
+      "area": "Downtown",
+      "region": "Utah",
+      "country": "United States",
+      "address": "55 100 South",
+      "lat": 40.76691,
+      "lng": -111.893012,
+      "cuisine": [
+        "American"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "lake-effect-salt-lake-city",
+      "name": "Lake Effect",
+      "city": "Salt Lake City",
+      "area": "Downtown",
+      "region": "Utah",
+      "country": "United States",
+      "address": "155 200 South",
+      "lat": 40.7648,
+      "lng": -111.895881,
+      "cuisine": [
+        "Cocktail Bar"
+      ],
+      "meal": [
+        "drinks"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "banbury-cross-donuts-salt-lake-city",
+      "name": "Banbury Cross Donuts",
+      "city": "Salt Lake City",
+      "area": "",
+      "region": "Utah",
+      "country": "United States",
+      "address": "705 S 700 East",
+      "lat": 40.753886,
+      "lng": -111.870721,
+      "cuisine": [
+        "Donuts"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "pullman-bar-diner-iowa-city",
+      "name": "Pullman Bar & Diner",
+      "city": "Iowa City",
+      "area": "",
+      "region": "Iowa",
+      "country": "United States",
+      "address": "17 South Dubuque Street",
+      "lat": 41.660576,
+      "lng": -91.533206,
+      "cuisine": [
+        "American",
+        "Diner"
+      ],
+      "meal": [
+        "breakfast",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "big-grove-brewery-iowa-city",
+      "name": "Big Grove Brewery",
+      "city": "Iowa City",
+      "area": "",
+      "region": "Iowa",
+      "country": "United States",
+      "address": "1225 South Gilbert Street",
+      "lat": 41.646746,
+      "lng": -91.532748,
+      "cuisine": [
+        "Brewery"
+      ],
+      "meal": [
+        "dinner",
+        "drinks"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "hola-arepa-minneapolis",
+      "name": "Hola Arepa",
+      "city": "Minneapolis",
+      "area": "",
+      "region": "Minnesota",
+      "country": "United States",
+      "address": "3501 Nicollet Avenue",
+      "lat": 44.939344,
+      "lng": -93.277403,
+      "cuisine": [
+        "Venezuelan",
+        "Latin American"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "hen-house-eatery-minneapolis",
+      "name": "Hen House Eatery",
+      "city": "Minneapolis",
+      "area": "Downtown",
+      "region": "Minnesota",
+      "country": "United States",
+      "address": "114 South 8th Street",
+      "lat": 44.975061,
+      "lng": -93.27055,
+      "cuisine": [
+        "American",
+        "Brunch"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "bradbury-s-coffee-madison",
+      "name": "Bradbury's Coffee",
+      "city": "Madison",
+      "area": "",
+      "region": "Wisconsin",
+      "country": "United States",
+      "address": "127 North Hamilton Street",
+      "lat": 43.077353,
+      "lng": -89.383961,
+      "cuisine": [
+        "Cafe",
+        "Crepes"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "marigold-kitchen-madison",
+      "name": "Marigold Kitchen",
+      "city": "Madison",
+      "area": "",
+      "region": "Wisconsin",
+      "country": "United States",
+      "address": "118 S Pinckney Street",
+      "lat": 43.074203,
+      "lng": -89.381558,
+      "cuisine": [
+        "American",
+        "Brunch"
+      ],
+      "meal": [
+        "breakfast"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "cento-madison",
+      "name": "Cento",
+      "city": "Madison",
+      "area": "",
+      "region": "Wisconsin",
+      "country": "United States",
+      "address": "122 West Mifflin Street",
+      "lat": 43.074282,
+      "lng": -89.387309,
+      "cuisine": [
+        "Italian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "cafe-hollander-madison",
+      "name": "Cafe Hollander",
+      "city": "Madison",
+      "area": "Hilldale",
+      "region": "Wisconsin",
+      "country": "United States",
+      "address": "701 Hilldale Way",
+      "lat": 43.073044,
+      "lng": -89.453823,
+      "cuisine": [
+        "Belgian",
+        "American"
+      ],
+      "meal": [
+        "breakfast",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "bibimbap-house-cambridge",
+      "name": "Bibimbap House",
+      "city": "Cambridge",
+      "area": "",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "60 Mill Road",
+      "lat": 52.200531,
+      "lng": 0.135771,
+      "cuisine": [
+        "Korean"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "trockel-ulmann-freunde-cambridge",
+      "name": "Trockel, Ulmann & Freunde",
+      "city": "Cambridge",
+      "area": "",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "13 Pembroke Street",
+      "lat": 52.202368,
+      "lng": 0.119209,
+      "cuisine": [
+        "Cafe"
+      ],
+      "meal": [
+        "breakfast",
+        "lunch"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "benets-cambridge",
+      "name": "Benets",
+      "city": "Cambridge",
+      "area": "",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "21 King's Parade",
+      "lat": 52.204988,
+      "lng": 0.117925,
+      "cuisine": [
+        "Cafe",
+        "Gelato"
+      ],
+      "meal": [
+        "dessert"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "padella-london",
+      "name": "Padella",
+      "city": "London",
+      "area": "Borough Market",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "6 Southwark Street",
+      "lat": 51.505138,
+      "lng": -0.089912,
+      "cuisine": [
+        "Italian",
+        "Pasta"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "the-round-house-london",
+      "name": "The Round House",
+      "city": "London",
+      "area": "Covent Garden",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "1 Garrick Street",
+      "lat": 51.511266,
+      "lng": -0.125539,
+      "cuisine": [
+        "Pub"
+      ],
+      "meal": [
+        "drinks"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "veeraswamy-london",
+      "name": "Veeraswamy",
+      "city": "London",
+      "area": "Mayfair",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "99 Regent Street",
+      "lat": 51.509895,
+      "lng": -0.137919,
+      "cuisine": [
+        "Indian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "gymkhana-london",
+      "name": "Gymkhana",
+      "city": "London",
+      "area": "Mayfair",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "42 Albemarle Street",
+      "lat": 51.508481,
+      "lng": -0.141486,
+      "cuisine": [
+        "Indian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "homeslice-london",
+      "name": "Homeslice",
+      "city": "London",
+      "area": "Neal's Yard",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "13 Neal's Yard",
+      "lat": 51.514597,
+      "lng": -0.126413,
+      "cuisine": [
+        "Pizza"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "udderlicious-london",
+      "name": "Udderlicious",
+      "city": "London",
+      "area": "Islington",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "187 Upper Street",
+      "lat": 51.542321,
+      "lng": -0.103279,
+      "cuisine": [
+        "Ice Cream"
+      ],
+      "meal": [
+        "dessert"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "pizza-union-london",
+      "name": "Pizza Union",
+      "city": "London",
+      "area": "",
+      "region": "England",
+      "country": "United Kingdom",
+      "address": "246-250 Pentonville Road",
+      "lat": 51.517065,
+      "lng": -0.123206,
+      "cuisine": [
+        "Pizza"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "open",
+      "note": "",
+      "order": "",
+      "closedNote": ""
+    },
+    {
+      "id": "autostrada-osteria-vancouver",
+      "name": "Autostrada Osteria",
+      "city": "Vancouver",
+      "area": "Downtown",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "350 West Pender Street",
+      "lat": 49.282596,
+      "lng": -123.11195,
+      "cuisine": [
+        "Italian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "closed",
+      "note": "",
+      "order": "",
+      "closedNote": "Closed January 2024; the Main Street location followed in December 2024."
+    },
+    {
+      "id": "pizzeria-farina-vancouver",
+      "name": "Pizzeria Farina",
+      "city": "Vancouver",
+      "area": "Mount Pleasant",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "915 Main Street",
+      "lat": 49.276638,
+      "lng": -123.100103,
+      "cuisine": [
+        "Pizza"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "closed",
+      "note": "",
+      "order": "",
+      "closedNote": "Closed May 2025 after 13 years on Main Street."
+    },
+    {
+      "id": "raudz-regional-table-kelowna",
+      "name": "RauDZ Regional Table",
+      "city": "Kelowna",
+      "area": "",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "1560 Water Street",
+      "lat": 49.885996,
+      "lng": -119.496784,
+      "cuisine": [
+        "Canadian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "closed",
+      "note": "",
+      "order": "",
+      "closedNote": "Closed New Year's Eve 2023 after 22 years."
+    },
+    {
+      "id": "a-pig-in-a-fur-coat-madison",
+      "name": "A Pig in a Fur Coat",
+      "city": "Madison",
+      "area": "",
+      "region": "Wisconsin",
+      "country": "United States",
+      "address": "940 Williamson Street",
+      "lat": 43.080528,
+      "lng": -89.368615,
+      "cuisine": [
+        "American"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "closed",
+      "note": "",
+      "order": "",
+      "closedNote": "Closed September 2025."
+    },
+    {
+      "id": "elephant-vancouver",
+      "name": "Elephant",
+      "city": "Vancouver",
+      "area": "Grandview-Woodland",
+      "region": "British Columbia",
+      "country": "Canada",
+      "address": "1879 Powell Street",
+      "lat": 49.284755,
+      "lng": -123.065934,
+      "cuisine": [
+        "Canadian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "closed",
+      "note": "",
+      "order": "",
+      "closedNote": "Closed 2024. Previously on the top-rated list."
+    },
+    {
+      "id": "chino-latino-minneapolis",
+      "name": "Chino Latino",
+      "city": "Minneapolis",
+      "area": "Uptown",
+      "region": "Minnesota",
+      "country": "United States",
+      "address": "2916 Hennepin Avenue South",
+      "lat": 44.948602,
+      "lng": -93.298678,
+      "cuisine": [
+        "Latin American",
+        "Asian"
+      ],
+      "meal": [
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "closed",
+      "note": "",
+      "order": "",
+      "closedNote": "Closed October 2020 after 20 years in Uptown."
+    },
+    {
+      "id": "sen-yai-sen-lek-minneapolis",
+      "name": "Sen Yai Sen Lek",
+      "city": "Minneapolis",
+      "area": "Northeast",
+      "region": "Minnesota",
+      "country": "United States",
+      "address": "2422 Central Avenue NE",
+      "lat": 45.035816,
+      "lng": -93.247355,
+      "cuisine": [
+        "Thai"
+      ],
+      "meal": [
+        "lunch",
+        "dinner"
+      ],
+      "topRated": false,
+      "status": "closed",
+      "note": "",
+      "order": "",
+      "closedNote": "Closed April 2022."
+    }
+  ]
+}

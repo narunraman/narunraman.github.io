@@ -1,0 +1,7 @@
+{
+  "_how": "Where I am at the moment, shown on the Personal page's map preview. Edit city/lat/lng when you move; zoom 12 is about a city, 5 a country.",
+  "city": "Vancouver",
+  "lat": 49.2827,
+  "lng": -123.1207,
+  "zoom": 12
+}

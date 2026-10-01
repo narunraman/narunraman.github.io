@@ -779,7 +779,7 @@
 }
 
 .software-link::before {
-    background-image: url('../assets/logos/software_logo.png');
+    background-image: url('../assets/logos/software_logo-128.webp');
     border-radius: 2px;
 }
 
@@ -1259,4 +1259,32 @@
    in main.js. Hidden but laid out, it made the page scrollable sideways, so take it out of layout. */
 .image-footnote-ref::after {
     display: none;
+}
+
+/* Full-bleed pages (photos, restaurants): the name and the links sit in the window's corners, on one
+   row even on phones */
+.edge-bar {
+    padding: 0.9rem 1.5rem 0.5rem;
+}
+
+.edge-bar .navbar {
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+}
+
+.edge-bar .navbar-brand {
+    margin-right: auto !important;
+    font-size: 1rem !important;
+}
+
+@media (max-width: 576px) {
+    .edge-bar {
+        padding: 0.7rem 1rem 0.4rem;
+    }
+
+    .edge-bar .navbar-brand,
+    .edge-bar .nav-link,
+    .edge-bar .navbar-text {
+        font-size: 0.95rem;
+    }
 }
