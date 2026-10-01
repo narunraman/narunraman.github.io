@@ -1,0 +1,85 @@
+/* Computer Modern (CMU Bright and CMU Serif), hosted here instead of on a CDN.
+   The files in /assets/fonts are subsets of the "computer-modern" npm package's fonts (SIL Open Font
+   License): Latin, Greek, punctuation, arrows and maths symbols, about a fifth of the full size.
+   font-display: swap shows text in a fallback font straight away instead of leaving it invisible
+   while the font downloads. */
+
+@font-face {
+    font-family: "CMU Bright";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-bright-500-roman.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Bright";
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-bright-500-italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Bright";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-bright-600-roman.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Bright";
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-bright-600-italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Bright";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-bright-700-roman.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Bright";
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-bright-700-italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Serif";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-serif-500-roman.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Serif";
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-serif-500-italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Serif";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-serif-700-roman.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "CMU Serif";
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/assets/fonts/cmu-serif-700-italic.woff2") format("woff2");
+}

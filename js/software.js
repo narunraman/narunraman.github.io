@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 'machine-behavior',
             title: 'Machine behavior',
             description: 'Software for building, evaluating, and interrogating language models.',
-            image: '/assets/software/software-1.png',
+            image: '/assets/software/software-1-400.webp',
             imageAlt: 'A monochrome sculptural figure with a bird-like head.',
             imageSide: 'right'
         },
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 'human-behavior',
             title: 'Human behavior',
             description: 'Software for studying how people make decisions in digital markets.',
-            image: '/assets/software/software-3.png',
+            image: '/assets/software/software-3-400.webp',
             imageAlt: 'A monochrome sculptural human figure with layered hands.',
             imageSide: 'left'
         }
