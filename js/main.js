@@ -280,207 +280,211 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function createPublicationFilterButton(label, group, value) {
-        const button = document.createElement('button');
+    // Publication filter: the heading's own words are the controls, each underlined in its badge
+    // colour. "Publications" has two bars: its left half shows conference papers, its right half
+    // journal papers. "Working Papers" shows the preprints and "Talks" the talks. On phones the
+    // heading says "Pre-prints" so it fits on one line, and the underlines give way to a row of tabs under the heading (All, Conference, ...), same filter. A paper's badge picks
+    // its own type. Clicking the active control again (or the ×) shows everything.
+    const PUBLICATION_GROUPS = {
+        conference: ['conference'],
+        journal: ['journal'],
+        working: ['informal'],
+        talks: ['talk']
+    };
+    const PUBLICATION_GROUP_TITLES = {
+        conference: 'conference papers',
+        journal: 'journal papers',
+        working: 'working papers',
+        talks: 'talks'
+    };
 
-        button.className = 'publication-filter-pill';
-        button.type = 'button';
-        button.dataset.filterGroup = group;
-        button.dataset.filterValue = value;
-        button.textContent = label;
-
-        return button;
-    }
-
-    function createPublicationFilterGroup(label, buttons) {
-        const group = document.createElement('div');
-        const groupLabel = document.createElement('span');
-
-        group.className = 'publication-filter-group';
-        groupLabel.className = 'publication-filter-label';
-        groupLabel.textContent = label;
-
-        group.appendChild(groupLabel);
-        buttons.forEach(function(button) {
-            group.appendChild(button);
-        });
-
-        return group;
-    }
-
-    function getPublicationTypeFilterLabel(type) {
-        if (type === 'conference') return 'Conferences';
-        if (type === 'journal') return 'Journals';
-        if (type === 'talk') return 'Talks';
-        return 'Working papers';
+    function publicationGroupOf(type) {
+        return Object.keys(PUBLICATION_GROUPS).find(function(group) {
+            return PUBLICATION_GROUPS[group].includes(type);
+        }) || 'working';
     }
 
     function initializePublicationFilters(publications) {
         const root = document.getElementById('publications-root');
         const heading = document.getElementById('publications-and-pre-prints');
-        if (!root || !heading || document.querySelector('.publication-filters')) return;
+        if (!root || !heading || heading.classList.contains('filterable')) return;
 
-        const filterState = {
-            type: 'all',
-            year: 'all'
-        };
-        const typeOrder = ['conference', 'journal', 'informal', 'talk'];
-        const types = typeOrder.filter(function(type) {
-            return publications.some(function(publication) {
-                return (publication.type || 'informal') === type;
+        let activeGroup = null;
+        const present = new Set(publications.map(function(publication) {
+            return publicationGroupOf(publication.type || 'informal');
+        }));
+        // split "Publications" into two clickable halves, one per bar
+        const split = heading.querySelector('.pub-term[data-filter="publications"]');
+        if (split) {
+            split.removeAttribute('data-filter');
+            split.classList.add('pub-term-split');
+            ['conference', 'journal'].forEach(function(group) {
+                const half = document.createElement('span');
+                half.className = `pub-term pub-half pub-half-${group}`;
+                half.dataset.filter = group;
+                split.appendChild(half);
             });
+        }
+        const terms = Array.from(heading.querySelectorAll('.pub-term[data-filter]')).filter(function(term) {
+            return present.has(term.dataset.filter);
         });
-        const years = Array.from(new Set(publications.map(function(publication) {
-            return publication.year;
-        }))).sort(function(a, b) {
-            return b - a;
-        });
-        const filterBar = document.createElement('div');
-        const emptyMessage = document.createElement('p');
+        const reset = document.createElement('button');
+        const tabs = document.createElement('div');
         const scrollSpacer = document.createElement('div');
         let spacerArmed = false;
         let spacerLastScrollY = 0;
 
-        filterBar.className = 'publication-filters';
-        filterBar.setAttribute('aria-label', 'Publication filters');
+        heading.classList.add('filterable');
+        terms.forEach(function(term) {
+            term.setAttribute('role', 'button');
+            term.tabIndex = 0;
+            term.title = `Show only ${PUBLICATION_GROUP_TITLES[term.dataset.filter]}`;
+        });
+        reset.type = 'button';
+        reset.className = 'pub-filter-reset';
+        reset.textContent = '×';
+        reset.title = 'Show everything';
+        reset.setAttribute('aria-label', 'Show everything');
+        reset.hidden = true;
+        heading.appendChild(reset);
 
-        emptyMessage.className = 'publication-filter-empty';
-        emptyMessage.hidden = true;
-        emptyMessage.textContent = 'No publications match these filters.';
+        const TAB_LABELS = { conference: 'Conference', journal: 'Journal', working: 'Pre-prints', talks: 'Talks' };
+        tabs.className = 'pub-tabs';
+        tabs.setAttribute('aria-label', 'Filter by type');
+        [null].concat(Object.keys(TAB_LABELS).filter(function(group) { return present.has(group); }))
+            .forEach(function(group) {
+                const tab = document.createElement('button');
+                tab.type = 'button';
+                tab.className = 'pub-tab';
+                tab.dataset.filter = group || '';
+                if (group) {
+                    const swatch = document.createElement('i');
+                    swatch.className = `pub-tab-swatch pub-tab-swatch-${group}`;
+                    tab.appendChild(swatch);
+                }
+                tab.appendChild(document.createTextNode(group ? TAB_LABELS[group] : 'All'));
+                tabs.appendChild(tab);
+            });
+        heading.parentNode.insertBefore(tabs, heading.nextSibling);
+        tabs.addEventListener('click', function(event) {
+            const tab = event.target.closest('.pub-tab');
+            if (!tab) return;
+            const group = tab.dataset.filter || null;
+            if (group !== activeGroup) setGroup(group);
+            tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        });
 
         scrollSpacer.className = 'publication-filter-scroll-spacer';
         scrollSpacer.setAttribute('aria-hidden', 'true');
+        root.parentNode.insertBefore(scrollSpacer, root.nextSibling);
 
-        filterBar.appendChild(createPublicationFilterGroup('Category', [
-            createPublicationFilterButton('All', 'type', 'all')
-        ].concat(types.map(function(type) {
-            return createPublicationFilterButton(getPublicationTypeFilterLabel(type), 'type', type);
-        }))));
-        filterBar.appendChild(createPublicationFilterGroup('Year', years.map(function(year) {
-            return createPublicationFilterButton(String(year), 'year', String(year));
-        })));
+        root.querySelectorAll('.publication-badge').forEach(function(badge) {
+            badge.setAttribute('role', 'button');
+            badge.tabIndex = 0;
+            badge.classList.add('publication-badge-filter');
+        });
 
-        heading.parentNode.insertBefore(filterBar, root);
-        root.parentNode.insertBefore(emptyMessage, root.nextSibling);
-        emptyMessage.parentNode.insertBefore(scrollSpacer, emptyMessage.nextSibling);
-
-        function filterIsEmpty() {
-            return filterState.type === 'all' &&
-                filterState.year === 'all';
-        }
-
-        function clearScrollSpacer() {
-            scrollSpacer.style.height = '0';
-            spacerArmed = false;
-            spacerLastScrollY = window.scrollY;
-        }
-
-        function updateButtons() {
-            filterBar.querySelectorAll('.publication-filter-pill').forEach(function(button) {
-                const group = button.dataset.filterGroup;
-                const value = button.dataset.filterValue;
-                const isActive = group === 'type' && value === 'all' ?
-                    filterIsEmpty() :
-                    filterState[group] === value;
-
-                button.classList.toggle('active', isActive);
-                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        function update() {
+            root.querySelectorAll('.publication-item').forEach(function(item) {
+                item.hidden = activeGroup !== null &&
+                    !PUBLICATION_GROUPS[activeGroup].includes(item.dataset.publicationType);
             });
-        }
-
-        function updateVisiblePublications() {
-            const items = Array.from(root.querySelectorAll('.publication-item'));
-            let visibleCount = 0;
-
-            items.forEach(function(item) {
-                const typeMatches = filterState.type === 'all' || item.dataset.publicationType === filterState.type;
-                const yearMatches = filterState.year === 'all' || item.dataset.publicationYear === filterState.year;
-                const visible = typeMatches && yearMatches;
-
-                item.hidden = !visible;
-                if (visible) visibleCount += 1;
-            });
-
             root.querySelectorAll('.publication-list').forEach(function(list) {
                 const hasVisibleItem = Boolean(list.querySelector('.publication-item:not([hidden])'));
                 const year = list.dataset.publicationYear;
                 const headingForYear = root.querySelector(`.year-heading[data-publication-year="${year}"]`);
-
                 list.hidden = !hasVisibleItem;
-                if (headingForYear) {
-                    headingForYear.hidden = !hasVisibleItem;
-                }
+                if (headingForYear) headingForYear.hidden = !hasVisibleItem;
             });
-
-            emptyMessage.hidden = visibleCount > 0;
-            updateButtons();
+            heading.classList.toggle('filtering', activeGroup !== null);
+            terms.forEach(function(term) {
+                const isActive = term.dataset.filter === activeGroup;
+                term.classList.toggle('active', isActive);
+                term.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+            if (split) {
+                split.classList.toggle('active', activeGroup === 'conference' || activeGroup === 'journal');
+            }
+            reset.hidden = activeGroup === null;
+            tabs.querySelectorAll('.pub-tab').forEach(function(tab) {
+                const isActive = (tab.dataset.filter || null) === activeGroup;
+                tab.classList.toggle('active', isActive);
+                tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
         }
 
-        function preserveScrollSpace(previousScrollHeight, previousScrollY) {
-            const viewportHeight = window.innerHeight;
-            const requiredHeight = previousScrollY + viewportHeight;
+        // Hold the reader's place: after the list changes, pad the bottom with just enough blank space
+        // that the page can stay scrolled where it was. The padding melts away as they scroll back up.
+        function holdScrollPosition(previousScrollY) {
             const currentSpacerHeight = scrollSpacer.getBoundingClientRect().height;
             const naturalScrollHeight = document.documentElement.scrollHeight - currentSpacerHeight;
-            const neededSpacerHeight = Math.max(0, requiredHeight - naturalScrollHeight);
+            const neededSpacerHeight = Math.max(0, previousScrollY + window.innerHeight - naturalScrollHeight);
 
-            if (neededSpacerHeight > 0 && previousScrollHeight > naturalScrollHeight) {
-                scrollSpacer.style.height = `${neededSpacerHeight + 24}px`;
-                spacerArmed = true;
-                window.scrollTo(0, previousScrollY);
-                spacerLastScrollY = previousScrollY;
-            } else {
-                clearScrollSpacer();
+            scrollSpacer.style.height = `${neededSpacerHeight}px`;
+            spacerArmed = neededSpacerHeight > 0;
+            window.scrollTo(0, previousScrollY);
+            spacerLastScrollY = previousScrollY;
+        }
+
+        function setGroup(group, anchor) {
+            const previousScrollY = window.scrollY;
+            const anchorTop = anchor ? anchor.getBoundingClientRect().top : null;
+
+            // grow the spacer first, so the page never gets shorter mid-change and the browser never
+            // scrolls on its own
+            scrollSpacer.style.height = `${document.documentElement.scrollHeight}px`;
+            activeGroup = (group === null || group === activeGroup) ? null : group;
+            update();
+            holdScrollPosition(previousScrollY);
+
+            // keep a clicked badge where it was on screen, so the list doesn't jump under the pointer
+            if (anchor && anchorTop !== null && !anchor.closest('[hidden]')) {
+                window.scrollBy(0, anchor.getBoundingClientRect().top - anchorTop);
             }
         }
 
-        filterBar.addEventListener('click', function(event) {
-            const button = event.target.closest('.publication-filter-pill');
-            if (!button) return;
+        function activated(event) {
+            if (event.type === 'keydown' && event.key !== 'Enter' && event.key !== ' ') return false;
+            event.preventDefault();
+            return true;
+        }
 
-            const group = button.dataset.filterGroup;
-            const value = button.dataset.filterValue;
-            const previousScrollHeight = document.documentElement.scrollHeight;
-            const previousScrollY = window.scrollY;
-
-            clearScrollSpacer();
-            scrollSpacer.style.height = `${previousScrollHeight}px`;
-
-            if (group === 'type' && value === 'all') {
-                filterState.type = 'all';
-                filterState.year = 'all';
-            } else {
-                filterState[group] = filterState[group] === value ? 'all' : value;
+        heading.addEventListener('click', function(event) {
+            if (event.target.closest('.pub-filter-reset')) {
+                setGroup(null);
+                return;
             }
-
-            updateVisiblePublications();
-            preserveScrollSpace(previousScrollHeight, previousScrollY);
+            const term = event.target.closest('.pub-term[data-filter][role="button"]');
+            if (term) setGroup(term.dataset.filter);
         });
+        heading.addEventListener('keydown', function(event) {
+            const term = event.target.closest('.pub-term[data-filter][role="button"]');
+            if (term && activated(event)) setGroup(term.dataset.filter);
+        });
+
+        function badgeActivated(event) {
+            const badge = event.target.closest('.publication-badge-filter');
+            if (!badge || !activated(event)) return;
+            const type = badge.closest('.publication-item').dataset.publicationType;
+            setGroup(publicationGroupOf(type), badge);
+        }
+        root.addEventListener('click', badgeActivated);
+        root.addEventListener('keydown', badgeActivated);
 
         window.addEventListener('scroll', function() {
             if (!spacerArmed) return;
-
             const currentScrollY = window.scrollY;
             const upwardDistance = Math.max(0, spacerLastScrollY - currentScrollY);
-
             if (upwardDistance > 0) {
                 const currentSpacerHeight = scrollSpacer.getBoundingClientRect().height;
                 const nextSpacerHeight = Math.max(0, currentSpacerHeight - upwardDistance);
-
                 scrollSpacer.style.height = `${nextSpacerHeight}px`;
-
-                if (nextSpacerHeight === 0) {
-                    spacerArmed = false;
-                }
+                if (nextSpacerHeight === 0) spacerArmed = false;
             }
-
             spacerLastScrollY = currentScrollY;
-
-            if (filterIsEmpty()) {
-                clearScrollSpacer();
-            }
         });
 
-        updateVisiblePublications();
+        update();
     }
 
     async function initializePublicationSection() {
@@ -577,48 +581,6 @@ document.addEventListener('DOMContentLoaded', function() {
         button.textContent = 'cite';
         button.title = 'Copy BibTeX';
         button.setAttribute('aria-label', `Copy BibTeX for ${button.dataset.publicationCode}`);
-    }
-
-    function initializePublicationsHeadingWrap() {
-        const heading = document.getElementById('publications-and-pre-prints');
-        if (!heading) return;
-
-        const measurer = heading.cloneNode(true);
-        measurer.removeAttribute('id');
-        measurer.setAttribute('aria-hidden', 'true');
-        measurer.classList.add('publications-heading-measurer');
-        heading.parentNode.insertBefore(measurer, heading.nextSibling);
-
-        const lead = measurer.querySelector('.publications-heading-lead');
-        const desktopTail = measurer.querySelector('.publications-heading-desktop-tail');
-        if (!lead || !desktopTail) {
-            measurer.remove();
-            return;
-        }
-
-        function updateHeadingText() {
-            measurer.classList.remove('publications-heading-short');
-            measurer.style.width = `${heading.getBoundingClientRect().width}px`;
-
-            const leadRect = lead.getBoundingClientRect();
-            const tailRect = desktopTail.getBoundingClientRect();
-            const tailWrapped = tailRect.top > leadRect.top + 1;
-
-            heading.classList.toggle('publications-heading-short', tailWrapped);
-        }
-
-        updateHeadingText();
-
-        if (window.ResizeObserver) {
-            const observer = new ResizeObserver(updateHeadingText);
-            observer.observe(heading.parentElement);
-        } else {
-            window.addEventListener('resize', updateHeadingText);
-        }
-
-        if (document.fonts) {
-            document.fonts.ready.then(updateHeadingText);
-        }
     }
 
     function setCopyButtonState(button, state) {
@@ -967,7 +929,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial calls and event listeners
     initializeProfilePills();
-    initializePublicationsHeadingWrap();
     initializePublicationSection()
         .then(function() {
             initializePublications();

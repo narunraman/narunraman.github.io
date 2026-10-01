@@ -230,74 +230,124 @@
     margin-top: 4px;
 }
 
-.publications-heading-desktop-tail {
-    white-space: nowrap;
+/* The heading's words filter the list; each is underlined in its badge colours */
+#publications-and-pre-prints.filterable .pub-term {
+    cursor: pointer;
+    padding-bottom: 1px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 100% 3px;
+    transition: opacity 0.15s ease, background-size 0.15s ease;
 }
 
-.publications-heading-mobile-tail {
-    display: none;
+/* "Publications": no bar of its own; two invisible halves on top of it each carry one bar
+   (conference blue, journal purple) and are clicked separately */
+#publications-and-pre-prints.filterable .pub-term-split {
+    position: relative;
+    cursor: default;
 }
 
-.publications-heading-short .publications-heading-desktop-tail {
-    display: none;
-}
-
-.publications-heading-short .publications-heading-mobile-tail {
-    display: inline;
-}
-
-.publications-heading-measurer {
+#publications-and-pre-prints.filterable .pub-half {
     position: absolute;
     top: 0;
-    left: -9999px;
-    visibility: hidden;
-    pointer-events: none;
+    bottom: 0;
+    padding: 0;
 }
 
-.publication-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 12px;
-    margin: -0.1rem 0 0.85rem;
+#publications-and-pre-prints.filterable .pub-half-conference {
+    left: 0;
+    width: calc(50% - 3px);
+    background-image: linear-gradient(#3f6db5, #3f6db5);
 }
 
-.publication-filter-group {
-    display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 5px;
+#publications-and-pre-prints.filterable .pub-half-journal {
+    right: 0;
+    width: calc(50% - 3px);
+    background-image: linear-gradient(#7a4cc2, #7a4cc2);
 }
 
-.publication-filter-label {
-    color: #666;
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.78rem;
-    line-height: 1.2;
+#publications-and-pre-prints.filterable .pub-term[data-filter="working"] {
+    background-image: linear-gradient(#7c8087, #7c8087);
 }
 
-.publication-filter-pill {
-    border: 1px solid #aaa;
-    border-radius: 10px;
-    background-color: rgb(243, 241, 241);
+#publications-and-pre-prints.filterable .pub-term[data-filter="talks"] {
+    background-image: linear-gradient(#0f800f, #0f800f);
+}
+
+#publications-and-pre-prints.filterable .pub-term:hover,
+#publications-and-pre-prints.filterable .pub-term:focus-visible,
+#publications-and-pre-prints.filterable .pub-term.active {
+    background-size: 100% 6px;
+    outline: none;
+}
+
+/* while filtering, the other words (and the commas) fade */
+#publications-and-pre-prints.filtering {
+    color: rgba(34, 34, 34, 0.35);
+}
+
+#publications-and-pre-prints.filtering .pub-term:not(.active) {
+    opacity: 0.45;
+}
+
+#publications-and-pre-prints.filtering .pub-term.active {
     color: #222;
-    cursor: pointer;
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.82rem;
-    line-height: 1.15;
-    padding: 2px 7px;
-    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
-.publication-filter-pill:hover {
-    border-color: #dc3545;
-    background-color: #fff;
+/* the halves only draw bars, so don't fade them twice when "Publications" as a whole is faded */
+#publications-and-pre-prints.filtering .pub-term-split:not(.active) .pub-half {
+    opacity: 1;
+}
+
+.pub-filter-reset {
+    margin-left: 0.3em;
+    border: 0;
+    background: none;
+    padding: 0 0.15em;
     color: #dc3545;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 400;
+    line-height: 1;
+    vertical-align: baseline;
 }
 
-.publication-filter-pill.active {
-    border-color: #dc3545;
-    background-color: #dc3545;
-    color: #fff;
+.pub-filter-reset:hover {
+    color: #a71d2a;
+}
+
+/* "Working Papers" on wider screens, "Pre-prints" on phones (so the heading fits one line) */
+.pub-term-short {
+    display: none;
+}
+
+/* Phone filter: tabs under the heading (hidden on wider screens, where the heading's words filter) */
+.pub-tabs {
+    display: none;
+}
+
+.pub-tab-swatch {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 5px;
+    vertical-align: 1px;
+}
+
+.pub-tab-swatch-conference { background-color: #3f6db5; }
+.pub-tab-swatch-journal { background-color: #7a4cc2; }
+.pub-tab-swatch-working { background-color: #7c8087; }
+.pub-tab-swatch-talks { background-color: #0f800f; }
+
+.publication-badge-filter {
+    cursor: pointer;
+}
+
+.publication-badge-filter:hover,
+.publication-badge-filter:focus-visible {
+    filter: brightness(1.15);
+    outline: 1px solid currentColor;
+    outline-offset: 1px;
 }
 
 .publication-filter-scroll-spacer {
@@ -337,6 +387,83 @@
 }
 
 @media (max-width: 530px) {
+    /* headings shrink with the screen so "Publications, Pre-prints, and Talks" stays on one line */
+    #content h2 {
+        font-size: min(1.6rem, calc((100vw - 30px) * 0.0625));
+    }
+
+    .publication-content {
+        font-size: 15px;
+    }
+
+    .pub-term-long {
+        display: none;
+    }
+
+    .pub-term-short {
+        display: inline;
+    }
+
+    /* the heading is plain text here; the tabs below do the filtering */
+    #publications-and-pre-prints.filterable .pub-term,
+    #publications-and-pre-prints.filterable .pub-half {
+        background-image: none !important;
+        cursor: auto;
+        pointer-events: none;
+    }
+
+    #publications-and-pre-prints.filtering,
+    #publications-and-pre-prints.filtering .pub-term:not(.active) {
+        color: inherit;
+        opacity: 1;
+    }
+
+    #publications-and-pre-prints .pub-filter-reset {
+        display: none;
+    }
+
+    .pub-tabs {
+        display: flex;
+        gap: min(18px, 3.6vw);
+        margin: -0.2rem 0 0.9rem;
+        overflow-x: auto;
+        border-bottom: 1px solid #e3e3e3;
+        scrollbar-width: none;
+        white-space: nowrap;
+    }
+
+    .pub-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .pub-tab {
+        flex: none;
+        margin-bottom: -1px;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        background: none;
+        padding: 4px 0 7px;
+        color: #777;
+        cursor: pointer;
+        font: inherit;
+        font-size: min(14.5px, 3.75vw);
+    }
+
+    .pub-tab:focus {
+        outline: none;
+    }
+
+    .pub-tab:focus-visible {
+        outline: 1px dotted #222;
+        outline-offset: 2px;
+    }
+
+    .pub-tab.active {
+        border-bottom-color: #222;
+        color: #222;
+        font-weight: 600;
+    }
+
     .publication-entry {
         column-gap: 8px;
     }
@@ -724,11 +851,10 @@
     font-size: 14px;
     line-height: 1.4;
     white-space: normal;
-    width: 250px;
+    width: min(250px, calc(100vw - 32px));
     z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+    /* not laid out until shown: a hidden tooltip near the right edge would otherwise widen the page */
+    display: none;
     pointer-events: none;
 }
 
@@ -781,6 +907,7 @@
 
 .footnote-ref:hover::after,
 .footnote-ref:hover::before {
+    display: block;
     opacity: 1;
     visibility: visible;
 }
@@ -854,11 +981,13 @@
         position: relative;
     }
     
-    .footnote-ref::after {
+    .footnote-ref::after,
+    .footnote-ref:hover::after {
         display: none; /* Hide tooltip on desktop */
     }
     
-    .footnote-ref::before {
+    .footnote-ref::before,
+    .footnote-ref:hover::before {
         display: none; /* Hide tooltip arrow on desktop */
     }
     
