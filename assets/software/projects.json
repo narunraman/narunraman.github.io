@@ -5,8 +5,8 @@
     "year": 2026,
     "domain": "machine-behavior",
     "kind": "Adaptive evaluation",
-    "primaryHref": "https://www.cs.ubc.ca/~narunram/quickscope/",
-    "homepage": "https://www.cs.ubc.ca/~narunram/quickscope/",
+    "primaryHref": "https://quickscope.narunraman.com/",
+    "homepage": "https://quickscope.narunraman.com/",
     "summary": "Bayesian-optimal evaluation for finding and certifying hard regions in dynamic LLM benchmarks.",
     "description": "QuickScope adaptively allocates evaluation budget across a benchmark's configuration space, helping identify model weak spots without uniformly evaluating every generated question. It is built around COUP-style Bayesian optimization and supports pluggable datasets, utilities, and benchmark generators.",
     "resources": [
