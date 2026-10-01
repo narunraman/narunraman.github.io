@@ -21,6 +21,8 @@
 
   <style>
     :root { --gap: 2px; }
+    /* no rubber-band overscroll: the page ends in black, and bouncing past it showed the white behind */
+    html, body { overscroll-behavior: none; }
     *, *::before, *::after { box-sizing: border-box; }
 
     /* Make navbar brand smaller for this page */
@@ -127,6 +129,11 @@
     /* IMPORTANT: remove margin-stacking approach; gaps are controlled above */
     /* .photo-row + .photo-row { margin-top: 2px; }  <-- deleted on purpose */
 
+    /* the page ends in black, like the gallery */
+    .photos-footer { margin: 0; padding: 1.6rem 0 2.2rem; background: #000; color: #fff; }
+    .photos-footer small, .photos-footer a, .photos-footer a::before { color: #fff !important; }
+    .photos-footer a:hover, .photos-footer a:hover::before { color: #dc3545 !important; }
+
     .photo-item { position: relative; overflow: hidden; flex: 0 0 auto; min-width: 0; margin: 0; padding: 0; }
     .photo-item img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
@@ -227,8 +234,7 @@
     </div>
   </div>
 
-  <div id="footer" class="mb-5">
-    <hr>
+  <div id="footer" class="photos-footer">
     <div class="container text-center">
     <a href="https://www.instagram.com/narun_pics/?hl=en" class="fab fa-instagram fa-1x" title="instagram"></a>
     </div>
@@ -409,26 +415,10 @@
     return photos;
   }
 
-  // The rows currently on screen. Full rows scale with the window in pure CSS (each photo's flex-grow
-  // is its aspect ratio), so while a resize leaves every row at a sensible height nothing is redone;
-  // photos move between rows only when a row would get too tall or too short.
+  // The rows currently on screen. Rows scale with the window in pure CSS (each photo's flex-grow is
+  // its aspect ratio). On a width change the best split is worked out again (it takes about a
+  // millisecond) and the page is only rebuilt when the rows come out differently.
   let CURRENT_ROWS = null; // { gallery, rows, targetH }
-
-  function rowsStillFit(W) {
-    if (!CURRENT_ROWS || CURRENT_ROWS.gallery !== ACTIVE_GALLERY) return false;
-    const { rows, targetH } = CURRENT_ROWS;
-    const lo = MIN_ROW_H * 0.8, hi = effectiveMaxRowH() * 1.15;
-    for (let i = 0; i < rows.length; i++) {
-      const r = rows[i], gaps = GAP * Math.max(0, r.len - 1);
-      if (i < rows.length - 1) {
-        const h = (W - gaps) / r.sumAR;
-        if (h < lo || (h > hi && r.len > 1)) return false; // a lone photo can't be split anyway
-      } else if (r.sumAR * targetH + gaps > W * 1.25) {
-        return false; // the ragged last row would have to shrink a lot: rebalance instead
-      }
-    }
-    return true;
-  }
 
   function layoutActive(force) {
     const photos = gridCache.get(ACTIVE_GALLERY);
@@ -436,7 +426,6 @@
     const photoGrid = document.getElementById('photo-grid');
     const W = gridWidthPx(photoGrid);
     if (!force && W === LAST_LAYOUT_W) return; // e.g. phone address bar showing/hiding: nothing to redo
-    if (!force && rowsStillFit(W)) { LAST_LAYOUT_W = W; return; }
     fastLayout(photoGrid, photos.filter(p => typeof p.ar === 'number'));
   }
 
@@ -461,7 +450,7 @@
     // Use cached ARs to pick h immediately
     const ars = photos.map(p => p.ar);
     const best = pickOptimalTargetHeight(ars, W);
-    renderJustified(container, photos, W, best.h, false);
+    renderJustified(container, photos, W, best.h, true);
     LAST_LAYOUT_W = W;
   }
 
@@ -497,12 +486,41 @@
     return rows;
   }
 
+  // Break the photos into rows so that EVERY row, the last one included, fills the width: of all the
+  // ways to split them (in order), take the one whose row heights stay closest to the target. A row
+  // is never shorter than the target (as before), and nothing is left over for a ragged last line.
+  function partitionRows(ars, W, target) {
+    const n = ars.length;
+    const cost = new Array(n + 1).fill(Infinity), from = new Array(n + 1).fill(0);
+    cost[0] = 0;
+    for (let end = 1; end <= n; end++) {
+      let sumAR = 0;
+      for (let start = end - 1; start >= 0; start--) {
+        sumAR += ars[start];
+        const len = end - start;
+        const h = (W - GAP * (len - 1)) / sumAR;
+        if (h < target * 0.99 && len > 1) break; // more photos would only make the row shorter
+        // a lone very wide photo may come out shorter than the target: allowed, but costly
+        const c = cost[start] + (h >= target ? (h - target) ** 2 : 4 * (target - h) ** 2);
+        if (c < cost[end]) { cost[end] = c; from[end] = start; }
+      }
+    }
+    const rows = [];
+    for (let end = n; end > 0; end = from[end]) {
+      const start = from[end];
+      let sumAR = 0;
+      for (let k = start; k < end; k++) sumAR += ars[k];
+      rows.unshift({ start, end: end - 1, sumAR, len: end - start });
+    }
+    return rows;
+  }
+
   function renderJustified(containerEl, photos, W, targetH, fillLastRow) {
     const frag = document.createDocumentFragment();
     containerEl.style.rowGap = GAP + 'px';
 
     const ars = photos.map(p => p.ar);
-    const rows = simulateRows(ars, W, targetH);
+    const rows = fillLastRow ? partitionRows(ars, W, targetH) : simulateRows(ars, W, targetH);
 
     // Same rows as on screen already? Then CSS has scaled them; keep the DOM as it is.
     const sig = rows.map(r => `${r.start}-${r.end}`).join(',') + `|${fillLastRow}`;
