@@ -9,28 +9,44 @@
     margin-top: 1rem !important;
 }
 
-/* the same 750px column as the navbar and the other pages, so the sentence lines up with them */
-.personal-wrap {
+/* the page is as tall as the window, so the footer lands at the bottom of the view */
+.personal-page {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.personal-page #footer {
+    margin-bottom: 1rem;
+}
+
+/* inside a flex column a rule has no width of its own */
+.personal-page > hr {
+    width: 100%;
+}
+
+/* the same 750px column as the navbar and the other pages; the line sits near the top, set right */
+.personal-wrap {
+    flex: 1;
+    width: 100%;
     max-width: 750px;
-    min-height: calc(100vh - 260px);
     margin: 0 auto;
-    padding: 2rem 15px 8vh;
+    padding: 1.5rem 15px 3rem;
 }
 
 .personal-line {
-    width: 100%;
     margin: 0;
     color: #222;
     font-family: 'CMU Serif', serif;
-    font-size: clamp(22px, 5.4vw, 34px);
+    font-size: 12px;
     font-weight: 400;
-    line-height: 1.35;
+    line-height: 1.4;
+    text-align: right;
 }
 
 .personal-line a {
-    border-bottom: 3px solid rgba(220, 53, 69, 0.25);
+    border-bottom: 1px solid rgba(220, 53, 69, 0.35);
     color: #dc3545;
     text-decoration: none;
     white-space: nowrap; /* a link never breaks across lines */
@@ -133,8 +149,3 @@
     }
 }
 
-@media (max-width: 576px) {
-    .personal-wrap {
-        min-height: calc(100vh - 300px);
-    }
-}
