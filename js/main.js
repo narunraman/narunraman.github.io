@@ -283,8 +283,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Publication filter: the heading's own words are the controls, each underlined in its badge
     // colour. "Publications" has two bars: its left half shows conference papers, its right half
     // journal papers. "Working Papers" shows the preprints and "Talks" the talks. On phones the
-    // heading says "Pre-prints" so it fits on one line, and the underlines give way to a row of tabs under the heading (All, Conference, ...), same filter. A paper's badge picks
-    // its own type. Clicking the active control again (or the ×) shows everything.
+    // heading says "Pre-prints" so it fits on one line, and the underlines give way to a row of tabs
+    // under the heading (All, Conference, ...), same filter. Clicking the active control again (or
+    // the ×) shows everything. The badges on the papers only label them; they are not controls.
     const PUBLICATION_GROUPS = {
         conference: ['conference'],
         journal: ['journal'],
@@ -378,12 +379,6 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollSpacer.setAttribute('aria-hidden', 'true');
         root.parentNode.insertBefore(scrollSpacer, root.nextSibling);
 
-        root.querySelectorAll('.publication-badge').forEach(function(badge) {
-            badge.setAttribute('role', 'button');
-            badge.tabIndex = 0;
-            badge.classList.add('publication-badge-filter');
-        });
-
         function update() {
             root.querySelectorAll('.publication-item').forEach(function(item) {
                 item.hidden = activeGroup !== null &&
@@ -426,9 +421,8 @@ document.addEventListener('DOMContentLoaded', function() {
             spacerLastScrollY = previousScrollY;
         }
 
-        function setGroup(group, anchor) {
+        function setGroup(group) {
             const previousScrollY = window.scrollY;
-            const anchorTop = anchor ? anchor.getBoundingClientRect().top : null;
 
             // grow the spacer first, so the page never gets shorter mid-change and the browser never
             // scrolls on its own
@@ -436,11 +430,6 @@ document.addEventListener('DOMContentLoaded', function() {
             activeGroup = (group === null || group === activeGroup) ? null : group;
             update();
             holdScrollPosition(previousScrollY);
-
-            // keep a clicked badge where it was on screen, so the list doesn't jump under the pointer
-            if (anchor && anchorTop !== null && !anchor.closest('[hidden]')) {
-                window.scrollBy(0, anchor.getBoundingClientRect().top - anchorTop);
-            }
         }
 
         function activated(event) {
@@ -461,15 +450,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const term = event.target.closest('.pub-term[data-filter][role="button"]');
             if (term && activated(event)) setGroup(term.dataset.filter);
         });
-
-        function badgeActivated(event) {
-            const badge = event.target.closest('.publication-badge-filter');
-            if (!badge || !activated(event)) return;
-            const type = badge.closest('.publication-item').dataset.publicationType;
-            setGroup(publicationGroupOf(type), badge);
-        }
-        root.addEventListener('click', badgeActivated);
-        root.addEventListener('keydown', badgeActivated);
 
         window.addEventListener('scroll', function() {
             if (!spacerArmed) return;

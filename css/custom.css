@@ -339,17 +339,6 @@
 .pub-tab-swatch-working { background-color: #7c8087; }
 .pub-tab-swatch-talks { background-color: #0f800f; }
 
-.publication-badge-filter {
-    cursor: pointer;
-}
-
-.publication-badge-filter:hover,
-.publication-badge-filter:focus-visible {
-    filter: brightness(1.15);
-    outline: 1px solid currentColor;
-    outline-offset: 1px;
-}
-
 .publication-filter-scroll-spacer {
     height: 0;
 }
