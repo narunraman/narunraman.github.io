@@ -22,7 +22,10 @@
     "photo20.jpg",
     "photo21.jpg",
     "photo22.jpg",
-    "photo23.jpg"
+    "photo23.jpg",
+    "photo24.jpg",
+    "photo25.jpg",
+    "photo26.jpg"
   ],
   "color": [
     "photo1.jpg",
@@ -83,7 +86,12 @@
     "photo56.jpg",
     "photo57.jpg",
     "photo58.jpg",
-    "photo59.jpg"
+    "photo59.jpg",
+    "photo60.jpg",
+    "photo61.jpg",
+    "photo62.jpg",
+    "photo63.jpg",
+    "photo64.jpg"
   ],
   "dims": {
     "bw": {
@@ -178,6 +186,18 @@
       "photo23.jpg": [
         8192,
         5464
+      ],
+      "photo24.jpg": [
+        5472,
+        2723
+      ],
+      "photo25.jpg": [
+        5472,
+        3648
+      ],
+      "photo26.jpg": [
+        5472,
+        3648
       ]
     },
     "color": {
@@ -416,7 +436,123 @@
       "photo59.jpg": [
         7782,
         5194
+      ],
+      "photo60.jpg": [
+        3648,
+        5472
+      ],
+      "photo61.jpg": [
+        3648,
+        5472
+      ],
+      "photo62.jpg": [
+        5756,
+        2759
+      ],
+      "photo63.jpg": [
+        5472,
+        3648
+      ],
+      "photo64.jpg": [
+        5472,
+        3000
       ]
+    }
+  },
+  "dates": {
+    "bw": {
+      "photo1.jpg": "2025-06",
+      "photo2.jpg": "2023-12",
+      "photo3.jpg": "2025-04",
+      "photo4.jpg": "2025-06",
+      "photo5.jpg": "2025-04",
+      "photo6.jpg": "2025-04",
+      "photo7.jpg": "2025-06",
+      "photo8.jpg": "2025-04",
+      "photo9.jpg": "2023-12",
+      "photo10.jpg": "2025-04",
+      "photo11.jpg": "2023-01",
+      "photo12.jpg": "2023-12",
+      "photo13.jpg": "2025-04",
+      "photo14.jpg": "2020-08",
+      "photo15.jpg": "2024-06",
+      "photo16.jpg": "2025-04",
+      "photo17.jpg": "2023-12",
+      "photo18.jpg": "2024-01",
+      "photo19.jpg": "2022-12",
+      "photo20.jpg": "2023-12",
+      "photo21.jpg": "2023-05",
+      "photo22.jpg": "2018-08",
+      "photo23.jpg": "2021-12",
+      "photo24.jpg": "2021-07",
+      "photo25.jpg": "2021-07",
+      "photo26.jpg": "2021-07"
+    },
+    "color": {
+      "photo1.jpg": "2025-04",
+      "photo2.jpg": "2025-06",
+      "photo3.jpg": "2020-08",
+      "photo4.jpg": "2025-04",
+      "photo5.jpg": "2023-12",
+      "photo6.jpg": "2020-07",
+      "photo7.jpg": "2024-06",
+      "photo8.jpg": "2023-01",
+      "photo9.jpg": "2021-12",
+      "photo10.jpg": "2021-12",
+      "photo11.jpg": "2022-12",
+      "photo12.jpg": "2023-12",
+      "photo13.jpg": "2023-01",
+      "photo14.jpg": "2023-12",
+      "photo15.jpg": "2025-01",
+      "photo16.jpg": "2022-12",
+      "photo17.jpg": "2025-01",
+      "photo18.jpg": "2021-12",
+      "photo19.jpg": "2020-04",
+      "photo20.jpg": "2023-12",
+      "photo21.jpg": "2020-01",
+      "photo22.jpg": "2022-12",
+      "photo23.jpg": "2023-12",
+      "photo24.jpg": "2023-01",
+      "photo25.jpg": "2022-12",
+      "photo26.jpg": "2023-12",
+      "photo27.jpg": "2025-06",
+      "photo28.jpg": "2022-12",
+      "photo29.jpg": "2024-12",
+      "photo30.jpg": "2024-06",
+      "photo31.jpg": "2022-12",
+      "photo32.jpg": "2021-12",
+      "photo33.jpg": "2022-12",
+      "photo34.jpg": "2025-06",
+      "photo35.jpg": "2020-08",
+      "photo36.jpg": "2024-01",
+      "photo37.jpg": "2018-07",
+      "photo38.jpg": "2022-12",
+      "photo39.jpg": "2023-12",
+      "photo40.jpg": "2021-12",
+      "photo41.jpg": "2025-04",
+      "photo42.jpg": "2018-08",
+      "photo43.jpg": "2023-12",
+      "photo44.jpg": "2022-12",
+      "photo45.jpg": "2023-12",
+      "photo46.jpg": "2022-12",
+      "photo47.jpg": "2021-12",
+      "photo48.jpg": "2022-12",
+      "photo49.jpg": "2024-06",
+      "photo50.jpg": "2025-04",
+      "photo51.jpg": "2022-12",
+      "photo52.jpg": "2023-12",
+      "photo53.jpg": "2023-12",
+      "photo54.jpg": "2023-07",
+      "photo55.jpg": "2024-01",
+      "photo56.jpg": "2025-04",
+      "photo57.jpg": "2025-04",
+      "photo58.jpg": "2025-04",
+      "photo59.jpg": "2023-12",
+      "photo60.jpg": "2021-07",
+      "photo61.jpg": "2021-07",
+      "photo62.jpg": "2021-07",
+      "photo63.jpg": "2021-07",
+      "photo64.jpg": "2021-06"
     }
   }
 }

@@ -1,0 +1,13 @@
+{
+  "_how": "Where each photo was taken, shown under it in the full-screen view (before the date). Edit by hand: gallery -> file name -> place. Photos not listed show only their date. The six here came from the photos' GPS data.",
+  "color": {
+    "photo7.jpg": "West Dover, Nova Scotia",
+    "photo30.jpg": "West Dover, Nova Scotia",
+    "photo49.jpg": "West Dover, Nova Scotia"
+  },
+  "bw": {
+    "photo7.jpg": "Clallam County, Washington",
+    "photo15.jpg": "Peggys Cove, Nova Scotia",
+    "photo21.jpg": "Amsterdam"
+  }
+}

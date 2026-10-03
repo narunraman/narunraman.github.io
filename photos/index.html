@@ -173,6 +173,18 @@
     .lightbox.open { display: flex; }
     .lightbox-content { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 4rem 5rem; z-index: 1; }
     .lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 30px rgba(0,0,0,0.35); }
+    /* place and month under the photo: small and quiet */
+    .lightbox-caption { position: absolute; left: 0; right: 0; bottom: 1.4rem; text-align: center; color: rgba(255,255,255,0.72);
+                        font-size: 0.9rem; letter-spacing: 0.02em; pointer-events: none; }
+    .lightbox-caption:empty { display: none; }
+    /* small spinner at the photo's bottom-right corner while it (or its sharper copy) loads; it only
+       appears if loading takes more than a moment, so instant loads don't flash it */
+    .lightbox-spinner { position: absolute; width: 20px; height: 20px; border-radius: 50%;
+                        border: 2px solid rgba(255,255,255,0.3); border-top-color: rgba(255,255,255,0.95);
+                        box-shadow: 0 0 6px rgba(0,0,0,0.5); opacity: 0; pointer-events: none; z-index: 2; }
+    .lightbox-spinner.on { animation: lb-spin 0.8s linear infinite, lb-appear 0.2s ease 0.25s forwards; }
+    @keyframes lb-spin { to { transform: rotate(360deg); } }
+    @keyframes lb-appear { to { opacity: 1; } }
     .lightbox-close, .lightbox-prev, .lightbox-next {
       position: absolute; background: rgba(0,0,0,0.55); border: none; color: #fff;
       width: 44px; height: 44px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;
@@ -249,6 +261,8 @@
     <button class="lightbox-prev" aria-label="Previous">&#10094;</button>
     <div class="lightbox-content">
       <img class="lightbox-img" alt="Expanded photo">
+      <div class="lightbox-caption" aria-live="polite"></div>
+      <span class="lightbox-spinner" aria-hidden="true"></span>
     </div>
     <button class="lightbox-next" aria-label="Next">&#10095;</button>
   </div>
@@ -272,7 +286,8 @@
   const arCache = new Map(); // src -> number
   // Originals whose resized copies exist (listed in photo-index.json "dims"; made by generate_thumbnails.fish)
   const HAS_RESIZED = new Set();
-  const GRID_2X = 800, THUMB_EDGE = 400, LIGHTBOX_EDGE = 2048;
+  const GRID_2X = 800, THUMB_EDGE = 400, LIGHTBOX_EDGE = 2048, SHARP_EDGE = 3200;
+  const ORIG_WH = new Map(); // src -> [width, height] of the original
   const VARIANT_W = new Map(); // src -> {thumb, x2} pixel widths for srcset
 
   // Manifest of photos (loaded at runtime). GH Pages cannot list directories, so we use a JSON index.
@@ -357,6 +372,7 @@
       if (!(w > 0 && h > 0)) continue;
       const src = `${ASSETS_BASE}/${galleryType}/${name}`;
       arCache.set(src, w / h);
+      ORIG_WH.set(src, [w, h]);
       HAS_RESIZED.add(src);
       const fit = edge => Math.round(w * Math.min(1, edge / Math.max(w, h)));
       VARIANT_W.set(src, { thumb: fit(THUMB_EDGE), x2: fit(GRID_2X) });
@@ -632,10 +648,10 @@
     LB_SOURCES = sources;
     LB_INDEX = Math.max(0, Math.min(startIndex, sources.length - 1));
     if (!LB_EL) return;
-    updateLightboxImage();
     document.body.classList.add('modal-open');
-    LB_EL.classList.add('open');
+    LB_EL.classList.add('open');            // shown first, so the photo's size can be measured
     LB_EL.setAttribute('aria-hidden', 'false');
+    updateLightboxImage();
     document.addEventListener('keydown', onLightboxKey);
   }
 
@@ -668,13 +684,91 @@
   // Lightbox shows the 2048 px copy; the full-size original is only used if that copy is missing
   function lightboxSrc(src) { return HAS_RESIZED.has(src) ? toResized(src, LIGHTBOX_EDGE) : src; }
 
+  // Caption for the full-screen view: "Place · Month Year". The month is in photo-index.json (from the
+  // photo's EXIF data); places are hand-written in assets/photos/places.json. Either may be missing.
+  let PLACES_PROMISE = null;
+  function loadPlaces() {
+    if (!PLACES_PROMISE) {
+      PLACES_PROMISE = fetch('/assets/photos/places.json', { cache: 'no-cache' })
+        .then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+    }
+    return PLACES_PROMISE;
+  }
+  async function captionFor(src) {
+    const m = src.match(/photos\/([^/]+)\/([^/]+\.jpg)$/);
+    if (!m) return '';
+    const [index, places] = await Promise.all([ensurePhotoIndex(), loadPlaces()]);
+    const taken = index && index.dates && index.dates[m[1]] && index.dates[m[1]][m[2]];
+    let when = '';
+    if (taken) {
+      const [y, mo] = taken.split('-').map(Number);
+      when = new Date(y, mo - 1, 1).toLocaleString('en', { month: 'long', year: 'numeric' });
+    }
+    const where = (places && places[m[1]] && places[m[1]][m[2]]) || '';
+    return [where, when].filter(Boolean).join(' \u00b7 ');
+  }
+
+  // The photo is shown at a size worked out here (fit to the screen, never larger than the original),
+  // so the 2048 px copy and the sharper 3200 px copy take exactly the same space when one replaces the
+  // other, and the spinner can sit at the photo's corner before anything has loaded.
+  let LB_TOKEN = 0;
+  function lightboxRect(full) {
+    const c = LB_EL.querySelector('.lightbox-content');
+    const cs = getComputedStyle(c);
+    const padL = parseFloat(cs.paddingLeft), padT = parseFloat(cs.paddingTop);
+    const cw = c.clientWidth - padL - parseFloat(cs.paddingRight);
+    const ch = c.clientHeight - padT - parseFloat(cs.paddingBottom);
+    const [ow, oh] = ORIG_WH.get(full) || [LB_IMG.naturalWidth || 3, LB_IMG.naturalHeight || 2];
+    const scale = Math.min(cw / ow, ch / oh, 1);
+    const w = ow * scale, h = oh * scale;
+    return { left: padL + (cw - w) / 2, top: padT + (ch - h) / 2, w, h };
+  }
+  function layoutLightbox(full) {
+    const r = lightboxRect(full);
+    LB_IMG.style.width = `${Math.round(r.w)}px`;
+    LB_IMG.style.height = `${Math.round(r.h)}px`;
+    const sp = LB_EL.querySelector('.lightbox-spinner');
+    if (sp) { sp.style.left = `${r.left + r.w - 32}px`; sp.style.top = `${r.top + r.h - 32}px`; }
+    return r;
+  }
+  function needsSharp(full, r) {
+    const wh = ORIG_WH.get(full);
+    if (!wh || !HAS_RESIZED.has(full) || Math.max(...wh) <= LIGHTBOX_EDGE) return false;
+    return Math.max(r.w, r.h) * (window.devicePixelRatio || 1) > LIGHTBOX_EDGE * 1.1;
+  }
+  function setSpinner(on) {
+    const sp = LB_EL && LB_EL.querySelector('.lightbox-spinner');
+    if (sp) sp.classList.toggle('on', on);
+  }
+
   function updateLightboxImage() {
     if (!LB_IMG) return;
     const full = LB_SOURCES[LB_INDEX];
+    const token = ++LB_TOKEN;
+    const cap = LB_EL && LB_EL.querySelector('.lightbox-caption');
+    if (cap) {
+      cap.textContent = '';
+      captionFor(full).then(text => { if (LB_SOURCES[LB_INDEX] === full) cap.textContent = text; });
+    }
+    const r = layoutLightbox(full);
+    setSpinner(true);
     LB_IMG.setAttribute('fetchpriority', 'high');
     LB_IMG.onerror = () => {
       LB_IMG.onerror = null;
       if (LB_IMG.src !== new URL(full, location.href).href) LB_IMG.src = full;
+      else setSpinner(false);
+    };
+    LB_IMG.onload = () => {
+      if (token !== LB_TOKEN) return;
+      LB_IMG.onload = null;
+      if (!needsSharp(full, r)) { setSpinner(false); return; }
+      // the screen can show more than 2048 px: fetch the sharper copy, swap it in once decoded
+      const sharp = new Image();
+      sharp.decoding = 'async';
+      sharp.src = toResized(full, SHARP_EDGE);
+      sharp.decode().then(() => {
+        if (token === LB_TOKEN) LB_IMG.src = sharp.src;
+      }).catch(() => {}).finally(() => { if (token === LB_TOKEN) setSpinner(false); });
     };
     LB_IMG.src = lightboxSrc(full);
     preloadNeighborImages();
@@ -701,6 +795,7 @@
       LB_BTN_CLOSE && LB_BTN_CLOSE.addEventListener('click', closeLightbox);
       // Click outside image closes
       LB_EL.addEventListener('click', (e) => { if (e.target === LB_EL) closeLightbox(); });
+      window.addEventListener('resize', () => { if (LB_EL.classList.contains('open') && LB_SOURCES.length) layoutLightbox(LB_SOURCES[LB_INDEX]); });
       // Basic swipe
       let startX = 0;
       LB_EL.addEventListener('touchstart', e => { startX = (e.changedTouches?.[0]?.clientX) || 0; }, { passive: true });

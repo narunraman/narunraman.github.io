@@ -13,11 +13,13 @@
 #   <gallery>/thumbs/photoN.webp        400 px long edge, grid thumbnail (1x screens)
 #   <gallery>/resized/photoN-800.webp   800 px long edge, grid on 2x/3x screens (phones, Retina)
 #   <gallery>/resized/photoN-2048.webp  2048 px long edge, lightbox (instead of the full-size original)
+#   <gallery>/resized/photoN-3200.webp  3200 px long edge, lightbox on high-resolution screens
 # and for the splash photo:
 #   resized/wide_splash_photo-{1280,1920,2560,3840}.webp
 # and rewrites assets/photos/photo-index.json: the photo order per gallery (existing order kept, new
 # photos appended in numeric order) plus each original's pixel size, so the page can lay out the grid
-# without downloading anything.
+# without downloading anything, and the month each was taken (from EXIF), shown in the full-screen
+# view. Places are not generated: add them by hand in assets/photos/places.json.
 #
 # Colour: every generated image keeps the original's colour profile (Display P3 for camera photos),
 # so the grid, lightbox and splash all show the colours as shot. Without it browsers read the P3
@@ -26,6 +28,7 @@
 set THUMB_WIDTH 400
 set GRID_2X 800
 set LIGHTBOX 2048
+set SHARP 3200   # full-screen copy for high-resolution screens (Retina, large monitors)
 set WEBP_QUALITY 80
 set SPLASH_WIDTHS 1280 1920 2560 3840
 set SPLASH_QUALITY 82
@@ -49,6 +52,11 @@ set TMP (mktemp -d)
 
 function dims --argument-names file
     sips -g pixelWidth -g pixelHeight $file | awk '/pixelWidth/ {w=$2} /pixelHeight/ {h=$2} END {print w, h}'
+end
+
+# The month a photo was taken, as YYYY-MM, from its EXIF data ("-" if it has none)
+function taken --argument-names file
+    sips -g creation $file | awk '/creation/ && $2 ~ /^[0-9][0-9][0-9][0-9]:[0-9][0-9]:/ {split($2, d, ":"); print d[1] "-" d[2]; found=1} END {if (!found) print "-"}'
 end
 
 # make_webp <src> <dest> <long edge px> <quality> <keep ICC: yes/no>
@@ -99,6 +107,7 @@ for gallery in $GALLERIES
 
         make_webp $photo "$resized_dir/$basename-$GRID_2X.webp" $GRID_2X $WEBP_QUALITY yes; and set count (math $count + 1)
         make_webp $photo "$resized_dir/$basename-$LIGHTBOX.webp" $LIGHTBOX $WEBP_QUALITY yes; and set count (math $count + 1)
+        make_webp $photo "$resized_dir/$basename-$SHARP.webp" $SHARP $WEBP_QUALITY yes; and set count (math $count + 1)
     end
     echo "  Generated $count images for $gallery"
 
@@ -113,7 +122,7 @@ for gallery in $GALLERIES
     end
     for name in $ordered
         set wh (string split ' ' (dims "$source_dir/$name"))
-        printf '%s\t%s\t%s\t%s\n' $gallery $name $wh[1] $wh[2] >>$rows
+        printf '%s\t%s\t%s\t%s\t%s\n' $gallery $name $wh[1] $wh[2] (taken "$source_dir/$name") >>$rows
     end
 end
 
@@ -133,6 +142,7 @@ jq -R -s '
   split("\n") | map(select(length > 0) | split("\t")) as $rows
   | (reduce $rows[] as [$g, $n] ({}; .[$g] += [$n]))
   + {dims: (reduce $rows[] as [$g, $n, $w, $h] ({}; .[$g][$n] = [($w | tonumber), ($h | tonumber)]))}
+  + {dates: (reduce ($rows[] | select(.[4] != "-")) as [$g, $n, $w, $h, $d] ({}; .[$g][$n] = $d))}
 ' $rows >$INDEX.tmp; and mv $INDEX.tmp $INDEX
 echo "Wrote $INDEX"
 
