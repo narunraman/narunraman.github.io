@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Web article">
+  <rect x="9" y="7" width="46" height="44" rx="5" fill="#fff" stroke="#09234b" stroke-width="1.5"/>
+  <path d="M14 7h36a5 5 0 0 1 5 5v8H9v-8a5 5 0 0 1 5-5Z" fill="#0866ff"/>
+  <path d="M9 20h46M9 20v-8a5 5 0 0 1 5-5h36a5 5 0 0 1 5 5v8" fill="none" stroke="#09234b" stroke-width="1.5"/>
+  <g fill="#fff">
+    <circle cx="16" cy="13.5" r="1.7"/>
+    <circle cx="22" cy="13.5" r="1.7"/>
+  </g>
+  <path d="M16 27h32M16 33h25" fill="none" stroke="#09234b" stroke-width="2" stroke-linecap="round"/>
+  <rect x="5" y="39" width="54" height="19" rx="4" fill="#ff4148" stroke="#09234b" stroke-width="1.5"/>
+  <g fill="#fff">
+    <path d="M11 43h3l2 8 2.2-8h2.6l2.2 8 2-8h3l-3.3 11h-3l-2.2-7.4-2.2 7.4h-3Z"/>
+    <path d="M30 43h9v2.5h-6v1.8h5.4v2.4H33v1.8h6V54h-9Z"/>
+    <path fill-rule="evenodd" d="M42 43h5.7c2.8 0 4.3 1.1 4.3 3 0 1.1-.6 2-1.6 2.4 1.3.4 2 1.3 2 2.5 0 2.1-1.7 3.1-4.5 3.1H42Zm3 2.3v2.1h2.4c1 0 1.5-.4 1.5-1.1s-.5-1-1.5-1Zm0 4.3v2.1h2.7c1.1 0 1.6-.3 1.6-1s-.5-1.1-1.6-1.1Z"/>
+  </g>
+</svg>

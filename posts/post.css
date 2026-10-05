@@ -2,6 +2,10 @@
 
 .post-wrap { max-width: 750px; margin: 2rem auto 4rem; padding: 0 1rem; }
 .post-masthead { margin: 2.75rem 0 1.5rem; }
+.post-wrap .post-download, .post-wrap .post-download:hover { display: inline; color: #000; text-decoration: none; }
+.post-wrap .post-download::before { display: inline-block; vertical-align: -.15em; margin-right: 6px; }
+.post-wrap .post-download:hover .link-text,
+.post-wrap .post-download:focus-visible .link-text { text-decoration: underline; }
 .post-kicker { color: #6c757d; font-family: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .post-wrap .title { --title-default-size: clamp(2rem, 5vw, 3.25rem); font-size: var(--title-size, var(--title-default-size)); line-height: 1.08; margin: .45rem 0 .85rem; }
 .post-standfirst { font-family: "CMU Serif", Georgia, serif; font-size: 1.25rem; line-height: 1.45; margin: 0 0 1rem; }

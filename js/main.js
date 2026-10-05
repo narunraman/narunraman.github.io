@@ -232,7 +232,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         venue.className = 'cmu-serif-italic';
-        venue.textContent = publication.venue;
+        publication.venue.split('×').forEach(function(part, index) {
+            if (index > 0) {
+                const separator = document.createElement('span');
+                separator.className = 'venue-separator';
+                separator.textContent = '×';
+                venue.appendChild(separator);
+            }
+            appendText(venue, part);
+        });
         content.appendChild(venue);
 
         if (links) {

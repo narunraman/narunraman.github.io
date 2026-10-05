@@ -136,7 +136,7 @@
     "title": "Evaluating LLMs in Information Economics.",
     "authors": ["narun", "taylor-lundy", "thiago-amin", "kevin-leyton-brown", "jesse-perla"],
     "venuePrefix": "In",
-    "venue": "Workshop on Information Economics x Large Language Models at Economics and Computation (EC '25).",
+    "venue": "Workshop on Information Economics × Large Language Models at Economics and Computation (EC '25).",
     "links": [
       {
         "kind": "pdf",
@@ -145,7 +145,7 @@
       },
       {
         "kind": "html",
-        "label": "post",
+        "label": "view",
         "href": "/posts/llms_information_economics.html"
       }
     ]

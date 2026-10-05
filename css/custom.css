@@ -226,6 +226,10 @@
     min-width: 0;
 }
 
+.venue-separator {
+    font-style: normal;
+}
+
 .publication-content > .horizontal-links {
     margin-top: 4px;
 }
@@ -764,7 +768,8 @@
 }
 
 .html-link::before {
-    background-image: url('../assets/logos/html_logo.svg');
+    /* Temporary alternative; original retained at assets/logos/html_logo.svg. */
+    background-image: url('../assets/logos/web_article_logo.svg');
 }
 
 .software-link::before {
